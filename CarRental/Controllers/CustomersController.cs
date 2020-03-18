@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using CarRental.Models;
 using AutoMapper;
 using CarRental.Dtos;
+using System.Threading.Tasks;
 
 namespace CarRental.Controllers
 {
@@ -16,89 +17,62 @@ namespace CarRental.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ILogger<CustomersController> _logger;
-        private readonly ApplicationDbContext _context;
 
-        private readonly IMapper _mapper;
+        private readonly ICustomerRepository _repo;
 
-        public CustomersController(ILogger<CustomersController> logger, ApplicationDbContext context, IMapper mapper)
+        public CustomersController(ILogger<CustomersController> logger, ICustomerRepository repo)
         {
+            _repo = repo;
             _logger = logger;
-            _context = context;
-            _mapper = mapper;
         }
 
         // GET /api/customers
         [HttpGet]
-        public ActionResult GetCustomers()
+        public async Task<ActionResult> GetCustomers()
         {
-            var customersQuery = _context.Customers
-                .Include(c => c.MembershipType).ToList();
-
-            var customerDtos = _mapper.Map<CustomerDto>(customersQuery);
-
-            return Ok(customerDtos);  
+            var customers = await _repo.GetCustomersAsync();
+            return Ok(customers);
         }
 
         // GET /api/customer/1
-        public ActionResult GetCustomer(int Id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetCustomer(int id)
         {
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == Id);
+            var customer = await _repo.GetCustomerAsync(id);
 
             if (customer == null)
                 return NotFound();
-            
-            return Ok(_mapper.Map<CustomerDto>(customer));
+
+            return Ok(customer);
         }
 
         // POST /api/customers
         [HttpPost]
-        public ActionResult CreateCustomer(CustomerDto customerDto)
+        public async Task<ActionResult> CreateCustomer(Customer customer)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var customer = _mapper.Map<Customer>(customerDto);
-            _context.Customers.Add(customer);
+            _repo.Add(customer);
             _logger.LogInformation("Add Customer for ID: {Id}", customer.Id);
-            _context.SaveChanges();
-
-            customerDto.Id = customer.Id;
-
-            return Created(new Uri(Request.GetDisplayUrl() + "/" + customer.Id), customerDto);
-        }
-
-        // PUT /api/customers/1
-        [HttpPut]
-        public ActionResult UpdateCustomer(int Id, CustomerDto customerDto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == Id);
-            if (customerInDb == null)
-                return NotFound();
-
-            _logger.LogInformation("Update Customer for ID: {Id}", customerInDb.Id);
-            customerInDb = _mapper.Map<Customer>(customerDto);
-            
-            _context.SaveChanges();
-
-            return Ok();
+           
+            await _repo.SaveAllAsync();
+            return Created(new Uri(Request.GetDisplayUrl() + "/" + customer.Id), customer);
         }
 
         // DELETE /api/customers/1
-        [HttpDelete]
-        public ActionResult DeleteCustomer(int Id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteCustomer(int id)
         {
-            var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == Id);
-            
+            var customerInDb = await _repo.GetCustomerAsync(id);
+
             if (customerInDb == null)
                 return NotFound();
 
-            _logger.LogInformation("Delete Customer for ID: {Id}", Id);
-            _context.Customers.Remove(customerInDb);
-            _context.SaveChanges();
-
+            _repo.Delete(customerInDb);
+            await _repo.SaveAllAsync();
+            _logger.LogInformation("Delete Customer for ID: {Id}", id);
+            
             return Ok();
         }
     }

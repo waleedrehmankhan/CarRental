@@ -43,6 +43,7 @@ namespace CarRental
             services.AddRazorPages();
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

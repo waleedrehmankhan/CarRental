@@ -2,7 +2,7 @@ using AutoMapper;
 using CarRental.Dtos;
 using CarRental.Models;
 
-namespace CarRental.Properties
+namespace CarRental.Dtos
 {
     public class MappingProfile : Profile
     {
