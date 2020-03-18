@@ -1,15 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CarRental.Data;
-using System.Net;
-using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http.Extensions;
 using CarRental.Models;
+using AutoMapper;
+using CarRental.Dtos;
 
 namespace CarRental.Controllers
 {
@@ -20,10 +18,13 @@ namespace CarRental.Controllers
         private readonly ILogger<CustomersController> _logger;
         private readonly ApplicationDbContext _context;
 
-        public CustomersController(ILogger<CustomersController> logger, ApplicationDbContext context)
+        private readonly IMapper _mapper;
+
+        public CustomersController(ILogger<CustomersController> logger, ApplicationDbContext context, IMapper mapper)
         {
             _logger = logger;
             _context = context;
+            _mapper = mapper;
         }
 
         // GET /api/customers
@@ -33,7 +34,9 @@ namespace CarRental.Controllers
             var customersQuery = _context.Customers
                 .Include(c => c.MembershipType).ToList();
 
-            return Ok(customersQuery);  
+            var customerDtos = _mapper.Map<CustomerDto>(customersQuery);
+
+            return Ok(customerDtos);  
         }
 
         // GET /api/customer/1
@@ -44,26 +47,29 @@ namespace CarRental.Controllers
             if (customer == null)
                 return NotFound();
             
-            return Ok(customer);
+            return Ok(_mapper.Map<CustomerDto>(customer));
         }
 
-        // POST /api/customer
+        // POST /api/customers
         [HttpPost]
-        public ActionResult CreateCustomer(Customer customer)
+        public ActionResult CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            _logger.LogInformation("Add Customer for ID: {Id}", customer.Id);
+            var customer = _mapper.Map<Customer>(customerDto);
             _context.Customers.Add(customer);
+            _logger.LogInformation("Add Customer for ID: {Id}", customer.Id);
             _context.SaveChanges();
 
-            return Created(new Uri(Request.GetDisplayUrl() + "/" + customer.Id), customer);
+            customerDto.Id = customer.Id;
+
+            return Created(new Uri(Request.GetDisplayUrl() + "/" + customer.Id), customerDto);
         }
 
-        // PUT /api/customer/1
+        // PUT /api/customers/1
         [HttpPut]
-        public ActionResult UpdateCustomer(int Id, Customer customer)
+        public ActionResult UpdateCustomer(int Id, CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -72,15 +78,15 @@ namespace CarRental.Controllers
             if (customerInDb == null)
                 return NotFound();
 
-            _logger.LogInformation("Update Customer for ID: {Id}", customer.Id);
-            customerInDb = customer;
-
+            _logger.LogInformation("Update Customer for ID: {Id}", customerInDb.Id);
+            customerInDb = _mapper.Map<Customer>(customerDto);
+            
             _context.SaveChanges();
 
             return Ok();
         }
 
-        // DELETE /api/customer/1
+        // DELETE /api/customers/1
         [HttpDelete]
         public ActionResult DeleteCustomer(int Id)
         {
