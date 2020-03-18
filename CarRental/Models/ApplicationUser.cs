@@ -8,5 +8,6 @@ namespace CarRental.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        
     }
 }
