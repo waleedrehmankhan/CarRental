@@ -41,7 +41,7 @@ namespace CarRental
                 .AddIdentityServerJwt();
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(CustomerRepository).Assembly);
             services.AddControllersWithViews();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             // In production, the Angular files will be served from this directory

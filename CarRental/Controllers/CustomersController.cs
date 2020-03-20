@@ -9,6 +9,8 @@ using CarRental.Models;
 using AutoMapper;
 using CarRental.Dtos;
 using System.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace CarRental.Controllers
 {
@@ -19,10 +21,12 @@ namespace CarRental.Controllers
         private readonly ILogger<CustomersController> _logger;
 
         private readonly ICustomerRepository _repo;
+        private readonly IMapper _mapper;
 
-        public CustomersController(ILogger<CustomersController> logger, ICustomerRepository repo)
+        public CustomersController(ILogger<CustomersController> logger, ICustomerRepository repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
             _logger = logger;
         }
 
@@ -31,7 +35,8 @@ namespace CarRental.Controllers
         public async Task<ActionResult> GetCustomers()
         {
             var customers = await _repo.GetCustomersAsync();
-            return Ok(customers);
+            var customersToReturn = _mapper.Map<IEnumerable<CustomerDto>>(customers);
+            return Ok(customersToReturn);
         }
 
         // GET /api/customer/1
@@ -43,21 +48,28 @@ namespace CarRental.Controllers
             if (customer == null)
                 return NotFound();
 
-            return Ok(customer);
+            var customerToReturn = _mapper.Map<CustomerDto>(customer);
+
+            return Ok(customerToReturn);
         }
 
         // POST /api/customers
         [HttpPost]
-        public async Task<ActionResult> CreateCustomer(Customer customer)
+        public async Task<ActionResult> CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            _repo.Add(customer);
-            _logger.LogInformation("Add Customer for ID: {Id}", customer.Id);
+            var customerToAdd = _mapper.Map<Customer>(customerDto);
+
+            _repo.Add(customerToAdd);
            
-            await _repo.SaveAllAsync();
-            return Created(new Uri(Request.GetDisplayUrl() + "/" + customer.Id), customer);
+            bool status = await _repo.SaveAllAsync();
+            if (!status)
+                return Forbid();
+
+            _logger.LogInformation("Add Customer for ID: {Id}", customerToAdd.Id);
+            return Created(new Uri(Request.GetDisplayUrl() + "/" + customerToAdd.Id), customerDto);
         }
 
         // DELETE /api/customers/1
@@ -70,7 +82,11 @@ namespace CarRental.Controllers
                 return NotFound();
 
             _repo.Delete(customerInDb);
-            await _repo.SaveAllAsync();
+            bool status = await _repo.SaveAllAsync();
+
+            if (!status)
+                return Forbid();
+                
             _logger.LogInformation("Delete Customer for ID: {Id}", id);
             
             return Ok();
