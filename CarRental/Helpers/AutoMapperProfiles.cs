@@ -8,8 +8,16 @@ namespace CarRental.Helpers
     {
         public AutoMapperProfiles()
         {
+            //Domain to Dto
             CreateMap<Customer, CustomerDto>();
             CreateMap<MembershipType, MembershipTypeDto>();
+
+            // Dto to Domain
+            CreateMap<CustomerDto, Customer>()
+                .ForMember(c => c.Id, opt => opt.Ignore());
+
+            CreateMap<MembershipTypeDto, MembershipType>()
+                .ForMember(c => c.Id, opt => opt.Ignore());
         }
     }
 }

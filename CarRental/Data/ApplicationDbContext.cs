@@ -21,8 +21,5 @@ namespace CarRental.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
-
-        
-
     }
 }

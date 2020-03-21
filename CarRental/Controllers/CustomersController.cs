@@ -11,6 +11,7 @@ using CarRental.Dtos;
 using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using CarRental.Persistence;
 
 namespace CarRental.Controllers
 {
@@ -19,31 +20,30 @@ namespace CarRental.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ILogger<CustomersController> _logger;
-
-        private readonly ICustomerRepository _repo;
+        private IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CustomersController(ILogger<CustomersController> logger, ICustomerRepository repo, IMapper mapper)
+        public CustomersController(ILogger<CustomersController> logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _repo = repo;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
         }
 
         // GET /api/customers
         [HttpGet]
-        public async Task<ActionResult> GetCustomers()
+        public ActionResult GetCustomers()
         {
-            var customers = await _repo.GetCustomersAsync();
+            var customers = _unitOfWork.Customers.GetAll();
             var customersToReturn = _mapper.Map<IEnumerable<CustomerDto>>(customers);
             return Ok(customersToReturn);
         }
 
         // GET /api/customer/1
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetCustomer(int id)
+        public ActionResult GetCustomer(int id)
         {
-            var customer = await _repo.GetCustomerAsync(id);
+            var customer = _unitOfWork.Customers.Get(id);
 
             if (customer == null)
                 return NotFound();
@@ -55,39 +55,66 @@ namespace CarRental.Controllers
 
         // POST /api/customers
         [HttpPost]
-        public async Task<ActionResult> CreateCustomer(CustomerDto customerDto)
+        public ActionResult CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
             var customerToAdd = _mapper.Map<Customer>(customerDto);
 
-            _repo.Add(customerToAdd);
-           
-            bool status = await _repo.SaveAllAsync();
-            if (!status)
+            _unitOfWork.Customers.Add(customerToAdd);
+            var status = _unitOfWork.Complete();
+            if (status == 0)
                 return Forbid();
 
-            _logger.LogInformation("Add Customer for ID: {Id}", customerToAdd.Id);
+            _logger.LogInformation("Log:Add Customer for ID: {Id}", customerToAdd.Id);
             return Created(new Uri(Request.GetDisplayUrl() + "/" + customerToAdd.Id), customerDto);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateCustomer(int id, CustomerDto customerDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+            
+            var customerInDb = _unitOfWork.Customers.SingleOrDefault(c => c.Id == id);
+            if (customerInDb == null)
+                return NotFound();
+            
+            // manual mapping TODO: Auto Mapper not working.
+            customerInDb.Name = customerDto.Name;
+            customerInDb.EmailAddress = customerDto.EmailAddress;
+            customerInDb.BirthDate = customerDto.BirthDate;
+            customerInDb.LicenseNumber = customerDto.LicenseNumber;
+            customerInDb.PhoneNumber = customerDto.PhoneNumber;   
+            customerInDb.MembershipTypeId = customerDto.MembershipTypeId; 
+            customerInDb.isSubscribedToNewsLetter = customerDto.isSubscribedToNewsLetter;
+
+            var status = _unitOfWork.Complete();
+            if (status == 0)
+                return Forbid();
+
+            _logger.LogInformation("Log:Update Customer for ID: {Id}", customerInDb.Id);
+            
+            return Ok();
         }
 
         // DELETE /api/customers/1
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteCustomer(int id)
+        public ActionResult DeleteCustomer(int id)
         {
-            var customerInDb = await _repo.GetCustomerAsync(id);
+            var customerInDb = _unitOfWork.Customers.Get(id);
 
             if (customerInDb == null)
                 return NotFound();
 
-            _repo.Delete(customerInDb);
-            bool status = await _repo.SaveAllAsync();
+            _unitOfWork.Customers.Remove(customerInDb);
+            var status = _unitOfWork.Complete();
 
-            if (!status)
+            if (status == 0)
                 return Forbid();
                 
-            _logger.LogInformation("Delete Customer for ID: {Id}", id);
+            _logger.LogInformation("Log:Delete Customer for ID: {Id}", id);
             
             return Ok();
         }
