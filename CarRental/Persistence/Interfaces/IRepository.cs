@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace CarRental.Persistence
 {
@@ -18,5 +20,11 @@ namespace CarRental.Persistence
         void RemoveRange(IEnumerable<TEntity> entities);
 
         void Update(TEntity entity);
+
+          Task<IEnumerable<TEntity>> GetAsync(
+           Expression<Func<TEntity, bool>> filter = null,
+           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+           string includeProperties = "",
+           int first = 0, int offset = 0);
     }
 }

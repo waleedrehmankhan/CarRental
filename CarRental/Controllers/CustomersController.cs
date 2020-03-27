@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using CarRental.Persistence;
+using CarRental.Helpers;
+using CarRental.Persistence.Repositories.Customer;
+using Newtonsoft.Json;
 
 namespace CarRental.Controllers
 {
@@ -30,93 +33,100 @@ namespace CarRental.Controllers
             _logger = logger;
         }
 
-        // GET /api/customers
-        [HttpGet]
-        public ActionResult GetCustomers()
+ 
+        [HttpPost("getCustomerDetails")]
+        public async Task<ContentResult> GetCustomers(GetCustomerInput input)
         {
-            var customers = _unitOfWork.Customers.GetAll();
-            var customersToReturn = _mapper.Map<IEnumerable<CustomerDto>>(customers);
-            return Ok(customersToReturn);
+            try
+            {
+                ReturnMessage rm = new ReturnMessage(1,"Success");
+                var customers = await Task.Run(() => _unitOfWork.Customers.GetAsync(filter: w => input.CustomerID!=0? (w.CustomerID == input.CustomerID):true )) ;
+                var customersToReturn = _mapper.Map<IEnumerable<CustomerDto>>(customers);
+                return this.Content(rm.returnMessage(new PagedResultDto<CustomerDto>
+                    (customersToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
+                    "application/json");
+            }
+            catch(Exception ex) {
+                return this.Content(JsonConvert.SerializeObject(new
+                {
+                    msgCode = 0,
+                    msg = ex.Message
+                }), "application/json");
+            }
+        }
+         [HttpPost("getCustomerDetailById")]
+        public async Task<ContentResult> GetCustomerById(GetCustomerInput input)
+        {
+            return await GetCustomers(input);
         }
 
-        // GET /api/customer/1
-        [HttpGet("{id}")]
-        public ActionResult GetCustomer(int id)
+         
+
+        [HttpPost("createOrUpdateCustomer")]
+        public async Task<ContentResult> CreateOrUpdateCustomer(CustomerDto customerDto)
         {
-            var customer = _unitOfWork.Customers.Get(id);
 
-            if (customer == null)
-                return NotFound();
+            ReturnMessage returnmessage = new ReturnMessage(1, "Customer Saved Succesfully");
+            try
+            {
+                var customer = await Task.Run(() => _unitOfWork.Customers.GetAsync(filter: w => w.CustomerID == customerDto.CustomerID));
+                var customerToAdd = _mapper.Map<Customer>(customerDto);
+                if (customer.Count() == 0)
+                {
+                    _unitOfWork.Customers.Add(customerToAdd);
 
-            var customerToReturn = _mapper.Map<CustomerDto>(customer);
+                }
+                else
+                {
+                    _unitOfWork.Customers.Update(customerToAdd);
+                }
+                var status = _unitOfWork.Complete();
+                _logger.LogInformation("Log:Add Customer for ID: {Id}", customerToAdd.CustomerID);
+                return this.Content(returnmessage.returnMessage(null),
+                         "application/json");
+            }
+            catch(Exception ex)
+            {
+                returnmessage.msg = ex.Message.ToString();
+                returnmessage.msgCode = -3;
+                return this.Content(returnmessage.returnMessage(null));
+            }
 
-            return Ok(customerToReturn);
         }
 
-        // POST /api/customers
-        [HttpPost]
-        public ActionResult CreateCustomer(CustomerDto customerDto)
+
+
+
+       
+        [HttpPost("deleteCustomer")]
+        public async Task<ContentResult> DeleteCustomer(GetCustomerInput input)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-            var customerToAdd = _mapper.Map<Customer>(customerDto);
-
-            _unitOfWork.Customers.Add(customerToAdd);
-            var status = _unitOfWork.Complete();
-            if (status == 0)
-                return Forbid();
-
-            _logger.LogInformation("Log:Add Customer for ID: {Id}", customerToAdd.Id);
-            return Created(new Uri(Request.GetDisplayUrl() + "/" + customerToAdd.Id), customerDto);
-        }
-
-        [HttpPut("{id}")]
-        public ActionResult UpdateCustomer(int id, CustomerDto customerDto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest();
             
-            var customerInDb = _unitOfWork.Customers.SingleOrDefault(c => c.Id == id);
-            if (customerInDb == null)
-                return NotFound();
-            
-            // manual mapping TODO: Auto Mapper not working.
-            customerInDb.Name = customerDto.Name;
-            customerInDb.EmailAddress = customerDto.EmailAddress;
-            customerInDb.BirthDate = customerDto.BirthDate;
-            customerInDb.LicenseNumber = customerDto.LicenseNumber;
-            customerInDb.PhoneNumber = customerDto.PhoneNumber;   
-            customerInDb.MembershipTypeId = customerDto.MembershipTypeId; 
-            customerInDb.isSubscribedToNewsLetter = customerDto.isSubscribedToNewsLetter;
+            ReturnMessage returnmessage = new ReturnMessage(1, "Customer Deleted Succesfully");
+            try
+            {
 
-            var status = _unitOfWork.Complete();
-            if (status == 0)
-                return Forbid();
+                var customer = await Task.Run(() => _unitOfWork.Customers.GetAsync(filter: w => w.CustomerID == input.CustomerID));
 
-            _logger.LogInformation("Log:Update Customer for ID: {Id}", customerInDb.Id);
-            
-            return Ok();
-        }
+                if (customer.Count() == 0)
+                {
+                    returnmessage.msgCode = -2;
+                    returnmessage.msg = "Customer Not Found";
+                }
+                else
+                    _unitOfWork.Customers.Remove(customer.First());
+                _unitOfWork.Complete();
+                _logger.LogInformation("Log:Delete Customer for ID: {Id}", input.CustomerID);
 
-        // DELETE /api/customers/1
-        [HttpDelete("{id}")]
-        public ActionResult DeleteCustomer(int id)
-        {
-            var customerInDb = _unitOfWork.Customers.Get(id);
-
-            if (customerInDb == null)
-                return NotFound();
-
-            _unitOfWork.Customers.Remove(customerInDb);
-            var status = _unitOfWork.Complete();
-
-            if (status == 0)
-                return Forbid();
-                
-            _logger.LogInformation("Log:Delete Customer for ID: {Id}", id);
-            
-            return Ok();
+                return this.Content(returnmessage.returnMessage(null),
+                            "application/json");
+            }
+            catch(Exception ex)
+            {
+                returnmessage.msg = ex.Message.ToString();
+                returnmessage.msgCode = -3;
+                return this.Content(returnmessage.returnMessage(null));
+            }
         }
     }
 }

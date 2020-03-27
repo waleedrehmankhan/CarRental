@@ -1,17 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarRental.Models
 {
     public class Customer
     {
-        public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long CustomerID { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string CustomerCode { get; set; }
 
         [Required]
-        [StringLength(255)]
-        public string Name { get; set; }
-
+        [StringLength(100)]
+        public string FirstName { get; set; }
+        [StringLength(100)]
+        public string MiddleName { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string LastName { get; set; }
         [Required]
         [StringLength(255)]
         public string EmailAddress { get; set; }

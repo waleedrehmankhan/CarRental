@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarRental.Persistence
@@ -9,10 +10,12 @@ namespace CarRental.Persistence
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext Context;
+        internal DbSet<TEntity> dbSet;
 
         public Repository(DbContext context)
         {
             Context = context;
+            this.dbSet = context.Set<TEntity>();
         }
 
         public TEntity Get(int id)
@@ -57,7 +60,47 @@ namespace CarRental.Persistence
 
         public void Update(TEntity entity)
         {
+            
             Context.Entry(entity).State = EntityState.Modified;
+        }
+
+
+        public virtual async Task<IEnumerable<TEntity>> GetAsync(
+           Expression<Func<TEntity, bool>> filter = null,
+           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+           string includeProperties = "",
+           int first = 0, int offset = 0)
+        {
+            IQueryable<TEntity> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (offset > 0)
+            {
+                query = query.Skip(offset);
+            }
+            if (first > 0)
+            {
+                query = query.Take(first);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query).ToListAsync();
+            }
+            else
+            {
+                return await query.ToListAsync();
+            }
         }
     }
 }
