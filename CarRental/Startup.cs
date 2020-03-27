@@ -13,6 +13,8 @@ using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using CarRental.Persistence;
 using CarRental.Models;
+using Microsoft.AspNetCore.Mvc;
+using FluentValidation.AspNetCore;
 
 namespace CarRental
 {
@@ -44,6 +46,7 @@ namespace CarRental
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddAutoMapper(typeof(CustomerRepository).Assembly);
+            services.AddMvc().AddNewtonsoftJson();
             services.AddControllersWithViews();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
@@ -52,6 +55,12 @@ namespace CarRental
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0).AddFluentValidation(fv =>
+            {
+                fv.RegisterValidatorsFromAssemblyContaining<Startup>();
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

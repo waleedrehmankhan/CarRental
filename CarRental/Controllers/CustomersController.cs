@@ -63,6 +63,7 @@ namespace CarRental.Controllers
          
 
         [HttpPost("createOrUpdateCustomer")]
+        [ValidateFilter]
         public async Task<ContentResult> CreateOrUpdateCustomer(CustomerDto customerDto)
         {
 
