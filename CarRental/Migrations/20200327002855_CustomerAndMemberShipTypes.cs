@@ -1,19 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CarRental.Data.Migrations
+namespace CarRental.Migrations
 {
-    public partial class CustomerAndMembershipType : Migration
+    public partial class CustomerAndMemberShipTypes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Phone",
-                table: "AspNetUsers",
-                maxLength: 50,
-                nullable: false,
-                defaultValue: "");
-
             migrationBuilder.CreateTable(
                 name: "MembershipTypes",
                 columns: table => new
@@ -34,7 +27,7 @@ namespace CarRental.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
                     EmailAddress = table.Column<string>(maxLength: 255, nullable: false),
                     PhoneNumber = table.Column<string>(maxLength: 12, nullable: false),
@@ -67,10 +60,6 @@ namespace CarRental.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "MembershipTypes");
-
-            migrationBuilder.DropColumn(
-                name: "Phone",
-                table: "AspNetUsers");
         }
     }
 }
