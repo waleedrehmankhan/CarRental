@@ -1,0 +1,6 @@
+<ul nzMode="vertical"
+    nz-menu
+    nzTheme="dark"
+    [nzInlineCollapsed]="isCollapsed">
+  <app-sidebar-item [item]=item *ngFor="let item of sidebarConfig" remove-host></app-sidebar-item>
+</ul>

@@ -1,0 +1,11 @@
+<li *ngIf="item.children == undefined" nz-menu-item nzMatchRouter>
+  <a routerLink="{{ item.routerLink }}">
+    <i *ngIf="item.icon" nz-icon nzType="{{ item.icon }}"></i>
+    <span>{{ item.title }}</span>
+  </a>
+</li>
+<li *ngIf="item.children != undefined" nz-submenu nzTitle="{{ item.title }}" nzIcon="{{ item.icon }}">
+  <ul *ngFor="let it of item.children">
+    <app-sidebar-item [item]="it"></app-sidebar-item>
+  </ul>
+</li>
