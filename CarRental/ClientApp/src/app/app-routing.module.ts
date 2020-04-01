@@ -9,7 +9,13 @@ const routes: Routes = [
  
     path: '', component: LayoutComponent,
     children:
-      []
+      [
+        {
+          "path": "customer",
+          "loadChildren": "./pages/customer/customer.module#CustomerModule",
+          "data": { "breadcrumb": "Customer" }
+        },
+      ]
 
   },
 
