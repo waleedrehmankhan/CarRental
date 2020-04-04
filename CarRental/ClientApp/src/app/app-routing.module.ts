@@ -12,7 +12,7 @@ const routes: Routes = [
       [
         {
           "path": "customer",
-          "loadChildren": "./pages/customer/customer.module#CustomerModule",
+          "loadChildren": () => import("./pages/customer/customer.module").then(m => m.CustomerModule),
           "data": { "breadcrumb": "Customer" }
         },
       ]

@@ -31,6 +31,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Update="Persistence\Repositories\Customer\GetCustomerInput.cs.d.ts">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GetCustomerInput.cs</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Remove="$(SpaRoot)**" />
@@ -40,6 +45,46 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\app\pages\" />
     <Folder Include="ClientApp\src\app\shared\services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Dtos\CustomerDto.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>CustomerDto.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Update="Dtos\MembershipTypeDto.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>MembershipTypeDto.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Update="Helpers\PagedAndSortedInputDto.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>PagedAndSortedInputDto.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Update="Helpers\PagedResultDto.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>PagedResultDto.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Update="Helpers\ReturnMessage.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>ReturnMessage.cs.d.ts</LastGenOutput>
+    </Compile>
+    <Compile Update="Persistence\Repositories\Customer\GetCustomerInput.cs">
+      <Generator>DtsGenerator</Generator>
+      <LastGenOutput>GetCustomerInput.cs.d.ts</LastGenOutput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="ClientApp\src\app\classes\BranchDto.ts">
+      <CustomToolNamespace>Dtos\BranchDto.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\classes\CustomerDto.ts">
+      <CustomToolNamespace>Dtos\CustomerDto.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\classes\MembershipTypeDto.ts">
+      <CustomToolNamespace>Dtos\MembershipTypeDto.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\classes\PagedAndSortedInputDto.ts">
+      <CustomToolNamespace>Helpers\PagedAndSortedInputDto.cs</CustomToolNamespace>
+    </None>
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <Exec Command="node --version" ContinueOnError="true">
