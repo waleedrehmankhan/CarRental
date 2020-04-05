@@ -1,0 +1,17 @@
+<div><nz-spin [nzSpinning]="isSpinning"><ng-content></ng-content></nz-spin></div>
+<nz-table [nzFrontPagination]="false" #Table [nzData]="records">
+  <thead>
+    <tr>
+      <th *ngFor="let column of columns">{{ column }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of Table.data">
+      <td *ngFor="let column of columns">{{ data[column] }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<div style="display: flex; flex-direction: row-reverse">
+<nz-pagination [nzShowSizeChanger]="true" [nzPageIndex]="pagenumber" [nzTotal]="totalcount" (nzPageIndexChange)="pageIndexChanged($event)" (nzPageSizeChange)="pageSizeChanged($event)"></nz-pagination>
+
+</div>

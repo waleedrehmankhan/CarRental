@@ -15,6 +15,7 @@ const routes: Routes = [
           "loadChildren": () => import("./pages/customer/customer.module").then(m => m.CustomerModule),
           "data": { "breadcrumb": "Customer" }
         },
+    
       ]
 
   },

@@ -25,7 +25,7 @@ import { DataService } from './data.service';
     NavMenuComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
     
   ],
   imports: [
@@ -44,7 +44,7 @@ import { DataService } from './data.service';
   ],
   providers: [DataService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }, { provide: NZ_I18N, useValue: en_US },
-    { provide: "API_BASE_URL", useValue: "test" }
+    { provide: "API_BASE_URL", useValue: "https://localhost:44341/api/" }
   ],
   bootstrap: [AppComponent]
    

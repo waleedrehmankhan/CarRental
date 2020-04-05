@@ -1,37 +1,3 @@
-<!--<input nz-input placeholder="Basic usage" [(ngModel)]="value" />
+ 
+  <div><app-crgrid   [columns]="lstcolumns" [url]="url"   ></app-crgrid></div>
 
-<button nz-button nzType="primary" (click)="clickHandler()">Search</button>
-{{ value | json}}
-{{ data | json}}
-{{ lstcustomer | json}}-->
-
-  <div><nz-spin [nzSpinning]="isSpinning"><ng-content></ng-content></nz-spin></div>
-<nz-table  [nzFrontPagination]="false" #CustomerTable [nzData]="lstcustomer">
-  <thead>
-    <tr>
-      <th>Customer ID</th>
-      <th>Customer Code</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Birth Date</th>
-      <th>Email</th>
-      <th>Phone Number</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of CustomerTable.data">
-      <td>{{ data.CustomerID }}</td>
-      <td>{{ data.CustomerCode }}</td>
-      <td>{{ data.FirstName }}</td>
-      <td>{{ data.LastName }}</td>
-      <td>{{ data.BirthDate }}</td>
-      <td>{{ data.EmailAddress }}</td>
-      <td>{{ data.PhoneNumber }}</td>
-
-    </tr>
-  </tbody>
-</nz-table>
-<div style="display: flex; flex-direction: row-reverse">
-<nz-pagination [nzShowSizeChanger]="true" [nzPageIndex]="pagenumber" [nzTotal]="totalcount" (nzPageIndexChange)="pageIndexChanged($event)" (nzPageSizeChange)="pageSizeChanged($event)"></nz-pagination>
-
-</div>

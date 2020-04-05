@@ -17,18 +17,18 @@ export class SidebarmenuService {
     },
     {
       title: "Branch", icon: "dollar", children: [
-        { title: "Branch Details", routerLink: "" },
-        { title: "Branch Users", routerLink: "" }
+        { title: "Branch Details", routerLink: "/branch/view" },
+        { title: "Branch Users", routerLink: "/branch/user" }
       ]
     },
     {
       title: "Payment", icon: "pay-circle", children: [
-        { title: "Payment Details", routerLink: "" }
+        { title: "Payment Details", routerLink: "/payment/view" }
       ]
     },
     {
       title: "Location", icon: "pay-circle", children: [
-        { title: "Location Details", routerLink: "" }
+        { title: "Location Details", routerLink: "/location/view" }
       ]
     }
     
