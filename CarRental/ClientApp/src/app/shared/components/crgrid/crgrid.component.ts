@@ -16,24 +16,23 @@ export class CrgridComponent  implements OnInit {
   pagesize: number = 10;
   totalcount: number = 0;
   records: any;
-  apiBaseUrl: String;
+ 
 
   ngOnInit() {
     console.log(  this.url);
     this.getData();
 
   }
-  constructor(private _dataService: DataService,
-    @Inject("API_BASE_URL") apiBaseUrl: String
+  constructor(private _dataService: DataService 
 
   ) {
-    this.apiBaseUrl = apiBaseUrl;
+   
   }
 
   getData() {
     
     this.isSpinning = true;
-    this._dataService.postData(this.apiBaseUrl+this.url, { "pagenumber": this.pagenumber, "pagesize": this.pagesize }).subscribe
+    this._dataService.postData(this.url, { "pagenumber": this.pagenumber, "pagesize": this.pagesize }).subscribe
       (
 
         response => {

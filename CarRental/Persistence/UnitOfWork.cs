@@ -1,4 +1,6 @@
 using CarRental.Data;
+using CarRental.Persistence.Interfaces;
+using CarRental.Persistence.Repositories.MemberShipType;
 
 namespace CarRental.Persistence
 {
@@ -10,9 +12,11 @@ namespace CarRental.Persistence
         {
             _context = context;
             Customers = new CustomerRepository(_context);
+            MembershipTypes = new MembershipRepository(_context);
         }
 
         public ICustomerRepository Customers { get; private set; }
+        public IMembershipRepository MembershipTypes { get; private set; }
 
         public int Complete()
 

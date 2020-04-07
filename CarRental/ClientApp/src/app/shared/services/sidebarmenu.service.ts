@@ -13,6 +13,7 @@ export class SidebarmenuService {
     {
       title: "Customer", icon: "smile", children: [
         { title: "Customer Details", icon: "plus", routerLink: "/customer/view" },
+        { title: "Add Customer", icon: "plus", routerLink: "/customer/add" },
       ]
     },
     {

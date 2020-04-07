@@ -1,1 +1,74 @@
-<p>add-customer works!</p>
+<!--<input nz-input placeholder="Customer Code" [(ngModel)]="customerDto.customerCode" />
+<input nz-input placeholder="First Name" [(ngModel)]="customerDto.firstName" />
+<input nz-input placeholder="Last Name" [(ngModel)]="customerDto.lastName" />
+<input nz-input placeholder="Email Address" [(ngModel)]="customerDto.emailAddress" />
+<input nz-input placeholder="Phone Number" [(ngModel)]="customerDto.phoneNumber" />
+<input nz-input placeholder="Date of Birth" [(ngModel)]="customerDto.birthDate" />
+<input nz-input placeholder="Driving License" [(ngModel)]="customerDto.licenseNumber" />-->
+
+  <div class="alert alert-danger" role="alert" *ngIf="errors.length > 0">
+    <ul>
+      <li *ngFor="let error of errors">
+        {{ error }}
+      </li>
+    </ul>
+  </div>
+  <div class="alert alert-success" role="alert" *ngIf="successfulSave">
+    Customer saved successfully!
+  </div>
+
+  <form novalidate nz-form [formGroup]="customerForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="CustomerCode" >Customer Code</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="CustomerCode" placeholder="Enter Customer Code" id="CustomerCode" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="FirstName">FirstName</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="FirstName" placeholder="Enter First Name" id="FirstName" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="LastName">LastName</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="LastName" placeholder="Enter Last Name" id="LastName" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzErrorTip="Invalid Email" nzFor="EmailAddress">EmailAddress</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="EmailAddress" placeholder="Enter Email Address" id="EmailAddress" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="PhoneNumber">PhoneNumber</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="PhoneNumber" placeholder="Enter Phone number" id="PhoneNumber" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="LicenseNumber">LicenseNumber</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input formControlName="LicenseNumber" placeholder="Enter Driving License Number" id="LicenseNumber" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="MembershipTypeId">Membership Type</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <crselect [url]="membershipurl" id="MembershipTypeId" formControlName="MembershipTypeId"></crselect>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <button nz-button nzType="primary" [disabled]="customerForm.invalid">Save Customer</button>
+      </nz-form-control>
+    </nz-form-item>
+   
+  </form>
+
+

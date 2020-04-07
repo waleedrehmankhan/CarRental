@@ -15,9 +15,9 @@ namespace CarRental.ModelValidator
             RuleFor(x => x.FirstName).NotNull().NotEmpty();
             RuleFor(x => x.LastName).NotNull().NotEmpty();
             RuleFor(x => x.MembershipTypeId).NotNull().NotEmpty();
-            RuleFor(x => x.EmailAddress).NotNull().NotEmpty();
+            RuleFor(x => x.EmailAddress).NotNull().NotEmpty().EmailAddress(FluentValidation.Validators.EmailValidationMode.Net4xRegex);
             RuleFor(x => x.PhoneNumber).NotNull().NotEmpty();
-            RuleFor(x => x.LicenseNumber).NotNull().NotEmpty();
+            RuleFor(x => x.LicenseNumber).NotNull().NotEmpty().MaximumLength(10);
 
         }
     }

@@ -6,17 +6,21 @@ import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { ViewCustomerComponent } from './view-customer/view-customer.component';
 import { SharedModule } from '../../shared/shared.module';
 import { CrgridComponent } from '../../shared/components/crgrid/crgrid.component';
+import { CrselectComponent } from '../../shared/components/crselect/crselect.component';
+ 
 
 
 
 
 
 @NgModule({
-  declarations: [AddCustomerComponent, ViewCustomerComponent, CrgridComponent],
+  declarations: [AddCustomerComponent, ViewCustomerComponent, CrgridComponent, CrselectComponent],
   imports: [
     CommonModule,
     SharedModule,
     CustomerRoutingModule
   ]
 })
-export class CustomerModule { }
+export class CustomerModule {
+ 
+}
