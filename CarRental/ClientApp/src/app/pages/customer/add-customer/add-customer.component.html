@@ -19,46 +19,54 @@
 
   <form nz-form [formGroup]="customerForm" (ngSubmit)="submitForm()">
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="CustomerCode" >Customer Code</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CustomerCode">Customer Code</nz-form-label>
       <nz-form-control [nzErrorTip]="customerForm.get('CustomerCode').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
         <input nz-input formControlName="CustomerCode" placeholder="Enter Customer Code" id="CustomerCode" />
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="FirstName">FirstName</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="FirstName">FirstName</nz-form-label>
       <nz-form-control [nzErrorTip]="customerForm.get('FirstName').errors?.errors" nzHasFeedBack [nzSm]="14" [nzXs]="24">
         <input nz-input formControlName="FirstName" placeholder="Enter First Name" id="FirstName" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="LastName">LastName</nz-form-label>
-      <nz-form-control  [nzErrorTip]="customerForm.get('LastName').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="LastName">LastName</nz-form-label>
+      <nz-form-control [nzErrorTip]="customerForm.get('LastName').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
         <input nz-input formControlName="LastName" placeholder="Enter Last Name" id="LastName" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzErrorTip="Invalid Email" nzFor="EmailAddress">EmailAddress</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzErrorTip="Invalid Email" nzFor="EmailAddress">EmailAddress</nz-form-label>
       <nz-form-control [nzErrorTip]="customerForm.get('EmailAddress').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
         <input nz-input formControlName="EmailAddress" placeholder="Enter Email Address" id="EmailAddress" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="PhoneNumber">PhoneNumber</nz-form-label>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="PhoneNumber">PhoneNumber</nz-form-label>
       <nz-form-control [nzErrorTip]="customerForm.get('PhoneNumber').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
         <input nz-input formControlName="PhoneNumber" placeholder="Enter Phone number" id="PhoneNumber" />
       </nz-form-control>
     </nz-form-item>
+
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="LicenseNumber">LicenseNumber</nz-form-label>
-      <nz-form-control  [nzErrorTip]="customerForm.get('LicenseNumber').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="BirthDate">Date of Birth</nz-form-label>
+      <nz-form-control  [nzErrorTip]="customerForm.get('BirthDate').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+        <nz-date-picker   (ngModelChange)="onDateChange($event)"  nzFormat="yyyy/MM/dd"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="LicenseNumber">LicenseNumber</nz-form-label>
+      <nz-form-control [nzErrorTip]="customerForm.get('LicenseNumber').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
         <input nz-input formControlName="LicenseNumber" placeholder="Enter Driving License Number" id="LicenseNumber" />
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="MembershipTypeId">Membership Type</nz-form-label>
-      <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="MembershipTypeId">Membership Type</nz-form-label>
+      <nz-form-control [nzErrorTip]="customerForm.get('MembershipTypeId').errors?.errors" [nzSm]="14" [nzXs]="24">
         <crselect [url]="membershipurl" id="MembershipTypeId" formControlName="MembershipTypeId"></crselect>
       </nz-form-control>
     </nz-form-item>
@@ -68,7 +76,7 @@
         <button nz-button nzType="primary" [disabled]="customerForm.invalid">Save Customer</button>
       </nz-form-control>
     </nz-form-item>
-   
-  </form>
 
+  </form>
+ 
 

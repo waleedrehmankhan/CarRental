@@ -31,6 +31,7 @@ export class AddCustomerComponent implements OnInit {
       PhoneNumber: [""],
       LicenseNumber: [""],
       MembershipTypeId: [""],
+      BirthDate: [""],
     });
     console.log(this.customerForm);    
     this.errors = [];
@@ -46,6 +47,7 @@ export class AddCustomerComponent implements OnInit {
       this.customerDto.emailAddress = this.customerForm.value.EmailAddress;
       this.customerDto.phoneNumber = this.customerForm.value.PhoneNumber;
       this.customerDto.licenseNumber = this.customerForm.value.LicenseNumber;
+      this.customerDto.birthDate = this.customerForm.value.BirthDate;
       this.customerDto.membershipTypeId = this.customerForm.value.MembershipTypeId == null ? "0" : this.customerForm.value.MembershipTypeId;
       this.errors = [];
       console.log(this.customerDto);
@@ -122,4 +124,8 @@ export class AddCustomerComponent implements OnInit {
     }
 
   }
+
+   
+
+  
 }
