@@ -24,18 +24,19 @@ export class AddCustomerComponent implements OnInit {
 
 
     this.customerForm = this.fb.group({
-      CustomerCode: [""],
-      FirstName: [""],
-      LastName: [""],
+      CustomerCode: "",
+      FirstName: "",
+      LastName: "",
       EmailAddress: [""],
       PhoneNumber: [""],
       LicenseNumber: [""],
       MembershipTypeId: [""],
     });
+    console.log(this.customerForm);    
     this.errors = [];
   }
 
-  submitForm(): void {
+  submitForm = ( ) => {
     if (this.customerForm.valid) {
 
       console.log(this.customerForm.value.MembershipTypeId);
@@ -62,30 +63,48 @@ export class AddCustomerComponent implements OnInit {
             let validationErrorDictionary = response.data.message.msg;
             debugger;
             console.log(validationErrorDictionary);
-           
-            for (var fieldName in validationErrorDictionary) {
-              if (validationErrorDictionary.hasOwnProperty(fieldName)) {
-                this.errors.push(validationErrorDictionary[fieldName]);
-                if (this.customerForm.controls[fieldName]) {
-                  // integrate into angular's validation if we have field validation
-                  this.customerForm.controls[fieldName].setErrors({ invalid: true });
 
-               console.log(   this.customerForm.controls[fieldName].errors);
-                }
+            setTimeout(() => {
 
-                else {
-                  // if we have cross field validation then show the validation error at the top of the screen
+              for (var fieldName in validationErrorDictionary) {
+                this.customerForm.markAsDirty();
+                this.customerForm.markAllAsTouched();
+                if (validationErrorDictionary.hasOwnProperty(fieldName)) {
                   this.errors.push(validationErrorDictionary[fieldName]);
+                  if (this.customerForm.controls[fieldName]) {
+                    // integrate into angular's validation if we have field validation
+                    // this.customerForm.controls[fieldName].setErrors({ invalid: true });
+                     
+                    this.customerForm.get(fieldName).setErrors({ invalid: true, errors: validationErrorDictionary[fieldName] });
+                      this.customerForm.get(fieldName).markAsTouched();
+                    this.customerForm.get(fieldName).markAsDirty();
+                     
+
+
+                    console.log(validationErrorDictionary[fieldName]);
+                  }
+
+                  else {
+                    debugger;
+                    // if we have cross field validation then show the validation error at the top of the screen
+                    this.errors.push(validationErrorDictionary[fieldName]);
+                  }
                 }
               }
-            }
+
+
+
+            }, 100);
+           
+            
           }
           else if (response.message.msgCode =="1")
           {
             this.successfulSave = true;
           }
           else if (response.data && response.data.message.msgCode == -3) {
-
+            debugger;
+            console.log('hello');
             this.errors.push(response.data.message.msg);
 
           }
@@ -95,6 +114,7 @@ export class AddCustomerComponent implements OnInit {
 
 
           }
+          this.customerForm.markAsDirty(); 
         }
 
       )
