@@ -1,5 +1,6 @@
-import { Component, OnInit, OnChanges, Input, Inject } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Inject, Output, EventEmitter } from '@angular/core';
 import { DataService } from '../../../data.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-crgrid',
@@ -8,8 +9,13 @@ import { DataService } from '../../../data.service';
 })
 export class CrgridComponent  implements OnInit {
    
+   
   @Input() columns: string[];
   @Input() url: string;
+  @Input() refresh: Observable<boolean>;
+  @Output() editClick = new EventEmitter<any>();
+  @Output() deleteClick = new EventEmitter<any>();
+
 
   isSpinning: boolean;
   pagenumber: number = 1;
@@ -21,6 +27,7 @@ export class CrgridComponent  implements OnInit {
   ngOnInit() {
     console.log(  this.url);
     this.getData();
+    this.refresh && this.refresh.subscribe(data => this.getData());
 
   }
   constructor(private _dataService: DataService 
@@ -46,6 +53,7 @@ export class CrgridComponent  implements OnInit {
   }
 
 
+
   pageSizeChanged(x) {
     this.pagesize = x;
     this.pagenumber = 1;
@@ -55,6 +63,16 @@ export class CrgridComponent  implements OnInit {
   pageIndexChanged(x) {
     this.pagenumber = x;
     this.getData();
+  }
+
+  editClicked(data: any) {
+    console.log(data);
+    this.editClick.next(data);
+  }
+
+  deleteClicked(data: any) {
+    console.log(data);
+    this.deleteClick.next(data);
   }
 
 }

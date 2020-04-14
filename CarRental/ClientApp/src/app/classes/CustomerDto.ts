@@ -1,4 +1,4 @@
-import { MembershipTypeDto } from "./MembershipTypeDto";
+﻿import { MembershipTypeDto } from "./MembershipTypeDto";
 
  
 
@@ -12,28 +12,29 @@ import { MembershipTypeDto } from "./MembershipTypeDto";
     
     export class CustomerDto {
         
-        // CUSTOMERID
-        public customerID: number = 0;
-        // CUSTOMERCODE
-        public customerCode: string = null;
-        // FIRSTNAME
-        public firstName: string = null;
-        // MIDDLENAME
-        public middleName: string = null;
-        // LASTNAME
-        public lastName: string = null;
-        // EMAILADDRESS
-        public emailAddress: string = null;
-        // PHONENUMBER
-        public phoneNumber: string = null;
-        // BIRTHDATE
-        public birthDate: Date = null;
-        // LICENSENUMBER
-        public licenseNumber: string = null;
-        // ISSUBSCRIBEDTONEWSLETTER
+        // CustomerID
+        public CustomerID: number = 0;
+        // CustomerCode
+        public CustomerCode: string = null;
+        // FirstName
+        public FirstName: string = null;
+        // MiddleName
+        public MiddleName: string = null;
+        // LastName
+        public LastName: string = null;
+        // EmailAddress
+        public EmailAddress: string = null;
+        // PhoneNumber
+        public PhoneNumber: string = null;
+        // BirthDate
+        public BirthDate: Date = null;
+        // LicenseNumber
+        public LicenseNumber: string = null;
+        // isSubscribedToNewsLetter
         public isSubscribedToNewsLetter: boolean = false;
-        // MEMBERSHIPTYPE
-        public membershipType: MembershipTypeDto = null;
-        // MEMBERSHIPTYPEID
-        public membershipTypeId: number = 0;
+        // MembershipType
+        public MembershipType: MembershipTypeDto = null;
+        // MembershipTypeId
+        public MembershipTypeId: number = 0;
     }
+

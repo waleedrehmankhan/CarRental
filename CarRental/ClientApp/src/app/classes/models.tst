@@ -12,7 +12,7 @@ ${
     // Custom extension methods can be used in the template by adding a $ prefix e.g. $LoudName
     string LoudName(Property property)
     {
-        return property.Name.ToUpperInvariant();
+        return property.Name;
     }
 }
  
@@ -28,5 +28,6 @@ ${
     export class $Name {
         $Properties[
         // $LoudName
-        public $name: $Type = $Type[$Default];]
+        public $Name: $Type = $Type[$Default];]
     }]
+
