@@ -11,14 +11,15 @@
     
     export class PagedAndSortedInputDto {
         
-        // MAXRESULTCOUNT
-        public maxResultCount: number = 0;
-        // SKIPCOUNT
-        public skipCount: number = 0;
-        // SORTING
-        public sorting: string = null;
-        // PAGENUMBER
+        // MaxResultCount
+        public MaxResultCount: number = 0;
+        // SkipCount
+        public SkipCount: number = 0;
+        // Sorting
+        public Sorting: string = null;
+        // pagenumber
         public pagenumber: number = 0;
-        // PAGESIZE
+        // pagesize
         public pagesize: number = 0;
     }
+

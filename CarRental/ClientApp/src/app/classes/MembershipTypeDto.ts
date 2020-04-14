@@ -11,8 +11,9 @@
     
     export class MembershipTypeDto {
         
-        // ID
-        public id: number = 0;
-        // NAME
-        public name: string = null;
+        // Id
+        public Id: number = 0;
+        // Name
+        public Name: string = null;
     }
+
