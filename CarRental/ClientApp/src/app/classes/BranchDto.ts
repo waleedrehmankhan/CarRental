@@ -11,14 +11,15 @@
     
     export class BranchDto {
         
-        // ID
-        public id: number = 0;
-        // NAME
-        public name: string = null;
-        // ADDRESS
-        public address: string = null;
-        // PHONENUMBER
-        public phoneNumber: string = null;
-        // ISACTIVE
+        // Id
+        public Id: number = 0;
+        // Name
+        public Name: string = null;
+        // Address
+        public Address: string = null;
+        // PhoneNumber
+        public PhoneNumber: string = null;
+        // isActive
         public isActive: boolean = false;
     }
+

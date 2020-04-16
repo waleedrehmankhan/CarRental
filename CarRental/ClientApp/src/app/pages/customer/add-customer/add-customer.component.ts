@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { CustomerDto } from '../../../classes/CustomerDto';
 import { DataService } from '../../../data.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd';
  
 
 
@@ -11,10 +13,11 @@ import { DataService } from '../../../data.service';
   styleUrls: ['./add-customer.component.css']
 })
 export class AddCustomerComponent implements OnInit {
+   
   errors: string[]
   customerForm: FormGroup;
   successfulSave: boolean;
-  constructor(private fb: FormBuilder, private _dataService: DataService) {
+  constructor(private fb: FormBuilder, private _dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router, private message: NzMessageService) {
   }
 
   customerDto = new CustomerDto();
@@ -22,8 +25,20 @@ export class AddCustomerComponent implements OnInit {
 
   ngOnInit(): void {
 
+    const customerID = this.activatedRoute.snapshot.params.CustomerID;
+
+    customerID && this._dataService.postData("customers/getCustomerDetails", { "CustomerID": customerID }).subscribe
+      (
+
+        response => {
+          const [customer] = response.data.Items;
+          this.customerForm.patchValue(customer);
+
+        }
+      );
 
     this.customerForm = this.fb.group({
+      CustomerID: [customerID],
       CustomerCode: "",
       FirstName: "",
       LastName: "",
@@ -31,7 +46,7 @@ export class AddCustomerComponent implements OnInit {
       PhoneNumber: [""],
       LicenseNumber: [""],
       MembershipTypeId: [""],
-      BirthDate: [""],
+      BirthDate: [null],
     });
     console.log(this.customerForm);    
     this.errors = [];
@@ -41,14 +56,7 @@ export class AddCustomerComponent implements OnInit {
     if (this.customerForm.valid) {
 
       console.log(this.customerForm.value.MembershipTypeId);
-      this.customerDto.customerCode = this.customerForm.value.CustomerCode;
-      this.customerDto.firstName = this.customerForm.value.FirstName;
-      this.customerDto.lastName = this.customerForm.value.LastName;
-      this.customerDto.emailAddress = this.customerForm.value.EmailAddress;
-      this.customerDto.phoneNumber = this.customerForm.value.PhoneNumber;
-      this.customerDto.licenseNumber = this.customerForm.value.LicenseNumber;
-      this.customerDto.birthDate = this.customerForm.value.BirthDate;
-      this.customerDto.membershipTypeId = this.customerForm.value.MembershipTypeId == null ? "0" : this.customerForm.value.MembershipTypeId;
+      this.customerDto = this.mapValues(this.customerForm.value);
       this.errors = [];
       console.log(this.customerDto);
       this._dataService.postData("customers/createOrUpdateCustomer", this.customerDto).subscribe(
@@ -103,6 +111,11 @@ export class AddCustomerComponent implements OnInit {
           else if (response.message.msgCode =="1")
           {
             this.successfulSave = true;
+             
+            this.message.success(response.message.msg , {
+              nzDuration: 5000
+            });
+            this.router.navigateByUrl("customer/view")
           }
           else if (response.data && response.data.message.msgCode == -3) {
             debugger;
@@ -125,7 +138,16 @@ export class AddCustomerComponent implements OnInit {
 
   }
 
-   
+  mapValues(value: any): CustomerDto {
+    debugger;
+    const customerDto: CustomerDto = new CustomerDto();
+    for (const key in customerDto) {
+      if ((key in value) && value[key] ) {
+        customerDto[key] = value[key];
+      }
+    }
+    return customerDto;
+  }
 
   
 }

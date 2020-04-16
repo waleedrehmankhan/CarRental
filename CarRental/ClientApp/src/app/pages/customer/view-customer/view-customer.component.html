@@ -1,5 +1,5 @@
  
-  <div><app-crgrid   [columns]="lstcolumns" [url]="url"   ></app-crgrid></div>
+  <div><app-crgrid [refresh]="refresh"  (deleteClick)="deleteClicked($event)" (editClick)="editClicked($event)" [columns]="lstcolumns" [url]="url"   ></app-crgrid></div>
  
 
  
