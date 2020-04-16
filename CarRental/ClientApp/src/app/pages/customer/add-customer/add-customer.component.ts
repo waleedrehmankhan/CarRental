@@ -25,7 +25,7 @@ export class AddCustomerComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const customerID = this.activatedRoute.snapshot.params.CustomerID;
+    const customerID = this.activatedRoute.snapshot.params.Id;
 
     customerID && this._dataService.postData("customers/getCustomerDetails", { "CustomerID": customerID }).subscribe
       (
@@ -38,7 +38,7 @@ export class AddCustomerComponent implements OnInit {
       );
 
     this.customerForm = this.fb.group({
-      CustomerID: [customerID],
+      Id: [customerID],
       CustomerCode: "",
       FirstName: "",
       LastName: "",

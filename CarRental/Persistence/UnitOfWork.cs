@@ -19,6 +19,8 @@ namespace CarRental.Persistence
         public IMembershipRepository MembershipTypes { get; private set; }
         public IBranchRepository Branchs {get; private set; }
 
+        public ICarRepository Cars { get; private set; }
+
         public int Complete()
 
         {

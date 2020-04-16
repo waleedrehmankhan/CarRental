@@ -12,8 +12,8 @@
     
     export class CustomerDto {
         
-        // CustomerID
-        public CustomerID: number = 0;
+        // Id
+        public Id: number = 0;
         // CustomerCode
         public CustomerCode: string = null;
         // FirstName

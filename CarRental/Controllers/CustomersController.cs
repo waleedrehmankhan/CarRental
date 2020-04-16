@@ -49,7 +49,7 @@ namespace CarRental.Controllers
             catch(Exception ex) {
                 return this.Content(JsonConvert.SerializeObject(new
                 {
-                    msgCode = 0,
+                    msgCode = -3,
                     msg = ex.Message
                 }), "application/json");
             }

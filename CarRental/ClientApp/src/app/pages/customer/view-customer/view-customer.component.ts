@@ -22,7 +22,7 @@ export class ViewCustomerComponent implements OnInit {
   url: string = "customers/getCustomerDetails"
   refresh = new Subject<boolean>();
  
-  lstcolumns: string[] = ["CustomerID", "CustomerCode", "FirstName", "MiddleName", "LastName", "EmailAddress", "PhoneNumber", "BirthDate", "LicenseNumber"]
+  lstcolumns: string[] = ["Id", "CustomerCode", "FirstName", "MiddleName", "LastName", "EmailAddress", "PhoneNumber", "BirthDate", "LicenseNumber"]
   
   ngOnInit() {
    
@@ -31,7 +31,7 @@ export class ViewCustomerComponent implements OnInit {
   deleteClicked(data) {
     console.log("data:", data);
     debugger;
-    this._dataService.postData("customers/deleteCustomer", { "CustomerID": data.CustomerID }).subscribe(
+    this._dataService.postData("customers/deleteCustomer", { "CustomerID": data.Id }).subscribe(
 
       response => {
 
@@ -50,7 +50,7 @@ export class ViewCustomerComponent implements OnInit {
 
   editClicked(data: CustomerDto) {
     console.log(data);
-    this.router.navigateByUrl(`customer/edit/${data.CustomerID}`)
+    this.router.navigateByUrl(`customer/edit/${data.Id}`)
 
   }
 }

@@ -9,15 +9,19 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-    export class BranchDto {
+    export class AddressDto {
         
-        // BranchID
-        public BranchID: number = 0;
-        // BranchName
-        public BranchName: string = null;
-        // PhoneNumber
-        public PhoneNumber: string = null;
-        // isActive
-        public isActive: boolean = false;
+        // Unit
+        public Unit: string = null;
+        // Street
+        public Street: string = null;
+        // City
+        public City: string = null;
+        // State
+        public State: string = null;
+        // ZipCode
+        public ZipCode: number = 0;
+        // Country
+        public Country: string = null;
     }
 

@@ -74,8 +74,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Update="ClientApp\src\app\classes\AddressDto.ts">
+      <CustomToolNamespace>Dtos\AddressDto.cs</CustomToolNamespace>
+    </None>
     <None Update="ClientApp\src\app\classes\BranchDto.ts">
       <CustomToolNamespace>Dtos\BranchDto.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\classes\CarDto.ts">
+      <CustomToolNamespace>Dtos\CarDto.cs</CustomToolNamespace>
     </None>
     <None Update="ClientApp\src\app\classes\CustomerDto.ts">
       <CustomToolNamespace>Dtos\CustomerDto.cs</CustomToolNamespace>

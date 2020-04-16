@@ -19,6 +19,9 @@ namespace CarRental.Helpers
 
             CreateMap<MembershipTypeDto, MembershipType>()
                 .ForMember(c => c.Id, opt => opt.Ignore());
+
+            CreateMap<CarDto, Car>();
+            CreateMap<Car, CarDto>();
         }
     }
 }

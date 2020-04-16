@@ -9,15 +9,25 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-    export class BranchDto {
+    export class CarDto {
         
-        // BranchID
-        public BranchID: number = 0;
-        // BranchName
-        public BranchName: string = null;
-        // PhoneNumber
-        public PhoneNumber: string = null;
+        // Id
+        public Id: number = 0;
+        // RegistrationNumber
+        public RegistrationNumber: string = null;
+        // Year
+        public Year: number = 0;
+        // Make
+        public Make: string = null;
+        // Model
+        public Model: string = null;
+        // Mileage
+        public Mileage: number = 0;
+        // isAvailable
+        public isAvailable: boolean = false;
         // isActive
         public isActive: boolean = false;
+        // CarClassificationId
+        public CarClassificationId: number = 0;
     }
 
