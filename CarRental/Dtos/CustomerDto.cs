@@ -8,7 +8,7 @@ namespace CarRental.Dtos
     public class CustomerDto
     {
        
-        public long CustomerID { get; set; }
+        public int Id { get; set; }
       
         public string CustomerCode { get; set; }
 

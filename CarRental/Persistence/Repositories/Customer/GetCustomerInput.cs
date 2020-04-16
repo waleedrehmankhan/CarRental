@@ -9,7 +9,7 @@ namespace CarRental.Persistence.Repositories.Customer
     public class GetCustomerInput: PagedAndSortedInputDto
     {
 
-        public long CustomerID { get; set; }
+        public int CustomerID { get; set; }
         public string CustomerCode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

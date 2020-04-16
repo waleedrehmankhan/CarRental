@@ -35,12 +35,12 @@ namespace CarRental.Controllers
 
  
         [HttpPost("getCustomerDetails")]
-        public async Task<ContentResult> GetCustomers(GetCustomerInput input)
+        public async Task<ContentResult> GetCustomer(GetCustomerInput input)
         {
             try
             {
                 ReturnMessage rm = new ReturnMessage(1,"Success");
-                var customers = await Task.Run(() => _unitOfWork.Customers.GetAsync(filter: w => input.CustomerID!=0? (w.CustomerID == input.CustomerID):true )) ;
+                var customers = await Task.Run(() => _unitOfWork.Customers.GetAsync(filter: w => input.CustomerID!=0? (w.Id == input.CustomerID):true )) ;
                 var customersToReturn = _mapper.Map<IEnumerable<CustomerDto>>(customers);
                 return this.Content(rm.returnMessage(new PagedResultDto<CustomerDto>
                     (customersToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
@@ -57,7 +57,7 @@ namespace CarRental.Controllers
          [HttpPost("getCustomerDetailById")]
         public async Task<ContentResult> GetCustomerById(GetCustomerInput input)
         {
-            return await GetCustomers(input);
+            return await GetCustomer(input);
         }
 
          
@@ -70,7 +70,7 @@ namespace CarRental.Controllers
             ReturnMessage returnmessage = new ReturnMessage(1, "Customer Saved Succesfully");
             try
             {
-                var customer = await Task.Run(() => _unitOfWork.Customers.GetAsync(filter: w => w.CustomerID == customerDto.CustomerID));
+                var customer = await Task.Run(() => _unitOfWork.Customers.GetAsync(filter: w => w.Id == customerDto.Id));
                 var customerToAdd = _mapper.Map<Customer>(customerDto);
                 if (customer.Count() == 0)
                 {
@@ -82,7 +82,7 @@ namespace CarRental.Controllers
                     _unitOfWork.Customers.Update(customerToAdd);
                 }
                 var status = _unitOfWork.Complete();
-                _logger.LogInformation("Log:Add Customer for ID: {Id}", customerToAdd.CustomerID);
+                _logger.LogInformation("Log:Add Customer for ID: {Id}", customerToAdd.Id);
                 return this.Content(returnmessage.returnMessage(null),
                          "application/json");
             }
@@ -107,7 +107,7 @@ namespace CarRental.Controllers
             try
             {
 
-                var customer = await Task.Run(() => _unitOfWork.Customers.GetAsync(filter: w => w.CustomerID == input.CustomerID));
+                var customer = await Task.Run(() => _unitOfWork.Customers.GetAsync(filter: w => w.Id == input.CustomerID));
 
                 if (customer.Count() == 0)
                 {

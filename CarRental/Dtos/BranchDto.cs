@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using CarRental.Dtos;
 
 namespace CarRental.Models
 {
-    public class BranchDto
+    public class BranchDto : AddressDto
     {
-        public int Id { get; set; }
+        public int BranchID { get; set; }
 
         [Required]
         [StringLength(255)]
-        public string Name { get; set; }
-
-        [Required]
-        [StringLength(255)]
-        public string Address { get; set; }
+        public string BranchName { get; set; }
 
         [Required]
         [StringLength(20)]

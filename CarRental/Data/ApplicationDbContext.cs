@@ -15,6 +15,11 @@ namespace CarRental.Data
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<MembershipType> MembershipTypes { get; set; }
+        public DbSet<Branch> Branchs { get; set; }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<CarClassification> Classifications { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Location> Locations { get; set; }
         
         public ApplicationDbContext(
             DbContextOptions options,

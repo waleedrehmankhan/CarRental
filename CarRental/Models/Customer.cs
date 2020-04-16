@@ -5,12 +5,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarRental.Models
 {
-    public class Customer
+    public class Customer : Address
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long CustomerID { get; set; }
-        [Required]
+        public int Id { get; set; }
+        
         [StringLength(100)]
         public string CustomerCode { get; set; }
 
