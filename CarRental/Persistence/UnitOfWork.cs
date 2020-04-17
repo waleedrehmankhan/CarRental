@@ -13,6 +13,7 @@ namespace CarRental.Persistence
             _context = context;
             Customers = new CustomerRepository(_context);
             MembershipTypes = new MembershipRepository(_context);
+            Cars = new CarRepository(_context);
         }
 
         public ICustomerRepository Customers { get; private set; }
