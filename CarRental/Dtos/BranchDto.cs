@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CarRental.Dtos;
 
-namespace CarRental.Models
+namespace CarRental.Dtos
 {
     public class BranchDto : AddressDto
     {

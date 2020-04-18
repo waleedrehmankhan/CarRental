@@ -9,6 +9,7 @@ namespace CarRental.Persistence
         IMembershipRepository MembershipTypes { get; }
         IBranchRepository Branchs { get; }
         ICarRepository Cars { get; }
+        IBookingRepository Bookings { get; }
         int Complete();
     }
 }
