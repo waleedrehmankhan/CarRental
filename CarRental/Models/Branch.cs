@@ -16,6 +16,8 @@ namespace CarRental.Models
         [Required]
         [StringLength(20)]
         public string PhoneNumber { get; set; }
+        public float Longitude { get; set; }
+        public float Latitude { get; set; }
         public bool isActive { get; set; }
     }
 }

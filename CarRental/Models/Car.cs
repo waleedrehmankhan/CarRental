@@ -9,6 +9,7 @@ namespace CarRental.Models
 
         [Required]
         public string RegistrationNumber { get; set; }
+        public string Image { get; set; }
         
         [Required]
         public int Year { get; set; }
