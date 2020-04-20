@@ -4,14 +4,16 @@ using CarRental.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CarRental.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200420125331_ExtraAndBookingExtraTable")]
+    partial class ExtraAndBookingExtraTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,13 +98,13 @@ namespace CarRental.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("ActualReturnDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CarId")
                         .HasColumnType("int");
 
                     b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FromBranchId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FromDate")
@@ -110,9 +112,6 @@ namespace CarRental.Migrations
 
                     b.Property<DateTime>("ReturnDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ToBranchId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
@@ -122,10 +121,6 @@ namespace CarRental.Migrations
                     b.HasIndex("CarId");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("FromBranchId");
-
-                    b.HasIndex("ToBranchId");
 
                     b.ToTable("Bookings");
                 });
@@ -639,18 +634,6 @@ namespace CarRental.Migrations
                     b.HasOne("CarRental.Models.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarRental.Models.Branch", "FromBranch")
-                        .WithMany()
-                        .HasForeignKey("FromBranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarRental.Models.Branch", "ToBranch")
-                        .WithMany()
-                        .HasForeignKey("ToBranchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

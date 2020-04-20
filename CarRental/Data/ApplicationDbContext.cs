@@ -20,6 +20,9 @@ namespace CarRental.Data
         public DbSet<CarClassification> Classifications { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Extra> Extras { get; set; }
+        public DbSet<BookingExtra> BookingExtras { get; set; }
+
         
         public ApplicationDbContext(
             DbContextOptions options,
