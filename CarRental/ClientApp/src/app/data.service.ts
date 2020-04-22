@@ -25,6 +25,7 @@ export class DataService {
 
   postData(url: string, body: any): Observable<any> {
     debugger;
+    console.log(this.apiBaseUrl);
     //let headers = new HttpHeaders({
     //  'Content-Type': 'application/json;charset=UTF-8'
     //});

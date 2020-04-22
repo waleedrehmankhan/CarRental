@@ -22,7 +22,7 @@ export class ViewCustomerComponent implements OnInit {
   url: string = "customers/getCustomerDetails"
   refresh = new Subject<boolean>();
  
-  lstcolumns: string[] = ["Id", "CustomerCode", "FirstName", "MiddleName", "LastName", "EmailAddress", "PhoneNumber", "BirthDate", "LicenseNumber"]
+  lstcolumns: string[] = [ "CustomerCode", "FirstName", "MiddleName", "LastName", "EmailAddress", "PhoneNumber", "BirthDate", "LicenseNumber"]
   
   ngOnInit() {
    

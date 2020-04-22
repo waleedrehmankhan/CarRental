@@ -15,9 +15,11 @@ using CarRental.Persistence;
 using CarRental.Helpers;
 using CarRental.Persistence.Repositories.Customer;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarRental.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomersController : ControllerBase

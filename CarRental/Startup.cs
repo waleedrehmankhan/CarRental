@@ -15,6 +15,7 @@ using CarRental.Persistence;
 using CarRental.Models;
 using Microsoft.AspNetCore.Mvc;
 using FluentValidation.AspNetCore;
+using CarRental.Helpers;
 
 namespace CarRental
 {
@@ -43,6 +44,7 @@ namespace CarRental
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+            services.AddTokenAuthentication(Configuration);
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddAutoMapper(typeof(CustomerRepository).Assembly);
