@@ -15,6 +15,7 @@ namespace CarRental.Persistence
             MembershipTypes = new MembershipRepository(_context);
             Cars = new CarRepository(_context);
             Bookings = new BookingRepository(_context);
+            Branchs = new BranchRepository(_context);
         }
 
         public ICustomerRepository Customers { get; private set; }

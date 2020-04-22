@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarRental.Models
 {
-    public class Customer : Address
+    public class Customer 
     {
         public int Id { get; set; }
         
