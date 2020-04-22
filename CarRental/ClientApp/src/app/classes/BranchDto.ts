@@ -12,11 +12,15 @@
     export class BranchDto {
         
         // BranchID
-        public BranchID: number = 0;
+        public Id: number = 0;
         // BranchName
         public BranchName: string = null;
         // PhoneNumber
         public PhoneNumber: string = null;
+        // Longitude
+        public Longitude: string = null;
+        // Latitude
+        public Latitude: string = null;
         // isActive
         public isActive: boolean = false;
     }

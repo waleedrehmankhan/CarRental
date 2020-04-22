@@ -27,6 +27,9 @@ namespace CarRental.Helpers
             CreateMap<BookingDto, Booking>();
             CreateMap<Booking, BookingDto>();
 
+            CreateMap<BranchDto, Branch>();
+            CreateMap<Branch, BranchDto>();
+
             CreateMap<RegistrationDto, ApplicationUser>();
             CreateMap<ApplicationUser, RegistrationDto>();
         }

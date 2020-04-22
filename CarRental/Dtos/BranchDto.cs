@@ -5,17 +5,13 @@ using CarRental.Dtos;
 
 namespace CarRental.Dtos
 {
-    public class BranchDto : AddressDto
+    public class BranchDto
     {
-        public int BranchID { get; set; }
-
-        [Required]
-        [StringLength(255)]
+        public int Id { get; set; }
         public string BranchName { get; set; }
-
-        [Required]
-        [StringLength(20)]
         public string PhoneNumber { get; set; }
+        public string Longitude { get; set; }
+        public string Latitude { get; set; }
         public bool isActive { get; set; }
     }
 }

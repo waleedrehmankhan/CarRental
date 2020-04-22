@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarRental.Models
 {
-    public class Branch : Address
+    public class Branch
     {
         public int Id { get; set; }
 
@@ -16,8 +16,8 @@ namespace CarRental.Models
         [Required]
         [StringLength(20)]
         public string PhoneNumber { get; set; }
-        public float Longitude { get; set; }
-        public float Latitude { get; set; }
+        public string Longitude { get; set; }
+        public string Latitude { get; set; }
         public bool isActive { get; set; }
     }
 }
