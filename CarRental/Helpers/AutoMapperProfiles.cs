@@ -29,6 +29,7 @@ namespace CarRental.Helpers
 
             CreateMap<BranchDto, Branch>();
             CreateMap<Branch, BranchDto>();
+            
 
             CreateMap<RegistrationDto, ApplicationUser>();
             CreateMap<ApplicationUser, RegistrationDto>();

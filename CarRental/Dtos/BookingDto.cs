@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CarRental.Dtos
 {
-    public class BookingDto
+    public class BookingDto : AddressDto
     {
         public int Id { get; set; }
 

@@ -5,7 +5,7 @@ using CarRental.Dtos;
 
 namespace CarRental.Dtos
 {
-    public class BranchDto
+    public class BranchDto : AddressDto
     {
         public int Id { get; set; }
         public string BranchName { get; set; }
