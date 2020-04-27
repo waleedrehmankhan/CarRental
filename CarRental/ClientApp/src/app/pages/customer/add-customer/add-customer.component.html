@@ -67,7 +67,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="MembershipTypeId">Membership Type</nz-form-label>
       <nz-form-control [nzErrorTip]="customerForm.get('MembershipTypeId').errors?.errors" [nzSm]="14" [nzXs]="24">
-        <crselect [url]="membershipurl" id="MembershipTypeId" formControlName="MembershipTypeId"></crselect>
+        <crselect [url]="membershipurl" key="Name" value="Id" id="MembershipTypeId" formControlName="MembershipTypeId"></crselect>
       </nz-form-control>
     </nz-form-item>
 

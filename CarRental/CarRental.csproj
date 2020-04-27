@@ -46,7 +46,8 @@
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\pages\" />
+    <Folder Include="ClientApp\src\app\pages\booking\" />
+    <Folder Include="ClientApp\src\app\pages\account\" />
     <Folder Include="ClientApp\src\app\shared\components\" />
     <Folder Include="ClientApp\src\app\shared\services\" />
   </ItemGroup>
@@ -81,7 +82,7 @@
       <CustomToolNamespace>Dtos\AddressDto.cs</CustomToolNamespace>
     </None>
     <None Update="ClientApp\src\app\classes\BookingDto.ts">
-      <CustomToolNamespace>carent\Dtos\BookingDto.cs</CustomToolNamespace>
+      <CustomToolNamespace>Dtos\BookingDto.cs</CustomToolNamespace>
     </None>
     <None Update="ClientApp\src\app\classes\BranchDto.ts">
       <CustomToolNamespace>Dtos\BranchDto.cs</CustomToolNamespace>

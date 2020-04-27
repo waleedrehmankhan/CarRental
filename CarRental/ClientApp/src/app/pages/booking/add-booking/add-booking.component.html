@@ -1,0 +1,50 @@
+<form nz-form [formGroup]="bookingForm" (ngSubmit)="submitForm()">
+
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="FromBranchID">Pick up Location</nz-form-label>
+    <nz-form-control [nzErrorTip]="bookingForm.get('FromBranchID').errors?.errors" [nzSm]="14" [nzXs]="24">
+      <crselect [url]="branchurl" key="BranchName" value="Id" formControlName="FromBranchID"></crselect>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ToBranchID">Return Location</nz-form-label>
+    <nz-form-control [nzErrorTip]="bookingForm.get('ToBranchID').errors?.errors" [nzSm]="14" [nzXs]="24">
+      <crselect [url]="branchurl"  key="BranchName" value="Id" formControlName="ToBranchID"></crselect>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="FromDate">From Date</nz-form-label>
+    <nz-form-control [nzErrorTip]="bookingForm.get('FromDate').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <nz-date-picker formControlName="FromDate" nzFormat="yyyy/MM/dd"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ReturnDate">Return Date</nz-form-label>
+    <nz-form-control [nzErrorTip]="bookingForm.get('ReturnDate').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <nz-date-picker formControlName="ReturnDate" nzFormat="yyyy/MM/dd"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CarId">Car</nz-form-label>
+    <nz-form-control [nzErrorTip]="bookingForm.get('CarId').errors?.errors" [nzSm]="14" [nzXs]="24">
+      <crselect [url]="carurl" key="Model" value="Id" formControlName="CarId"></crselect>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CustomerId">Customer</nz-form-label>
+    <nz-form-control [nzErrorTip]="bookingForm.get('CustomerId').errors?.errors" [nzSm]="14" [nzXs]="24">
+      <crselect [url]="customerurl" key="FirstName" value="Id" formControlName="CustomerId"></crselect>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nz-row>
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" [disabled]="bookingForm.invalid">Save Booking</button>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

@@ -17,6 +17,12 @@ export class SidebarmenuService {
       ]
     },
     {
+      title: "Booking", icon: "dollar", children: [
+        { title: "View Bookings", icon: "info", routerLink: "/booking/view" },
+        { title: "Add Booking", icon: "plus", routerLink: "/booking/add" },
+      ]
+    },
+    {
       title: "Branch", icon: "dollar", children: [
         { title: "Branch Details", routerLink: "/branch/view" },
         { title: "Branch Users", routerLink: "/branch/user" }

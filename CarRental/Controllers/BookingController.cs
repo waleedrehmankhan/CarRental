@@ -39,7 +39,7 @@ namespace CarRental.Controllers
             try
             {
                 ReturnMessage rm = new ReturnMessage(1, "Success");
-                var bookings = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true));
+                var bookings = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true,includeProperties:"FromBranch,ToBranch,Car,Customer"));
                 var bookingdToReturn = _mapper.Map<IEnumerable<BookingDto>>(bookings);
                 return this.Content(rm.returnMessage(new PagedResultDto<BookingDto>
                     (bookingdToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
@@ -63,7 +63,7 @@ namespace CarRental.Controllers
         public async Task<ContentResult> CreateOrUpdateBooking(BookingDto bookingDto)
         {
 
-            ReturnMessage returnmessage = new ReturnMessage(1, "Booking Made");
+            ReturnMessage returnmessage = new ReturnMessage(1, "Booking Added ");
             try
             {
                 var booking = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => w.Id == bookingDto.Id));
@@ -96,7 +96,7 @@ namespace CarRental.Controllers
         public async Task<ContentResult> DeleteBooking(GetBookingInput input)
         {
 
-            ReturnMessage returnmessage = new ReturnMessage(1, "Booking Removed Succesfully");
+            ReturnMessage returnmessage = new ReturnMessage(1, "Booking Cancelled");
             try
             {
 

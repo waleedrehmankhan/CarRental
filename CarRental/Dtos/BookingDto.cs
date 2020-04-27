@@ -13,9 +13,9 @@ namespace CarRental.Dtos
         public BranchDto FromBranch { get; set; }
         public BranchDto ToBranch { get; set; }
         public CarDto Car { get; set; }
-        public DateTime FromDate { get; set; }
-        public DateTime ReturnDate { get; set; }
-        public DateTime ActualReturnDate { get; set; }
+        public string FromDate { get; set; }
+        public string ReturnDate { get; set; }
+      //  public DateTime ActualReturnDate { get; set; }
         public bool isActive { get; set; }
         public int CustomerId { get; set; }
         public int CarId { get; set; }

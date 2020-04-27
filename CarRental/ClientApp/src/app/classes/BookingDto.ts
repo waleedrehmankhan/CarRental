@@ -25,11 +25,9 @@ import { CarDto } from "./CarDto";
         // Car
         public Car: CarDto = null;
         // FromDate
-        public FromDate: Date = new Date(0);
+        public FromDate: string = null;
         // ReturnDate
-        public ReturnDate: Date = new Date(0);
-        // ActualReturnDate
-        public ActualReturnDate: Date = new Date(0);
+        public ReturnDate: string = null;
         // isActive
         public isActive: boolean = false;
         // CustomerId

@@ -1,12 +1,16 @@
 import { Component, OnInit, OnChanges, Input, Inject, Output, EventEmitter } from '@angular/core';
 import { DataService } from '../../../data.service';
 import { Observable } from 'rxjs';
+interface keyable {
+  [key: string]: any;
+}
 
 @Component({
   selector: 'app-crgrid',
   templateUrl: './crgrid.component.html',
   styleUrls: ['./crgrid.component.css']
 })
+
 export class CrgridComponent  implements OnInit {
    
    
@@ -36,6 +40,7 @@ export class CrgridComponent  implements OnInit {
    
   }
 
+
   getData() {
     
     this.isSpinning = true;
@@ -43,8 +48,14 @@ export class CrgridComponent  implements OnInit {
       (
 
         response => {
-
-          this.records = response.data.Items;
+          debugger;
+         var itemsarray = new Array();
+          for (var v in response.data.Items) {
+            debugger;
+            itemsarray.push( this.convertIntoOneLevelJson(response.data.Items[v]));
+          }
+          this.records = itemsarray;
+          console.log(itemsarray)
           this.isSpinning = false;
           this.totalcount = response.data.TotalCount;
         
@@ -74,5 +85,54 @@ export class CrgridComponent  implements OnInit {
     console.log(data);
     this.deleteClick.next(data);
   }
+
+
+
+
+ 
+ 
+
+
+
+
+ convertIntoOneLevelJson = (activity: any, key = ""): any => {
+  let response: keyable = {};
+  if (
+    activity &&
+    (activity["constructor"] === "".constructor ||
+      activity["constructor"] === (0).constructor)
+  ) {
+    response[key] = activity;
+  } else if (activity === null) {
+    response[key] = null;
+  } else if (activity && activity["constructor"] === {}.constructor) {
+    for (const k in activity) {
+      if (k in activity) {
+        if (key) {
+          response = {
+            ...response,
+            ...this.convertIntoOneLevelJson(activity[k], `${key}.${k}`)
+          };
+        } else {
+          response = {
+            ...response,
+            ...this.convertIntoOneLevelJson(activity[k], `${k}`)
+          };
+        }
+      }
+    }
+  } else if (activity && activity["constructor"] === [].constructor) {
+    for (let i = 0; i < activity.length; i++) {
+      response = {
+        ...response,
+        ...this.convertIntoOneLevelJson(activity[i], `${key}[${i}]`)
+      };
+    }
+  } else {
+    response[key] = activity;
+  }
+  return response;
+};
+
 
 }

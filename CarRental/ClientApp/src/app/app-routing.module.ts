@@ -15,7 +15,12 @@ const routes: Routes = [
           "loadChildren": () => import("./pages/customer/customer.module").then(m => m.CustomerModule),
           "data": { "breadcrumb": "Customer" }
         },
-    
+        {
+          "path": "booking",
+          "loadChildren": () => import("./pages/booking/booking.module").then(m => m.BookingModule),
+          "data": { "breadcrumb": "Booking" }
+        },
+        
       ]
 
   },

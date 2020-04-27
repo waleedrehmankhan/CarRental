@@ -5,7 +5,22 @@ import { DataService } from '../../../data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
  
+const makeCustomerFormControl = (fb: FormBuilder, customerId: number = -1): FormGroup => {
+  return fb.group({
+    Id: [customerId],
+    CustomerCode: "",
+    FirstName: "",
+    LastName: "",
+    EmailAddress: [""],
+    PhoneNumber: [""],
+    LicenseNumber: [""],
+    MembershipTypeId: [""],
+    BirthDate: [null]
+ })
+ 
+}
 
+export { makeCustomerFormControl };
 
 @Component({
   selector: 'add-customer',
@@ -51,6 +66,8 @@ export class AddCustomerComponent implements OnInit {
     console.log(this.customerForm);    
     this.errors = [];
   }
+
+
 
   submitForm = ( ) => {
     if (this.customerForm.valid) {

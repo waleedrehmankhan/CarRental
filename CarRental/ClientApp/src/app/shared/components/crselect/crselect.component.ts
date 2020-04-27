@@ -17,6 +17,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class CrselectComponent implements OnInit, ControlValueAccessor {
    
   @Input() url: string;
+  @Input() key: string;
+  @Input() value: string;
   selectedValue = null;
     changeFn: any;
     touchChangeFn: any;
@@ -40,7 +42,7 @@ export class CrselectComponent implements OnInit, ControlValueAccessor {
 
           console.log(response);
           this.items = response.data.Items;
-          this.selectedValue = response.data.Items[0].Id;
+         // this.selectedValue = response.data.Items[0].Id;
           this.modelChanged();
 
         }
