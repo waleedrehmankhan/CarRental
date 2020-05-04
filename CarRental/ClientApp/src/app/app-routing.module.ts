@@ -20,6 +20,11 @@ const routes: Routes = [
           "loadChildren": () => import("./pages/booking/booking.module").then(m => m.BookingModule),
           "data": { "breadcrumb": "Booking" }
         },
+        {
+          "path": "car",
+          "loadChildren": () => import("./pages/car/car.module").then(m => m.CarModule),
+          "data": { "breadcrumb": "Car" }
+        },
         
       ]
 

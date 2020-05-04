@@ -21,5 +21,6 @@ namespace CarRental.Dtos
         public int CarId { get; set; }
         public int FromBranchID { get; set; }
         public int ToBranchID { get; set; }
+        public bool IsNewCustomer { get; set; }
     }
 }

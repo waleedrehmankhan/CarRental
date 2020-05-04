@@ -38,5 +38,7 @@ import { CarDto } from "./CarDto";
         public FromBranchID: number = 0;
         // ToBranchID
         public ToBranchID: number = 0;
+        // IsNewCustomer
+        public IsNewCustomer: boolean = false;
     }
 

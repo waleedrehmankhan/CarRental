@@ -12,7 +12,7 @@ namespace CarRental.ModelValidator
             RuleFor(x => x.ToBranchID).NotNull().NotEmpty().WithMessage("Return Location Cannot be Empty");
             //RuleFor(x => x.FromDate).NotNull().NotEmpty().NotEqual("1970-01-01T00:00:00").WithMessage("From Date Cannot be Empty");
             //RuleFor(x => x.ReturnDate).NotNull().NotEmpty().WithMessage("Return Date Cannot be Empty");
-            RuleFor(x => x.CustomerId).NotNull().NotEmpty().WithMessage("Customer Cannot be Empty");
+            
             RuleFor(x => x.CarId).NotNull().NotEmpty().WithMessage("Car Cannot be Empty");
             RuleFor(x => x.ToBranchID).NotEqual(x => x.FromBranchID).WithMessage("Pick up Location and Drop off Location Cannot be same.");
             RuleFor(x => x.FromDate).Custom((x, context) => {
@@ -40,8 +40,21 @@ namespace CarRental.ModelValidator
                     context.AddFailure("Return Date can not be past date");
                 }
             });
+            When(x => x.IsNewCustomer, () =>
+            {
+                RuleFor(x => x.Customer.CustomerCode).NotNull().NotEmpty();
+                RuleFor(x => x.Customer.FirstName).NotNull().NotEmpty();
+                RuleFor(x => x.Customer.LastName).NotNull().NotEmpty();
+                RuleFor(x => x.Customer.MembershipTypeId).NotNull().NotEmpty();
+                RuleFor(x => x.Customer.EmailAddress).NotNull().NotEmpty().EmailAddress(FluentValidation.Validators.EmailValidationMode.Net4xRegex);
+                RuleFor(x => x.Customer.PhoneNumber).NotNull().NotEmpty();
+                RuleFor(x => x.Customer.LicenseNumber).NotNull().NotEmpty().MaximumLength(10);
+            });
+            When(x => !x.IsNewCustomer, () =>
+            {
+                RuleFor(x => x.CustomerId).NotNull().NotEmpty().WithMessage("Customer Cannot be Empty");
+            });
         }
-
         
     }
 }

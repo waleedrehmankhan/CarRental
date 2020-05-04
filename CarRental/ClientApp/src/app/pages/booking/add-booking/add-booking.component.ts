@@ -15,31 +15,49 @@ import { BookingDto } from '../../../classes/BookingDto';
 })
 export class AddBookingComponent implements OnInit {
   errors: string[]
-  bookingForm: FormGroup
+  booking: FormGroup
+  customerForm:FormGroup
   successfulSave: boolean;
+  show: boolean = false;
+  checked: boolean = false;
+  checkboxname: string = "Is New Customer";
  
   constructor(private fb: FormBuilder, private _dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router, private message: NzMessageService) {
   }
   bookingDto = new BookingDto();
   branchurl: string = "branch/getBranchDetails";
   carurl: string = "car/getCarDetails";
-  customerurl: string ="customers/getCustomerDetails"
+  customerurl: string = "customers/getCustomerDetails"
+  membershipurl: string = "membership/getMemberShip";
 
   ngOnInit() {
 
     const bookingId = this.activatedRoute.snapshot.params.Id;
-
+    if (bookingId) {
+      this.checkboxname="View Customer Details"
+    }
     bookingId && this._dataService.postData("booking/getBookings", { "ID": bookingId }).subscribe
       (
 
         response => {
           const [booking] = response.data.Items;
-          this.bookingForm.patchValue(booking);
+          this.booking.patchValue(booking);
 
         }
       );
+    this.customerForm = this.fb.group({
 
-    this.bookingForm = this.fb.group({
+      CustomerCode: "",
+      FirstName: "",
+      LastName: "",
+      EmailAddress: [""],
+      PhoneNumber: [""],
+      LicenseNumber: [""],
+      MembershipTypeId: [0],
+      BirthDate: [null]
+
+    })
+    this.booking = this.fb.group({
       Id: [bookingId],
       FromDate: [null],
       ReturnDate: [null],
@@ -48,25 +66,17 @@ export class AddBookingComponent implements OnInit {
       isActive: [true],
       FromBranchID: [""],
       ToBranchID: [""],
-      customerForm: this.fb.group({
-        CustomerCode: "",
-        FirstName: "",
-        LastName: "",
-        EmailAddress: [""],
-        PhoneNumber: [""],
-        LicenseNumber: [""],
-        MembershipTypeId: [""],
-        BirthDate: [null]
-
-      })
+      Customer: this.customerForm,
+      IsNewCustomer: [false]
     });
+    console.log(this.booking);
   }
 
   submitForm = () => {
-    if (this.bookingForm.valid) {
+    if (this.booking.valid) {
       debugger;
-      console.log(this.bookingForm.value.MembershipTypeId);
-      this.bookingDto = this.mapValues(this.bookingForm.value);
+      console.log(this.booking.value.MembershipTypeId);
+      this.bookingDto = this.mapValues(this.booking.value);
       this.errors = [];
       console.log(this.bookingDto);
       this._dataService.postData("booking/createOrUpdateBooking", this.bookingDto).subscribe(
@@ -86,17 +96,18 @@ export class AddBookingComponent implements OnInit {
             setTimeout(() => {
 
               for (var fieldName in validationErrorDictionary) {
-                this.bookingForm.markAsDirty();
-                this.bookingForm.markAllAsTouched();
+                this.booking.markAsDirty();
+                this.booking.markAllAsTouched();
                 if (validationErrorDictionary.hasOwnProperty(fieldName)) {
+                  debugger;
                   this.errors.push(validationErrorDictionary[fieldName]);
-                  if (this.bookingForm.controls[fieldName]) {
+                  if (this.booking.get(fieldName)) {
                     // integrate into angular's validation if we have field validation
                     // this.customerForm.controls[fieldName].setErrors({ invalid: true });
 
-                    this.bookingForm.get(fieldName).setErrors({ invalid: true, errors: validationErrorDictionary[fieldName] });
-                    this.bookingForm.get(fieldName).markAsTouched();
-                    this.bookingForm.get(fieldName).markAsDirty();
+                    this.booking.get(fieldName).setErrors({ invalid: true, errors: validationErrorDictionary[fieldName] });
+                    this.booking.get(fieldName).markAsTouched();
+                    this.booking.get(fieldName).markAsDirty();
 
 
 
@@ -137,7 +148,7 @@ export class AddBookingComponent implements OnInit {
 
 
           }
-          this.bookingForm.markAsDirty();
+          this.booking.markAsDirty();
         }
 
       )
@@ -156,6 +167,12 @@ export class AddBookingComponent implements OnInit {
     }
     return bookingDto;
   }
+
+  //toggle = ($event) => {
+  //  $event.preventDefault();
+  //  this.show = !this.show;
+  //}
+
 
   
 }

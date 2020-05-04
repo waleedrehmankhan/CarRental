@@ -1,4 +1,4 @@
-<nz-select nzShowSearch="true" nzAllowClear  nzPlaceHolder="Select Item" [(ngModel)]="selectedValue"  (ngModelChange)="modelChanged()">  
+<nz-select [nzDisabled]="disabled" nzShowSearch="true" nzAllowClear  nzPlaceHolder="Select Item" [(ngModel)]="selectedValue"  (ngModelChange)="modelChanged()">  
 
   
   <nz-option *ngFor="let c of items" [nzValue]="c[value]" [nzLabel]="c[key]"></nz-option>

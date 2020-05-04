@@ -62,20 +62,30 @@ namespace CarRental.Controllers
         [ValidateFilter]
         public async Task<ContentResult> CreateOrUpdateBooking(BookingDto bookingDto)
         {
-
+            Booking bookingToAdd = null;
             ReturnMessage returnmessage = new ReturnMessage(1, "Booking Added ");
             try
             {
-                var booking = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => w.Id == bookingDto.Id));
-                var bookingToAdd = _mapper.Map<Booking>(bookingDto);
-                if (booking.Count() == 0)
+                var booking = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => w.Id == bookingDto.Id, includeProperties:( bookingDto.IsNewCustomer? "Customer":"")));
+                bookingToAdd = _mapper.Map<Booking>(bookingDto);
+                 if (booking.Count() == 0)
                 {
+                    if(!bookingDto.IsNewCustomer&& bookingDto.CustomerId !=0)
+                    {
+                        bookingToAdd.Customer = null;
+                    }
                     _unitOfWork.Bookings.Add(bookingToAdd);
 
                 }
                 else
                 {
+                    if(bookingDto.IsNewCustomer)
+                    {
+                        bookingToAdd.Customer.Id = booking.First().Customer.Id;
+                        _unitOfWork.Customers.Update(bookingToAdd.Customer);
+                    }
                     _unitOfWork.Bookings.Update(bookingToAdd);
+       
                 }
                 var status = _unitOfWork.Complete();
                 _logger.LogInformation("Log:Add Booking for ID: {Id}", bookingToAdd.Id);

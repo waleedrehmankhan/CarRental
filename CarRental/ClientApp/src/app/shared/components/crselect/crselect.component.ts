@@ -19,6 +19,7 @@ export class CrselectComponent implements OnInit, ControlValueAccessor {
   @Input() url: string;
   @Input() key: string;
   @Input() value: string;
+  @Input() disabled: boolean=false;
   selectedValue = null;
     changeFn: any;
     touchChangeFn: any;

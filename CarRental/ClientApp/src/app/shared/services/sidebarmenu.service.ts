@@ -23,9 +23,9 @@ export class SidebarmenuService {
       ]
     },
     {
-      title: "Branch", icon: "dollar", children: [
-        { title: "Branch Details", routerLink: "/branch/view" },
-        { title: "Branch Users", routerLink: "/branch/user" }
+      title: "Car", icon: "car", children: [
+        { title: "View Car", routerLink: "/car/view" },
+        { title: "Add Car", routerLink: "/car/add" }
       ]
     },
     {

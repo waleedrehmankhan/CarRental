@@ -7,13 +7,13 @@ import { AddBookingComponent } from './add-booking/add-booking.component';
 import { SharedModule } from '../../shared/shared.module';
  
 
-
 @NgModule({
   declarations: [AddBookingComponent, ViewBookingComponent],
   imports: [
     CommonModule,
     BookingRoutingModule,
     SharedModule,
+    
   ]
 })
 export class BookingModule {
