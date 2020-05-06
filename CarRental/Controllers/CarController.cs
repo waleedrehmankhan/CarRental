@@ -39,7 +39,7 @@ namespace CarRental.Controllers
             try
             {
                 ReturnMessage rm = new ReturnMessage(1, "Success");
-                var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true));
+                var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true,includeProperties:"CarClassification"));
                 var carsToReturn = _mapper.Map<IEnumerable<CarDto>>(cars);
                 return this.Content(rm.returnMessage(new PagedResultDto<CarDto>
                     (carsToReturn.AsQueryable(), input.pagenumber, input.pagesize)),

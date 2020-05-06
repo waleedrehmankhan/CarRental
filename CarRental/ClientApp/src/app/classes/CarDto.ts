@@ -1,4 +1,5 @@
-﻿
+import { CarClassificationDto } from "./CarClassificationDto";
+
  
 
     // $Classes/Enums/Interfaces(filter)[template][separator]
@@ -29,5 +30,9 @@
         public isActive: boolean = false;
         // CarClassificationId
         public CarClassificationId: number = 0;
+        // CarClassification
+        public CarClassification: CarClassificationDto = null;
+        // image
+        public image: string = null;
     }
 

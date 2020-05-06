@@ -50,6 +50,7 @@
     <Folder Include="ClientApp\src\app\pages\account\" />
     <Folder Include="ClientApp\src\app\shared\components\" />
     <Folder Include="ClientApp\src\app\shared\services\" />
+    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Dtos\CustomerDto.cs">
@@ -86,6 +87,9 @@
     </None>
     <None Update="ClientApp\src\app\classes\BranchDto.ts">
       <CustomToolNamespace>Dtos\BranchDto.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\classes\CarClassificationDto.ts">
+      <CustomToolNamespace>Dtos\CarClassificationDto.cs</CustomToolNamespace>
     </None>
     <None Update="ClientApp\src\app\classes\CarDto.ts">
       <CustomToolNamespace>Dtos\CarDto.cs</CustomToolNamespace>

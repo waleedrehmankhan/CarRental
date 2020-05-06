@@ -1,0 +1,20 @@
+  
+
+<div style="display:flex;justify-content:center;align-items:center;padding:20px;border:1px solid #dddddd;border-radius:10px;margin:10px">
+  <div style="flex:1">
+    <img style="    width: 100%; border-radius: 10px" src="{{car.image}}" alt="no image" />
+  </div>
+  <div style="flex:5;padding:20px">
+    <h1 style="font-size:30px">  {{ car.Make}}| {{car.Model}}| {{car.Year}}</h1>
+    <h2 style="font-size: 18px;
+    font-weight: 500;">
+      Registration Number: {{car.RegistrationNumber}}
+    </h2>
+    <p> Daily Rate ${{car['CarClassification.CostPerDay'] }} </p>
+    <p> Hourly Rate ${{car['CarClassification.CostPerHour'] }} </p>
+    <p> LateFeePerHour ${{car['CarClassification.LateFeePerHour'] }} </p>
+  </div>
+  <div style="flex:2">
+    <strong>Total Passenger :{{car['CarClassification.PassengerCount']}}</strong>
+  </div>
+</div>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarRental.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,5 +18,7 @@ namespace CarRental.Dtos
         public bool isAvailable { get; set; }
         public bool isActive { get; set; }
         public int CarClassificationId { get; set; }
+        public CarClassification CarClassification { get; set; }
+        public string image { get; set; }
     }
 }

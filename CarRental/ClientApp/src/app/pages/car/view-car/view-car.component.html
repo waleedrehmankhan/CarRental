@@ -1,1 +1,2 @@
-<p>view-car works!</p>
+<!--<div><app-crgrid [refresh]="refresh" (deleteClick)="deleteClicked($event)" (editClick)="editClicked($event)" [columns]="lstcolumns" [url]="url"></app-crgrid></div>-->
+<app-car-item *ngFor="let car of carItems" [car]="car"></app-car-item>

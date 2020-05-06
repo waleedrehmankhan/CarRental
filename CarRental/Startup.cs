@@ -16,6 +16,8 @@ using CarRental.Models;
 using Microsoft.AspNetCore.Mvc;
 using FluentValidation.AspNetCore;
 using CarRental.Helpers;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace CarRental
 {
@@ -82,6 +84,13 @@ namespace CarRental
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles")),
+                RequestPath = "/StaticFiles"
+            });
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
