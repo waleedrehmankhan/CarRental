@@ -4,12 +4,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CrselectComponent } from './components/crselect/crselect.component';
 import { CrgridComponent } from './components/crgrid/crgrid.component';
+import { ViewExtraComponent } from '../pages/extra/view-extra/view-extra.component';
+import { ExtraItemComponent } from '../pages/extra/extra-item/extra-item.component';
  
  
 
 
 @NgModule({
-  declarations: [CrselectComponent,CrgridComponent],
+  declarations: [CrselectComponent,CrgridComponent,ViewExtraComponent,ExtraItemComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -23,7 +25,9 @@ import { CrgridComponent } from './components/crgrid/crgrid.component';
     ReactiveFormsModule,
     NgZorroAntdModule,
     CrselectComponent,
-    CrgridComponent
+    CrgridComponent,
+    ViewExtraComponent,
+    ExtraItemComponent
   ],
   
 })

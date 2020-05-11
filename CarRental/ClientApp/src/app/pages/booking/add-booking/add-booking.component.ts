@@ -14,6 +14,11 @@ import { BookingDto } from '../../../classes/BookingDto';
    
 })
 export class AddBookingComponent implements OnInit {
+  checkOptionsOne = [
+    { label: 'Apple', value: 'Apple', checked: true },
+    { label: 'Pear', value: 'Pear' },
+    { label: 'Orange', value: 'Orange' }
+  ];
   errors: string[]
   booking: FormGroup
   customerForm:FormGroup
@@ -67,6 +72,7 @@ export class AddBookingComponent implements OnInit {
       FromBranchID: [""],
       ToBranchID: [""],
       Customer: this.customerForm,
+      Extra: this.checkOptionsOne,
       IsNewCustomer: [false]
     });
     console.log(this.booking);

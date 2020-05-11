@@ -1,0 +1,15 @@
+<div style="display:flex;justify-content:center;align-items:center;padding:20px;border:1px solid #dddddd;border-radius:10px;margin:10px">
+  <div style="flex:2">
+
+    <label nz-checkbox [nzValue]="[extra.Id]" [(ngModel)]="checked"> </label>
+  </div>
+    <div style="flex:2">
+      <nz-input-number [nzMin]="0" [nzMax]="3" [nzStep]="1"></nz-input-number>
+    </div>
+    <div style="flex:2;padding:20px">
+      <label>{{extra.Name}}</label>
+    </div>
+    <div style="flex:2">
+      <label>{{extra.Price}}</label>
+    </div>
+  </div>

@@ -10,6 +10,7 @@ namespace CarRental.Persistence
         IBranchRepository Branchs { get; }
         ICarRepository Cars { get; }
         IBookingRepository Bookings { get; }
+        IExtraRepository Extras { get; }
         int Complete();
     }
 }

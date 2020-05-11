@@ -43,15 +43,28 @@
       <crselect [url]="carurl" key="Model" value="Id" formControlName="CarId"></crselect>
     </nz-form-control>
   </nz-form-item>
-   
+
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CustomerId">Customer</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('CustomerId').errors?.errors" [nzSm]="14" [nzXs]="24">
       <crselect [disabled]="(booking.get('IsNewCustomer').value)" [url]="customerurl" key="FirstName" value="Id" formControlName="CustomerId"></crselect>
-      <label nz-checkbox formControlName="IsNewCustomer">{{checkboxname}}</label>
+
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Extra">Booking Extras</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+
+      <nz-collapse >
+      <nz-collapse-panel nzHeader="Booking Extra">
+        <app-view-extra></app-view-extra>
+      </nz-collapse-panel>
+      </nz-collapse>
+
+    </nz-form-control>
+  </nz-form-item>
+  <label nz-checkbox formControlName="IsNewCustomer">{{checkboxname}}</label>
 
   <ng-container *ngIf="booking.get('IsNewCustomer').value">
     <div style="margin: 0 auto;text-align: left;">

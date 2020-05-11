@@ -8,6 +8,7 @@ using CarRental.Helpers;
 using CarRental.Models;
 using CarRental.Persistence;
 using CarRental.Persistence.Repositories.Booking;
+using CarRental.Persistence.Repositories.Extra;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -134,7 +135,30 @@ namespace CarRental.Controllers
         }
 
 
+        #region Extras
+        [HttpPost("getExtras")]
+        public async Task<ContentResult> GetExtras(GetExtraInput input)
+        {
+            try
+            {
+                ReturnMessage rm = new ReturnMessage(1, "Success");
+                var extras = await Task.Run(() => _unitOfWork.Extras.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true));
+                var extrasToReturn = _mapper.Map<IEnumerable<ExtraDto>>(extras);
+                return this.Content(rm.returnMessage(new PagedResultDto<ExtraDto>
+                    (extrasToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
+                    "application/json");
+            }
+            catch (Exception ex)
+            {
+                return this.Content(JsonConvert.SerializeObject(new
+                {
+                    msgCode = -3,
+                    msg = ex.Message
+                }), "application/json");
+            }
+        }
 
+        #endregion
 
     }
 }

@@ -5,6 +5,8 @@ import { BookingRoutingModule } from './booking-routing.module';
 import { ViewBookingComponent } from './view-booking/view-booking.component';
 import { AddBookingComponent } from './add-booking/add-booking.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ViewExtraComponent } from '../extra/view-extra/view-extra.component';
+ 
  
 
 @NgModule({
@@ -13,6 +15,7 @@ import { SharedModule } from '../../shared/shared.module';
     CommonModule,
     BookingRoutingModule,
     SharedModule,
+ 
     
   ]
 })

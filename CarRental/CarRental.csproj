@@ -97,6 +97,9 @@
     <None Update="ClientApp\src\app\classes\CustomerDto.ts">
       <CustomToolNamespace>carent\Dtos\CustomerDto.cs</CustomToolNamespace>
     </None>
+    <None Update="ClientApp\src\app\classes\ExtraDto.ts">
+      <CustomToolNamespace>Dtos\ExtraDto.cs</CustomToolNamespace>
+    </None>
     <None Update="ClientApp\src\app\classes\MembershipTypeDto.ts">
       <CustomToolNamespace>Dtos\MembershipTypeDto.cs</CustomToolNamespace>
     </None>
