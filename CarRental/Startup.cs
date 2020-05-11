@@ -18,6 +18,10 @@ using FluentValidation.AspNetCore;
 using CarRental.Helpers;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using System;
 
 namespace CarRental
 {
@@ -38,14 +42,43 @@ namespace CarRental
                    Configuration.GetConnectionString("DefaultConnection")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
           
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
+            services.Configure<IdentityOptions>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
+
+            var key = Encoding.UTF8.GetBytes("PDv7DrqznYL6nv7DrqzjnQYO9JxIsWdcjnQYL6nu0f");
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+            // services.AddAuthentication(x => {
+            //     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            // }).AddJwtBearer(x => {
+            //     x.RequireHttpsMetadata = false;
+            //     x.SaveToken = false;
+            //     x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            //     {
+            //         ValidateIssuerSigningKey = true,
+            //         IssuerSigningKey = new SymmetricSecurityKey(key),
+            //         ValidateIssuer = false,
+            //         ValidateAudience = false,
+            //         ClockSkew = TimeSpan.Zero
+            //     };
+            // });
+
+
             services.AddTokenAuthentication(Configuration);
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -95,6 +128,11 @@ namespace CarRental
             {
                 app.UseSpaStaticFiles();
             }
+
+            // app.UseCors(builder => 
+            // builder.WithOrigins("http://localhost:5000")
+            // .AllowAnyHeader()
+            // .AllowAnyMethod());
 
             app.UseRouting();
 

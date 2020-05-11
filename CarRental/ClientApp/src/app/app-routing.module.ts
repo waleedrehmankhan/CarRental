@@ -11,6 +11,11 @@ const routes: Routes = [
     children:
       [
         {
+          "path": "account",
+          "loadChildren": () => import("./account/account.module").then(m => m.AccountModule),
+          "data": { "breadcrumb": "Account" }
+        },
+        {
           "path": "customer",
           "loadChildren": () => import("./pages/customer/customer.module").then(m => m.CustomerModule),
           "data": { "breadcrumb": "Customer" }

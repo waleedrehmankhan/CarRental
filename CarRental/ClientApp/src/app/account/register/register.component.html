@@ -1,0 +1,45 @@
+<form nz-form [formGroup]="registerForm" class="register-form" (ngSubmit)="submitForm()">
+    
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">E-mail</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" >
+            <input nz-input formControlName="email" placeholder="Please Enter E-mail" id="email" formControlName="Email"/>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password">Password</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" >
+            <input nz-input formControlName="password" placeholder="Please Enter Password" id="password" formControlName="Password"/>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="firstname">First Name</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" >
+            <input nz-input formControlName="firstname" placeholder="Please Enter First Name" id="firstname" formControlName="FirstName"/>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="lastname">Last Name</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="lastname" placeholder="Please Enter Last Name" id="lastname" formControlName="LastName"/>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="UserRoleId">Role</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <crselect [url]="userRolesUrl" key="Name" value="Name" id="UserRole" formControlName="UserRole"></crselect>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+          <button nz-button nzType="primary">Submit</button>
+        </nz-form-control>
+    </nz-form-item>
+    
+
+</form>
