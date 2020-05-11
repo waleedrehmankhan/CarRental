@@ -1,6 +1,7 @@
 using AutoMapper;
 using CarRental.Dtos;
 using CarRental.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace CarRental.Helpers
 {
@@ -33,6 +34,8 @@ namespace CarRental.Helpers
 
             CreateMap<RegistrationDto, ApplicationUser>();
             CreateMap<ApplicationUser, RegistrationDto>();
+
+            CreateMap<IdentityRole, IdentityRoleDto>();
         }
     }
 }
