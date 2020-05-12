@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { LoginUserDto } from 'src/app/classes/LoginUserDto';
 import { DataService } from 'src/app/data.service';
 import { NzMessageService } from 'ng-zorro-antd';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +13,12 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  return: string = '';
   loginDto = new LoginUserDto();
   errors: string[];
 
-  constructor(private fb: FormBuilder, private _dataService: DataService, private message: NzMessageService, private router: Router) {
+
+  constructor(private fb: FormBuilder, private _dataService: DataService, private message: NzMessageService, private router: Router, private route: ActivatedRoute) {
     this.loginForm = new FormGroup({
       Email: new FormControl(),
       Password: new FormControl()
@@ -24,7 +26,8 @@ export class LoginComponent implements OnInit {
    }
 
    ngOnInit() {
-
+     this.route.queryParams
+       .subscribe(params => this.return = params['return'] || '/car/view');
     this.loginForm.reset();
   }
 
@@ -60,7 +63,7 @@ export class LoginComponent implements OnInit {
               this.message.success(res.message.msg, {
                 nzDuration: 3000
               });
-              this.router.navigateByUrl("car/view")
+              this.router.navigateByUrl(this.return);
             }
             else {
               this.message.error(res.message.msg, {

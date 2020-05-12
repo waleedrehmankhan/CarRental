@@ -3,20 +3,25 @@ import { Routes, RouterModule, PreloadAllModules, Router } from '@angular/router
 import { LayoutComponent } from './shared/layout/layout.component';
 import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
-
+import {
+  AuthGuardService as AuthGuard
+} from './auth-guard.service';
 const routes: Routes = [
   {
+
     path: '', component: LoginComponent
   },
   {
     path: 'changepassword', component: RegisterComponent
   },
   {
+
     path: 'login', component: LoginComponent
   },
   
   {
- 
+
+    canActivate: [AuthGuard],
     path: '', component: LayoutComponent,
     children:
       [
