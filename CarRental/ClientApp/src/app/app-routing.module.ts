@@ -1,9 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules, Router } from '@angular/router';
 import { LayoutComponent } from './shared/layout/layout.component';
- 
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
 
 const routes: Routes = [
+  {
+    path: '', component: LoginComponent
+  },
+  {
+    path: 'changepassword', component: RegisterComponent
+  },
+  {
+    path: 'login', component: LoginComponent
+  },
   
   {
  

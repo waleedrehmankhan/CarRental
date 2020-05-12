@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { RegisterUserDto } from '../../../classes/ApplicationUserDto';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  userMenu: any[];
+  user: RegisterUserDto;
+  constructor(private router: Router) {
 
-  constructor() { }
+    this.user = JSON.parse( sessionStorage.getItem("current_user"));
+  }
 
   ngOnInit() {
+    this.userMenu = [
+      { title: "Log Out", onClick: (e) => { sessionStorage.clear(); this.router.navigate(['login', {}]); } },
+      
+    ];
   }
 
 }

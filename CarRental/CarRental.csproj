@@ -82,6 +82,9 @@
     <None Update="ClientApp\src\app\classes\AddressDto.ts">
       <CustomToolNamespace>Dtos\AddressDto.cs</CustomToolNamespace>
     </None>
+    <None Update="ClientApp\src\app\classes\ApplicationUserDto.ts">
+      <CustomToolNamespace>Dtos\ApplicationUserDto.cs</CustomToolNamespace>
+    </None>
     <None Update="ClientApp\src\app\classes\BookingDto.ts">
       <CustomToolNamespace>Dtos\BookingDto.cs</CustomToolNamespace>
     </None>
@@ -99,6 +102,12 @@
     </None>
     <None Update="ClientApp\src\app\classes\ExtraDto.ts">
       <CustomToolNamespace>Dtos\ExtraDto.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\classes\IdentityRoleDto.ts">
+      <CustomToolNamespace>Dtos\IdentityRoleDto.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\classes\LoginDto.ts">
+      <CustomToolNamespace>Dtos\LoginDto.cs</CustomToolNamespace>
     </None>
     <None Update="ClientApp\src\app\classes\MembershipTypeDto.ts">
       <CustomToolNamespace>Dtos\MembershipTypeDto.cs</CustomToolNamespace>

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 
 namespace CarRental.Controllers
 {
@@ -70,16 +71,44 @@ namespace CarRental.Controllers
 
         [HttpPost]
         [Route("Login")]
+        [ValidateFilter]
         public async Task<Object> OnLoginAsync(LoginUserDto Input)
         {
-            
-            var user = await _userManager.FindByNameAsync(Input.Email);
-            if (user != null && await _userManager.CheckPasswordAsync(user,Input.Password)){
-                var token = GenerateSecurityToken(user);
-                return Ok(new { token });
+            try
+            {
+
+
+                ReturnMessage rm = new ReturnMessage(1, "Login Succesful");
+                List<RegisterUserDto> registeruserlist = new List<RegisterUserDto>();
+                var user = await _userManager.FindByNameAsync(Input.Email);
+                if (user != null && await _userManager.CheckPasswordAsync(user, Input.Password))
+                {
+                    var token = GenerateSecurityToken(user);
+                    var usertoreturn = _mapper.Map<RegisterUserDto>(user);
+                    usertoreturn.CurrentToken = token;
+                    var role= await _userManager.GetRolesAsync(user);
+                    usertoreturn.UserRole = role[0];
+                    registeruserlist.Add(usertoreturn);
+                }
+                else
+                {
+                    rm.msgCode = -1;
+                    rm.msg = "Login Failed";
+                }
+                return this.Content(rm.returnMessage(new PagedResultDto<RegisterUserDto>
+                       (registeruserlist.AsQueryable(), 0, 0)),
+                       "application/json");
             }
-            
-            return BadRequest(new { message = "username or password is incorrect!" }); 
+            catch (Exception ex)
+            {
+                return this.Content(JsonConvert.SerializeObject(new
+                {
+                    msgCode = -3,
+                    msg = ex.Message
+                }), "application/json");
+            }
+
+           
         }
 
         [HttpPost]

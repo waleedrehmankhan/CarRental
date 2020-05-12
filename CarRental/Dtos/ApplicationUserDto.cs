@@ -12,6 +12,7 @@ namespace CarRental.Dtos
 
         [Required]
         public string UserRole { get; set; }
+        public string CurrentToken { get; set; }
     }
 
     public class LoginUserDto

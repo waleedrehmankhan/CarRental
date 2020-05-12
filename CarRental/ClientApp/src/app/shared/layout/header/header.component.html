@@ -1,0 +1,16 @@
+<a nz-dropdown [nzDropdownMenu]="menu" style="float: right; margin-right: 20px">
+  <i nz-icon nzType="user"></i> Welcome {{user.FirstName}}
+  <i nz-icon nzType="down"></i>
+</a>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu nzSelectable *ngFor="let item of userMenu">
+    <li nz-menu-item>
+      <a *ngIf="item.link" routerLink="{{ item.link }}" style="color: #333">
+        {{ item.title }}
+      </a>
+      <a *ngIf="!item.link" (click)="item.onClick($event)" style="color: #333">
+        {{ item.title }}
+      </a>
+    </li>
+  </ul>
+</nz-dropdown-menu>

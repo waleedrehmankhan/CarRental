@@ -36,10 +36,11 @@ namespace CarRental.Helpers
             CreateMap<Extra, ExtraDto>();
 
 
-            CreateMap<RegistrationDto, ApplicationUser>();
-            CreateMap<ApplicationUser, RegistrationDto>();
+            CreateMap<RegisterUserDto, ApplicationUser>();
+            CreateMap<ApplicationUser, RegisterUserDto>();
 
             CreateMap<IdentityRole, IdentityRoleDto>();
+            CreateMap<IdentityRoleDto, IdentityRole>();
         }
     }
 }

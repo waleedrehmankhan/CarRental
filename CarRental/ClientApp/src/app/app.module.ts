@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LayoutModule } from './shared/layout/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataService } from './data.service';
+import { AccountModule } from './account/account.module';
  
 
 @NgModule({
@@ -22,6 +23,7 @@ import { DataService } from './data.service';
     HttpClientModule,
     AppRoutingModule,
     LayoutModule,
+    AccountModule,
     NzInputModule,
     BrowserAnimationsModule
     //RouterModule.forRoot([
