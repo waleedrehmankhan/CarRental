@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
    ngOnInit() {
      this.route.queryParams
-       .subscribe(params => this.return = params['return'] || '/car/view');
+       .subscribe(params => this.return = params['return'] || '');
     this.loginForm.reset();
   }
 

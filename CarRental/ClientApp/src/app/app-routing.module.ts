@@ -7,24 +7,25 @@ import {
   AuthGuardService as AuthGuard
 } from './auth-guard.service';
 const routes: Routes = [
-  {
-
-    path: '', component: LoginComponent
-  },
+  
   {
     path: 'changepassword', component: RegisterComponent
   },
   {
-
+  
     path: 'login', component: LoginComponent
   },
   
   {
-
     canActivate: [AuthGuard],
     path: '', component: LayoutComponent,
     children:
       [
+        {
+          "path": "",
+          "loadChildren": () => import("./pages/dashboard/dashboard.module").then(m => m.DashboardModule),
+          "data": { "breadcrumb": "Account" }
+        },
         {
           "path": "account",
           "loadChildren": () => import("./account/account.module").then(m => m.AccountModule),

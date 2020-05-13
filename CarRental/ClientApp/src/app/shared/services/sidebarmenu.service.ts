@@ -9,7 +9,7 @@ export class SidebarmenuService {
   constructor() { }
 
   routerConfig: any = [
-    { title: "Dashboard", icon: "dashboard", routerLink: "/dashboard" },
+    { title: "Dashboard", icon: "dashboard", routerLink: "/" },
     {
       title: "Customer", icon: "smile", children: [
         { title: "Customer Details", icon: "plus", routerLink: "/customer/view" },

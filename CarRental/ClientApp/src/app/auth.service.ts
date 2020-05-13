@@ -13,7 +13,7 @@ export class AuthService {
   public jwtHelper: JwtHelperService = new JwtHelperService();
   // ...
   public isAuthenticated(): boolean {
-    const token = JSON.parse(sessionStorage.getItem('current_user')).CurrentToken;
+    const token = sessionStorage.getItem('current_user')&& JSON.parse(sessionStorage.getItem('current_user')).CurrentToken;
     // Check whether the token is expired and return
     // true or false
     return !this.jwtHelper.isTokenExpired(token);
