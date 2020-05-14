@@ -7,6 +7,7 @@ import { SidebarmenuService } from '../services/sidebarmenu.service';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent implements OnInit, AfterViewInit {
+   
   ngAfterViewInit(): void {
 
   }
@@ -16,7 +17,9 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   constructor(private _menuService: SidebarmenuService) { }
 
   ngOnInit() {
-    this._menuService.getMenu().subscribe(menu => this.sidebarConfig = menu)
+    let currentuser = sessionStorage.getItem("current_user") && JSON.parse(sessionStorage.getItem("current_user"));
+    console.log(currentuser);
+    this._menuService.getMenu(currentuser.UserRole).subscribe(menu => this.sidebarConfig = menu)
   }
 
 }

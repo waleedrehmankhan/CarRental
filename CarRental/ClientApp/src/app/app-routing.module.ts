@@ -7,10 +7,11 @@ import {
   AuthGuardService as AuthGuard
 } from './auth-guard.service';
 const routes: Routes = [
-  
   {
-    path: 'changepassword', component: RegisterComponent
+    "path": "error",
+    "loadChildren": () => import("./pages/error/error.module").then(m => m.ErrorModule),
   },
+ 
   {
   
     path: 'login', component: LoginComponent
@@ -46,6 +47,8 @@ const routes: Routes = [
           "loadChildren": () => import("./pages/car/car.module").then(m => m.CarModule),
           "data": { "breadcrumb": "Car" }
         },
+
+       
         
       ]
 

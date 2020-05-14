@@ -12,14 +12,20 @@ export class AuthGuardService {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     debugger;
-    if (sessionStorage.getItem("current_user")) {
+    let currentuser = sessionStorage.getItem("current_user") && JSON.parse(sessionStorage.getItem("current_user"))
+    if (currentuser) {
       //filter
-      const config = this._menuService.routerConfig;
+      
+      let config = this._menuService.routerConfig;
+      if (currentuser.UserRole == "Staff") {
+        config = this._menuService.staffRouterConfig;
+      }
 
       const canGo = this.canGoToMenu(state, config);
       console.log(canGo);
       if (!canGo) {
-        this.router.navigate(['login']);
+        debugger;
+        this.router.navigateByUrl('error/error');
       }
       return canGo;
       //return true;

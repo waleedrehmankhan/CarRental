@@ -8,10 +8,11 @@ import { NzLayoutModule, NzIconModule, NzDropDownModule, NzSpinModule, NzBreadCr
 import { IconsProviderModule } from '../../icons-provider.module';
  
 import { RouterModule } from '@angular/router';
+import { RemoveHostDirective } from './sidebar/remove-host.directive';
  
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, SidebarComponent, ItemComponent],
+  declarations: [LayoutComponent, HeaderComponent, SidebarComponent, ItemComponent, RemoveHostDirective],
   imports: [
     CommonModule,
     RouterModule,
