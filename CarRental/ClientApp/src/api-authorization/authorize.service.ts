@@ -30,7 +30,7 @@ export enum AuthenticationResultStatus {
 }
 
 export interface IUser {
-  name: string;
+  name?: string;
 }
 
 @Injectable({
@@ -146,7 +146,7 @@ export class AuthorizeService {
     try {
       const state = await this.userManager.signoutCallback(url);
       this.userSubject.next(null);
-      return this.success(state && state.data);
+      return this.success(state);
     } catch (error) {
       console.log(`There was an error trying to log out '${error}'.`);
       return this.error(error);
