@@ -22,6 +22,9 @@ namespace CarRental.Data
         public DbSet<Location> Locations { get; set; }
         public DbSet<Extra> Extras { get; set; }
         public DbSet<BookingExtra> BookingExtras { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<ServiceHistory> ServiceHistory { get; set; }
 
         
         public ApplicationDbContext(
