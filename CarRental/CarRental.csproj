@@ -46,11 +46,17 @@
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="ClientApp\src\app\interceptor\token.interceptor.ts" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="ClientApp\src\app\pages\booking\" />
     <Folder Include="ClientApp\src\app\pages\account\" />
     <Folder Include="ClientApp\src\app\shared\components\" />
     <Folder Include="ClientApp\src\app\shared\services\" />
     <Folder Include="UploadedFiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\interceptor\token.interceptor.ts" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Dtos\CustomerDto.cs">

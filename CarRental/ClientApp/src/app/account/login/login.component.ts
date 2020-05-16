@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
             }
 
           }
-          if (res.data && res.data.message.msgCode == -2) {
+          if (res.data && res.data.message&& res.data.message.msgCode == -2) {
 
             let validationErrorDictionary = res.data.message.msg;
             debugger;

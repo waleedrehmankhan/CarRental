@@ -12,6 +12,7 @@ import { LayoutModule } from './shared/layout/layout.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataService } from './data.service';
 import { AccountModule } from './account/account.module';
+import { TokenInterceptor } from './interceptor/token.interceptor';
  
 
 @NgModule({
@@ -33,7 +34,7 @@ import { AccountModule } from './account/account.module';
     //])
   ],
   providers: [DataService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }, { provide: NZ_I18N, useValue: en_US },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }, { provide: NZ_I18N, useValue: en_US },
     { provide: "API_BASE_URL", useValue:"/api/" }
   ],
   bootstrap: [AppComponent]

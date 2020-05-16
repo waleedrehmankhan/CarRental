@@ -5,7 +5,7 @@ import { LoginComponent } from './account/login/login.component';
 import { RegisterComponent } from './account/register/register.component';
 import {
   AuthGuardService as AuthGuard
-} from './auth-guard.service';
+} from './auth/auth-guard.service';
 const routes: Routes = [
   {
     "path": "error",

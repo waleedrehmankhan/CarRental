@@ -10,6 +10,9 @@ export class AuthService {
   constructor(
    ) { }
 
+  public getToken(): string {
+    return sessionStorage.getItem('current_user') && JSON.parse(sessionStorage.getItem('current_user')).CurrentToken;
+  }
   public jwtHelper: JwtHelperService = new JwtHelperService();
   // ...
   public isAuthenticated(): boolean {
