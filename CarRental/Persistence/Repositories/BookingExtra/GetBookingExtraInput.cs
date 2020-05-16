@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CarRental.Persistence.Repositories.Extra
+namespace CarRental.Persistence.Repositories.BookingExtra
 {
-    public class GetExtraInput: PagedAndSortedInputDto
+    public class GetBookingExtraInput: PagedAndSortedInputDto
     {
-        public int Id { get; set; }
         public int BookingId { get; set; }
     }
 }

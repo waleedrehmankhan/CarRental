@@ -8,6 +8,7 @@ using CarRental.Helpers;
 using CarRental.Models;
 using CarRental.Persistence;
 using CarRental.Persistence.Repositories.Booking;
+using CarRental.Persistence.Repositories.BookingExtra;
 using CarRental.Persistence.Repositories.Extra;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,11 @@ namespace CarRental.Controllers
                 ReturnMessage rm = new ReturnMessage(1, "Success");
                 var bookings = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true,includeProperties:"FromBranch,ToBranch,Car,Customer"));
                 var bookingdToReturn = _mapper.Map<IEnumerable<BookingDto>>(bookings);
+                foreach (var item in bookingdToReturn)
+                {
+                    item.bookingextras = GetBookingExtras(new GetBookingExtraInput() { BookingId = item.Id });
+                   
+                }
                 return this.Content(rm.returnMessage(new PagedResultDto<BookingDto>
                     (bookingdToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
                     "application/json");
@@ -63,6 +69,7 @@ namespace CarRental.Controllers
         [ValidateFilter]
         public async Task<ContentResult> CreateOrUpdateBooking(BookingDto bookingDto)
         {
+             
             Booking bookingToAdd = null;
             ReturnMessage returnmessage = new ReturnMessage(1, "Booking Added ");
             try
@@ -75,8 +82,17 @@ namespace CarRental.Controllers
                     {
                         bookingToAdd.Customer = null;
                     }
+                    bookingToAdd.FromDate = Utility.ConvertToDatetime(bookingDto.FromDate);
+                    bookingToAdd.ReturnDate = Utility.ConvertToDatetime(bookingDto.ReturnDate);
                     _unitOfWork.Bookings.Add(bookingToAdd);
-
+                 
+                    foreach (var item in bookingDto.bookingextras)
+                    {
+                        var itemtoadd = _mapper.Map<BookingExtra>(item);
+                        itemtoadd.Booking = bookingToAdd;
+                        _unitOfWork.BookingExtras.Add(itemtoadd);
+                    }
+                    
                 }
                 else
                 {
@@ -142,8 +158,22 @@ namespace CarRental.Controllers
             try
             {
                 ReturnMessage rm = new ReturnMessage(1, "Success");
+                IList<BookingExtraDto> bookingextralist = null;
+                if (input.BookingId>0)
+                { 
+                    bookingextralist= GetBookingExtras(new GetBookingExtraInput() { BookingId = input.BookingId });
+
+                }
+
                 var extras = await Task.Run(() => _unitOfWork.Extras.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true));
                 var extrasToReturn = _mapper.Map<IEnumerable<ExtraDto>>(extras);
+
+                var result = extrasToReturn.Join(bookingextralist, d => d.ExtraId, s => s.ExtraId, (d, s) =>
+                {
+                    d.Count = s.Count;
+                    return d;
+                }).ToList();
+
                 return this.Content(rm.returnMessage(new PagedResultDto<ExtraDto>
                     (extrasToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
                     "application/json");
@@ -156,6 +186,19 @@ namespace CarRental.Controllers
                     msg = ex.Message
                 }), "application/json");
             }
+        }
+
+
+ 
+        public  IList<BookingExtraDto>  GetBookingExtras(GetBookingExtraInput input)
+        {
+      
+                ReturnMessage rm = new ReturnMessage(1, "Success");
+            var extras = _unitOfWork.BookingExtras.Find(x => x.BookingId == input.BookingId);
+             var extrasToReturn = _mapper.Map<IList<BookingExtraDto>>(extras.ToList());
+            return extrasToReturn;
+
+
         }
 
         #endregion

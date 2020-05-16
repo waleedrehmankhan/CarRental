@@ -1,4 +1,6 @@
-﻿
+﻿import { BookingDto } from "./BookingDto";
+import { ExtraDto } from "./ExtraDto";
+
  
 
     // $Classes/Enums/Interfaces(filter)[template][separator]
@@ -9,15 +11,21 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-    export class ExtraDto {
+    export class BookingExtraDto {
         
-        // ExtraId
-        public ExtraId: number = 0;
-        // Name
-        public Name: string = null;
-        // Price
-        public Price: number = 0;
+        // Id
+        public Id: number = 0;
+        // Booking
+        public Booking: BookingDto = null;
+        // Extra
+        public Extra: ExtraDto = null;
         // Count
         public Count: number = 0;
+        // ExtraId
+        public ExtraId: number = 0;
+        // BookingId
+        public BookingId: number = 0;
+        // Price
+        public Price: number = 0;
     }
 

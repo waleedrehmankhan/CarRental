@@ -12,6 +12,7 @@ namespace CarRental.Dtos
         public CustomerDto Customer { get; set; }
         public BranchDto FromBranch { get; set; }
         public BranchDto ToBranch { get; set; }
+        public IList<BookingExtraDto> bookingextras { get; set; }
         public CarDto Car { get; set; }
         public string FromDate { get; set; }
         public string ReturnDate { get; set; }

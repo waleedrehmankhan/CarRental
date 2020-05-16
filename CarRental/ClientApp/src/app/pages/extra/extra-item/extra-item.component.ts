@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ExtraDto } from '../../../classes/ExtraDto';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+ 
+import { BookingExtraDto } from '../../../classes/BookingExtraDto';
 
 @Component({
   selector: 'app-extra-item',
@@ -7,10 +8,29 @@ import { ExtraDto } from '../../../classes/ExtraDto';
   styleUrls: ['./extra-item.component.css']
 })
 export class ExtraItemComponent implements OnInit {
-  @Input("extra") extra: ExtraDto;
+  @Input("extra") extra: BookingExtraDto;
+
+  @Output("select") select = new EventEmitter<{ extra: BookingExtraDto, checked: boolean }>(); 
+  count: number = this.extra&& this.extra.Count;
+  checked = false;
+
+
   constructor() { }
 
   ngOnInit() {
+
+    if ((this.extra && this.extra.Count) !== 0) {
+     this. checked = true;
+    }
   }
+
+  selected() {
+    const extra = { ...this.extra };
+ 
+    this.select.emit({
+      extra, checked: this.checked
+     });
+  }
+
 
 }

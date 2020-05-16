@@ -1,5 +1,6 @@
-import { CustomerDto } from "./CustomerDto";
+﻿import { BookingExtraDto } from "./BookingExtraDto";
 import { BranchDto } from "./BranchDto";
+import { CustomerDto } from "./CustomerDto";
 import { CarDto } from "./CarDto";
 
  
@@ -22,6 +23,8 @@ import { CarDto } from "./CarDto";
         public FromBranch: BranchDto = null;
         // ToBranch
         public ToBranch: BranchDto = null;
+        // bookingextras
+        public bookingextras: BookingExtraDto[] = [];
         // Car
         public Car: CarDto = null;
         // FromDate

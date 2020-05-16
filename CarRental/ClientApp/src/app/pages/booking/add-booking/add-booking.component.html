@@ -21,7 +21,7 @@
 
       <nz-date-picker formControlName="FromDate"
                       nzShowTime
-                      nzFormat="yyyy/MM/dd HH:mm:ss"
+                      nzFormat="dd-MM-yyyy HH:mm:ss"
                       nzPlaceHolder="Select Pickup Date and Time"></nz-date-picker>
     </nz-form-control>
   </nz-form-item>
@@ -33,7 +33,7 @@
 
       <nz-date-picker formControlName="ReturnDate"
                       nzShowTime
-                      nzFormat="yyyy/MM/dd HH:mm:ss"
+                      nzFormat="dd-MM-yyyy HH:mm:ss"
                       nzPlaceHolder="Select Return Date and Time"></nz-date-picker>
     </nz-form-control>
   </nz-form-item>
@@ -47,6 +47,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CustomerId">Customer</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('CustomerId').errors?.errors" [nzSm]="14" [nzXs]="24">
+      <label nz-checkbox formControlName="IsNewCustomer">{{checkboxname}}</label>
       <crselect [disabled]="(booking.get('IsNewCustomer').value)" [url]="customerurl" key="FirstName" value="Id" formControlName="CustomerId"></crselect>
 
     </nz-form-control>
@@ -58,13 +59,13 @@
 
       <nz-collapse >
       <nz-collapse-panel nzHeader="Booking Extra">
-        <app-view-extra></app-view-extra>
+        <app-view-extra (dataChange)="dataChange($event)"></app-view-extra>
       </nz-collapse-panel>
       </nz-collapse>
 
     </nz-form-control>
   </nz-form-item>
-  <label nz-checkbox formControlName="IsNewCustomer">{{checkboxname}}</label>
+ 
 
   <ng-container *ngIf="booking.get('IsNewCustomer').value">
     <div style="margin: 0 auto;text-align: left;">

@@ -8,13 +8,18 @@ import {
  
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { Router, RouterStateSnapshot, ActivatedRoute } from '@angular/router';
  
  
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(public auth: AuthService) { }
+  constructor(public auth: AuthService, private router: Router, private route: ActivatedRoute) { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+    if (!this.auth.isAuthenticated()) {
+      
+        this.router.navigate(['login']);
+ 
+    }
     request = request.clone({
       setHeaders: {
         Authorization: `Bearer ${this.auth.getToken()}`

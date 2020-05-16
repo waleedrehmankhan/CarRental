@@ -26,6 +26,7 @@ export class AddBookingComponent implements OnInit {
   show: boolean = false;
   checked: boolean = false;
   checkboxname: string = "Is New Customer";
+    selectedExtra: any = [];
  
   constructor(private fb: FormBuilder, private _dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router, private message: NzMessageService) {
   }
@@ -72,7 +73,7 @@ export class AddBookingComponent implements OnInit {
       FromBranchID: [""],
       ToBranchID: [""],
       Customer: this.customerForm,
-      Extra: this.checkOptionsOne,
+      bookingextras: this.checkOptionsOne,
       IsNewCustomer: [false]
     });
     console.log(this.booking);
@@ -82,7 +83,7 @@ export class AddBookingComponent implements OnInit {
     if (this.booking.valid) {
       debugger;
       console.log(this.booking.value.MembershipTypeId);
-      this.bookingDto = this.mapValues(this.booking.value);
+      this.bookingDto = this.mapValues({ ...this.booking.value, bookingextras: this.selectedExtra });
       this.errors = [];
       console.log(this.bookingDto);
       this._dataService.postData("booking/createOrUpdateBooking", this.bookingDto).subscribe(
@@ -179,6 +180,8 @@ export class AddBookingComponent implements OnInit {
   //  this.show = !this.show;
   //}
 
-
+  dataChange($event) {
+    this.selectedExtra = $event;
+  }
   
 }

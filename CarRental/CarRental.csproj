@@ -94,6 +94,9 @@
     <None Update="ClientApp\src\app\classes\BookingDto.ts">
       <CustomToolNamespace>Dtos\BookingDto.cs</CustomToolNamespace>
     </None>
+    <None Update="ClientApp\src\app\classes\BookingExtraDto.ts">
+      <CustomToolNamespace>Dtos\BookingExtraDto.cs</CustomToolNamespace>
+    </None>
     <None Update="ClientApp\src\app\classes\BranchDto.ts">
       <CustomToolNamespace>Dtos\BranchDto.cs</CustomToolNamespace>
     </None>

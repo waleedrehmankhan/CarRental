@@ -31,11 +31,16 @@ namespace CarRental.Helpers
             CreateMap<BranchDto, Branch>();
             CreateMap<Branch, BranchDto>();
 
-            CreateMap<ExtraDto, Extra>();
+            CreateMap<ExtraDto, Extra>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExtraId));
 
-            CreateMap<Extra, ExtraDto>();
+
+            CreateMap<Extra, ExtraDto>()
+                 .ForMember(dest => dest.ExtraId, opt => opt.MapFrom(src => src.Id));
 
 
+            CreateMap<BookingExtraDto, BookingExtra>();
+            CreateMap<BookingExtra, BookingExtraDto>();
             CreateMap<RegisterUserDto, ApplicationUser>();
             CreateMap<ApplicationUser, RegisterUserDto>();
 
