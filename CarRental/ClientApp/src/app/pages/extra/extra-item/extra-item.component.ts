@@ -20,7 +20,8 @@ export class ExtraItemComponent implements OnInit {
   ngOnInit() {
 
     if ((this.extra && this.extra.Count) !== 0) {
-     this. checked = true;
+      this.checked = true;
+      this.selected();
     }
   }
 

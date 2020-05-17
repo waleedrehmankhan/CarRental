@@ -48,24 +48,52 @@ namespace CarRental.Controllers
 
         [HttpPost]
         [Route("Register")]
+        [ValidateFilter]
         public async Task<Object> OnRegisterAsync(RegisterUserDto Input) 
         {
-            
-            var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName };
-            var result = await _userManager.CreateAsync(user, Input.Password);
+            ReturnMessage returnmessage = new ReturnMessage(1, "User Created Successfully ");
+            try
+            {
+                var existinguser = await _userManager.FindByNameAsync(Input.Email);
 
-            if (result.Succeeded) {
-                _logger.LogInformation("User created a new account with password.");
+                if (existinguser != null)
+                {
+                    returnmessage.msg = "User Already Exist";
+                    returnmessage.msgCode = -3;
+                }
+                else
+                {
+                    var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName };
+                    var result = await _userManager.CreateAsync(user, Input.Password);
 
-                var roleCheck = await _roleManager.RoleExistsAsync(Input.UserRole);
-                if (!roleCheck)
-                    return BadRequest(new { message = "Something went wrong!" } );
-                
-                await _userManager.AddToRoleAsync(user, Input.UserRole);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User created a new account with password.");
+
+                        var roleCheck = await _roleManager.RoleExistsAsync(Input.UserRole);
+                        if (!roleCheck)
+                        {
+                            returnmessage.msg = "Role Doesnot Exist";
+                            returnmessage.msgCode = -3;
+                        }
+
+                        await _userManager.AddToRoleAsync(user, Input.UserRole);
+
+                    }
+                }
+
+                return this.Content(returnmessage.returnMessage(null),
+                       "application/json");
+
             }
-                
+            catch (Exception ex)
+            {
+                returnmessage.msg = ex.Message.ToString();
+                returnmessage.msgCode = -3;
+                return this.Content(returnmessage.returnMessage(null));
+            }
 
-            return Ok(result);
+       
 
         }
 

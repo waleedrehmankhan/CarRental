@@ -53,20 +53,6 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Extra">Booking Extras</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24">
-
-      <nz-collapse >
-      <nz-collapse-panel nzHeader="Booking Extra">
-        <app-view-extra (dataChange)="dataChange($event)"></app-view-extra>
-      </nz-collapse-panel>
-      </nz-collapse>
-
-    </nz-form-control>
-  </nz-form-item>
- 
-
   <ng-container *ngIf="booking.get('IsNewCustomer').value">
     <div style="margin: 0 auto;text-align: left;">
       <fieldset formGroupName="Customer">
@@ -128,6 +114,22 @@
       </fieldset>
     </div>
   </ng-container>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Extra">Booking Extras</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+
+      <nz-collapse>
+        <nz-collapse-panel nzHeader="Booking Extra">
+          <app-view-extra (dataChange)="dataChange($event)"></app-view-extra>
+        </nz-collapse-panel>
+      </nz-collapse>
+
+    </nz-form-control>
+  </nz-form-item>
+
+
+
 
 
   <nz-form-item nz-row>

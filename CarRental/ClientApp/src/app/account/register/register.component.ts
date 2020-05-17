@@ -11,6 +11,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 })
 export class RegisterComponent implements OnInit {
 
+  errors: string[]
   registerForm: FormGroup;
   registerDto = new RegisterUserDto();
   userRolesUrl: string = "account/roles";
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit {
   }
 
   submitForm = ( ) => {
-
+    this.errors = [];
     if (this.registerForm.valid) {
       console.log(this.registerForm)
       debugger;
@@ -47,28 +48,93 @@ export class RegisterComponent implements OnInit {
       debugger;
       this._dataService.postData("account/register", this.registerDto).subscribe(
         (res: any) => {
-          if(res.succeded){
-            this.registerForm.reset();
-          } else {
-            res.errors.forEach(element => {
-              switch(element.code) {
-                case 'DuplicateUserName':
-                  this.message.error("Username is already taken." , {
-                    nzDuration: 5000
-                  });
-                  break;
-                default:
-                  this.message.error(element.description , {
-                    nzDuration: 5000
-                  });
-                  break;
+          console.log(res);
+          //if(res.succeded){
+          //  this.registerForm.reset();
+          //} else {
+          //  res.errors.forEach(element => {
+          //    switch(element.code) {
+          //      case 'DuplicateUserName':
+          //        this.message.error("Username is already taken." , {
+          //          nzDuration: 5000
+          //        });
+          //        break;
+          //      default:
+          //        this.message.error(element.description , {
+          //          nzDuration: 5000
+          //        });
+          //        break;
+          //    }
+          //  });
+          //}
+
+          if (res.data && res.data.message.msgCode == -2) {
+
+            let validationErrorDictionary = res.data.message.msg;
+            debugger;
+            console.log(validationErrorDictionary);
+
+            setTimeout(() => {
+
+              for (var fieldName in validationErrorDictionary) {
+                this.registerForm.markAsDirty();
+                this.registerForm.markAllAsTouched();
+                if (validationErrorDictionary.hasOwnProperty(fieldName)) {
+                  debugger;
+                  this.errors.push(validationErrorDictionary[fieldName]);
+                  if (this.registerForm.get(fieldName)) {
+                 
+
+                    this.registerForm.get(fieldName).setErrors({ invalid: true, errors: validationErrorDictionary[fieldName] });
+                    this.registerForm.get(fieldName).markAsTouched();
+                    this.registerForm.get(fieldName).markAsDirty();
+
+
+
+                    console.log(validationErrorDictionary[fieldName]);
+                  }
+
+                  else {
+                    debugger;
+                    // if we have cross field validation then show the validation error at the top of the screen
+                    this.errors.push(validationErrorDictionary[fieldName]);
+                  }
+                }
               }
+
+
+
+            }, 100);
+
+
+          }
+          else if (res.message.msgCode == "1") {
+            
+
+            this.message.success(res.message.msg, {
+              nzDuration: 5000
+            });
+            this.registerForm.reset();
+            
+          }
+          else if (res.message && res.message.msgCode == -3) {
+            debugger;
+            console.log('hello');
+            this.errors.push(res.message.msg);
+            this.message.error(res.message.msg, {
+              nzDuration: 5000
             });
           }
-        },
-          err => {
-            console.log(err);
+          else {
+            this.errors.push("something went wrong!");
+
+
+
           }
+          this.registerForm.markAsDirty();
+
+        }
+           
       );
     }
   }

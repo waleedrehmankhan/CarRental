@@ -86,12 +86,13 @@ namespace CarRental.Controllers
                     bookingToAdd.ReturnDate = Utility.ConvertToDatetime(bookingDto.ReturnDate);
                     _unitOfWork.Bookings.Add(bookingToAdd);
                  
-                    foreach (var item in bookingDto.bookingextras)
-                    {
-                        var itemtoadd = _mapper.Map<BookingExtra>(item);
-                        itemtoadd.Booking = bookingToAdd;
-                        _unitOfWork.BookingExtras.Add(itemtoadd);
-                    }
+                    //foreach (var item in bookingDto.bookingextras)
+                    //{
+                    //    var itemtoadd = _mapper.Map<BookingExtra>(item);
+                    //    itemtoadd.Booking = bookingToAdd;
+
+                    //    _unitOfWork.BookingExtras.Add(itemtoadd);
+                    //}
                     
                 }
                 else
@@ -103,6 +104,19 @@ namespace CarRental.Controllers
                     }
                     _unitOfWork.Bookings.Update(bookingToAdd);
        
+                }
+                foreach (var item in bookingDto.bookingextras)
+                {
+                    var itemtoadd = _mapper.Map<BookingExtra>(item);
+                    itemtoadd.Booking = bookingToAdd;
+                    var extra = _unitOfWork.BookingExtras.Find(x => x.BookingId == itemtoadd.Booking.Id && x.ExtraId == itemtoadd.ExtraId);
+                   if (extra.Count()>0)
+                    {
+                        itemtoadd.Id = extra.First().Id;
+                        _unitOfWork.BookingExtras.Update(itemtoadd);
+                    }
+                   else
+                    _unitOfWork.BookingExtras.Add(itemtoadd);
                 }
                 var status = _unitOfWork.Complete();
                 _logger.LogInformation("Log:Add Booking for ID: {Id}", bookingToAdd.Id);
@@ -167,12 +181,15 @@ namespace CarRental.Controllers
 
                 var extras = await Task.Run(() => _unitOfWork.Extras.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true));
                 var extrasToReturn = _mapper.Map<IEnumerable<ExtraDto>>(extras);
-
-                var result = extrasToReturn.Join(bookingextralist, d => d.ExtraId, s => s.ExtraId, (d, s) =>
+                if(bookingextralist!=null)
                 {
-                    d.Count = s.Count;
-                    return d;
-                }).ToList();
+                    var result = extrasToReturn.Join(bookingextralist, d => d.ExtraId, s => s.ExtraId, (d, s) =>
+                    {
+                        d.Count = s.Count;
+                        return d;
+                    }).ToList();
+
+                }
 
                 return this.Content(rm.returnMessage(new PagedResultDto<ExtraDto>
                     (extrasToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
