@@ -41,13 +41,14 @@
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CarId">Car</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('CarId').errors?.errors" [nzSm]="14" [nzXs]="24">
       <crselect [url]="carurl" key="Model" value="Id" formControlName="CarId"></crselect>
+  <label nz-checkbox formControlName="IsNewCustomer">{{checkboxname}}</label>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CustomerId">Customer</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('CustomerId').errors?.errors" [nzSm]="14" [nzXs]="24">
-      <label nz-checkbox formControlName="IsNewCustomer">{{checkboxname}}</label>
+
       <crselect [disabled]="(booking.get('IsNewCustomer').value)" [url]="customerurl" key="FirstName" value="Id" formControlName="CustomerId"></crselect>
 
     </nz-form-control>

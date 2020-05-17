@@ -184,7 +184,7 @@ namespace CarRental.Controllers
                 Subject = new ClaimsIdentity(new Claim[]{
                     new Claim("UserID", _user.Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(5),
+                Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256Signature)
             };
