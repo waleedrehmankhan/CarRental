@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules, Router } from '@angular/router';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { LoginComponent } from './account/login/login.component';
-import { RegisterComponent } from './account/register/register.component';
 import {
   AuthGuardService as AuthGuard
 } from './auth/auth-guard.service';
@@ -46,6 +45,11 @@ const routes: Routes = [
           "path": "car",
           "loadChildren": () => import("./pages/car/car.module").then(m => m.CarModule),
           "data": { "breadcrumb": "Car" }
+        },
+        {
+          "path": "branch",
+          "loadChildren": () => import("./pages/branch/branch.module").then(m => m.BranchModule),
+          "data": { "breadcrumb": "Branch" }
         },
 
        
