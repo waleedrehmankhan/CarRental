@@ -5,6 +5,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { BranchDto } from 'src/app/classes/BranchDto';
 
+const makeBranchFormControl = (fb: FormBuilder, Id: number = -1): FormGroup => {
+  return fb.group({
+      Id: Id,
+      BranchName: new FormControl(),
+      PhoneNumber: new FormControl(),
+      Unit: new FormControl(),
+      Street: new FormControl(),
+      Suburb: new FormControl(),
+      ZipCode: new FormControl(),
+      City: new FormControl(),
+      State: new FormControl()
+  })
+
+}
+
+export { makeBranchFormControl };
+
+
+
 @Component({
   selector: 'app-add-branch',
   templateUrl: './add-branch.component.html',
@@ -17,8 +36,24 @@ export class AddBranchComponent implements OnInit {
   successfulSave: boolean;
   errors: string[];
   
-  constructor(private fb: FormBuilder, private _dataService: DataService, private message: NzMessageService, private router: Router, private route: ActivatedRoute) {
-    this.branchForm = new FormGroup({
+  constructor(private fb: FormBuilder, private _dataService: DataService, private activatedRoute: ActivatedRoute, private message: NzMessageService, private router: Router, private route: ActivatedRoute) {
+  }
+
+  ngOnInit() {
+    const Id = this.activatedRoute.snapshot.params.Id;
+
+    Id && this._dataService.postData("branch/getBranchDetails", { "Id": Id }).subscribe
+      (
+
+        response => {
+          const [branch] = response.data.Items;
+          this.branchForm.patchValue(branch);
+
+        }
+      );
+
+    this.branchForm = this.fb.group({
+      Id: Id,
       BranchName: new FormControl(),
       PhoneNumber: new FormControl(),
       Unit: new FormControl(),
@@ -26,21 +61,20 @@ export class AddBranchComponent implements OnInit {
       Suburb: new FormControl(),
       ZipCode: new FormControl(),
       City: new FormControl(),
-      State: new FormControl(),
-
-   });
-  }
-
-  ngOnInit() {
-    this.branchForm.reset();
+      State: new FormControl()
+    });
+    console.log(this.branchForm);    
+    this.errors = [];
   }
 
   submitForm = ( ) => {
     this.errors = [];
     if (this.branchForm.valid) {
+      debugger;
       console.log(this.branchForm);
 
       //object
+      this.branchDto.Id = this.branchForm.value.Id;
       this.branchDto.BranchName = this.branchForm.value.BranchName;
       this.branchDto.PhoneNumber = this.branchForm.value.PhoneNumber;
       this.branchDto.Unit = this.branchForm.value.Unit;
@@ -56,7 +90,6 @@ export class AddBranchComponent implements OnInit {
         (res: any) => {
           if (res.data && res.data.message.msgCode == -2) {
             let validationErrorDictionary = res.data.message.msg;
-            debugger;
             console.log(validationErrorDictionary);
 
             setTimeout(() => {
@@ -80,7 +113,6 @@ export class AddBranchComponent implements OnInit {
                   }
 
                   else {
-                    debugger;
                     // if we have cross field validation then show the validation error at the top of the screen
                     this.errors.push(validationErrorDictionary[fieldName]);
                   }
@@ -93,7 +125,6 @@ export class AddBranchComponent implements OnInit {
           }
           else if (res.message.msgCode =="1")
           {
-            debugger;
 
             this.successfulSave = true;
              
@@ -103,13 +134,11 @@ export class AddBranchComponent implements OnInit {
             this.router.navigateByUrl("branch/view")
           }
           else if (res.data && res.data.message.msgCode == -3) {
-            debugger;
             console.log('hello');
             this.errors.push(res.data.message.msg);
 
           }
           else {
-            debugger;
 
             this.errors.push("something went wrong!");
 
@@ -119,7 +148,6 @@ export class AddBranchComponent implements OnInit {
           this.branchForm.markAsDirty();
         },
         err => {
-          debugger;
 
           this.errors.push("something went wrong!");
           console.log(err);

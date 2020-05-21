@@ -3,6 +3,8 @@
   </div>
 
   <form nz-form [formGroup]="branchForm" (ngSubmit)="submitForm()">
+    <input style="display: none;" nz-input formControlName="Id" id="Id" />
+    
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="BranchName">Branch Name</nz-form-label>
       <nz-form-control [nzErrorTip]="branchForm.get('BranchName').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>

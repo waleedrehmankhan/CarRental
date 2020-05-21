@@ -31,7 +31,7 @@ export class ViewCustomerComponent implements OnInit {
   deleteClicked(data) {
     console.log("data:", data);
     debugger;
-    this._dataService.postData("customers/deleteCustomer", { "CustomerID": data.Id }).subscribe(
+    this._dataService.postData("customers/deleteCustomer", { "Id": data.Id }).subscribe(
 
       response => {
 
@@ -39,18 +39,13 @@ export class ViewCustomerComponent implements OnInit {
         this.message.success(response.message.msg, {
           nzDuration: 5000
         });
-
       }
-
     );
-
-
 
   }
 
   editClicked(data: CustomerDto) {
     console.log(data);
     this.router.navigateByUrl(`customer/edit/${data.Id}`)
-
   }
 }

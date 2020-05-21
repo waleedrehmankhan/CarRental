@@ -56,7 +56,8 @@ namespace CarRental.Controllers
                 }), "application/json");
             }
         }
-         [HttpPost("getCustomerDetailById")]
+        
+        [HttpPost("getCustomerDetailById")]
         public async Task<ContentResult> GetCustomerById(GetCustomerInput input)
         {
             return await GetCustomer(input);

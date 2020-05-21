@@ -50,6 +50,12 @@ namespace CarRental.Controllers
                 }), "application/json");
             }
         }
+
+        [HttpPost("getBranchDetailById")]
+        public async Task<ContentResult> GetBranchById(GetBranchInput input)
+        {
+            return await GetBranch(input);
+        }
         
         [HttpPost("createOrUpdateBranch")]
         [ValidateFilter]
