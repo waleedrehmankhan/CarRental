@@ -23,9 +23,9 @@ export class LoginComponent implements OnInit {
       Email: new FormControl(),
       Password: new FormControl()
    });
-   }
+  }
 
-   ngOnInit() {
+  ngOnInit() {
      this.route.queryParams
        .subscribe(params => this.return = params['return'] || '');
     this.loginForm.reset();

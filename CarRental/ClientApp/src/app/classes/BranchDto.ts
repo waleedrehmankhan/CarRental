@@ -6,10 +6,12 @@
     // template: The template to repeat for each matched item
     // separator (optional): A separator template that is placed between all templates e.g. $Properties[public $name: $Type][, ]
 
+import { AddressDto } from "./AddressDto";
+
     // More info: http://frhagn.github.io/Typewriter/
 
     
-    export class BranchDto {
+    export class BranchDto extends AddressDto {
         
         // BranchID
         public Id: number = 0;

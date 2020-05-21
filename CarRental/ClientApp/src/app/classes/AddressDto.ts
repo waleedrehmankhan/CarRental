@@ -19,6 +19,8 @@
         public City: string = null;
         // State
         public State: string = null;
+        // Suburb
+        public Suburb: string = null;
         // ZipCode
         public ZipCode: number = 0;
         // Country

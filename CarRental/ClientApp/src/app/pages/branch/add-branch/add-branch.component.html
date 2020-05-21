@@ -1,1 +1,70 @@
-<p>add-branch works!</p>
+<div class="alert alert-success" role="alert" *ngIf="successfulSave">
+    Branch saved successfully!
+  </div>
+
+  <form nz-form [formGroup]="branchForm" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="BranchName">Branch Name</nz-form-label>
+      <nz-form-control [nzErrorTip]="branchForm.get('BranchName').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+        <input nz-input formControlName="BranchName" placeholder="Enter Branch Name" id="BranchName" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="PhoneNumber">Phone Number</nz-form-label>
+      <nz-form-control [nzErrorTip]="branchForm.get('PhoneNumber').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+        <input nz-input formControlName="PhoneNumber" placeholder="Enter Phone Number" id="PhoneNumber" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Unit">Unit#</nz-form-label>
+      <nz-form-control [nzErrorTip]="branchForm.get('Unit').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+        <input nz-input formControlName="Unit" placeholder="Enter Unit" id="Unit" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Street">Street</nz-form-label>
+      <nz-form-control [nzErrorTip]="branchForm.get('Street').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+        <input nz-input formControlName="Street" placeholder="Enter Street" id="Street" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Suburb">Suburb</nz-form-label>
+      <nz-form-control [nzErrorTip]="branchForm.get('Suburb').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+        <input nz-input formControlName="Suburb" placeholder="Enter Suburb" id="Suburb" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ZipCode">Zip Code</nz-form-label>
+      <nz-form-control [nzErrorTip]="branchForm.get('ZipCode').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+        <input nz-input formControlName="ZipCode" placeholder="Enter ZipCode" id="ZipCode" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="City">City</nz-form-label>
+      <nz-form-control [nzErrorTip]="branchForm.get('City').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+        <input nz-input formControlName="City" placeholder="Enter City" id="City" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="State">State</nz-form-label>
+      <nz-form-control [nzErrorTip]="branchForm.get('State').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+        <input nz-input formControlName="State" placeholder="Enter State" id="State" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+      <nz-form-control [nzSpan]="14" [nzOffset]="6">
+        <button nz-button nzType="primary" [disabled]="branchForm.invalid">Save Branch</button>
+      </nz-form-control>
+    </nz-form-item>
+
+  </form>
+ 
+
