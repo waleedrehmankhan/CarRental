@@ -12,6 +12,7 @@ namespace CarRental.Models
         public double TotalAmount { get; set; }
         public double GST { get; set; }
         public double LateFee { get; set; }
+        public bool IsReversed { get; set; }
         public string PaymentType { get; set; }
         public string Remarks { get; set; }
 
