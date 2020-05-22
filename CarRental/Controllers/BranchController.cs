@@ -34,7 +34,7 @@ namespace CarRental.Controllers
         {
             try
             {
-                ReturnMessage rm = new ReturnMessage(1,"Success");
+                ReturnMessage rm = new ReturnMessage(1, "Success");
                 var branchs = await Task.Run(() => _unitOfWork.Branchs.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true));
                 var branchsToReturn = _mapper.Map<IEnumerable<BranchDto>>(branchs);
                 return this.Content(rm.returnMessage(new PagedResultDto<BranchDto>
@@ -56,7 +56,7 @@ namespace CarRental.Controllers
         {
             return await GetBranch(input);
         }
-        
+
         [HttpPost("createOrUpdateBranch")]
         [ValidateFilter]
         public async Task<ContentResult> CreateOrUpdateBranch(BranchDto branchDto)
@@ -69,6 +69,7 @@ namespace CarRental.Controllers
                 var branchToAdd = _mapper.Map<Branch>(branchDto);
                 if (branch.Count() == 0)
                 {
+                    branchToAdd.Id = 0;
                     _unitOfWork.Branchs.Add(branchToAdd);
 
                 }

@@ -1,3 +1,56 @@
-<div>
- <p>add car works</p>
+<div class="alert alert-success" role="alert" *ngIf="successfulSave">
+    Car saved successfully!
 </div>
+
+<form nz-form [formGroup]="carForm" (ngSubmit)="submitForm()">
+    <input style="display: none;" nz-input formControlName="Id" id="Id" />
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="RegistrationNumber">Registration Number
+        </nz-form-label>
+        <nz-form-control [nzErrorTip]="carForm.get('RegistrationNumber').errors?.errors" [nzSm]="14" [nzXs]="24"
+            nzHasFeedBack>
+            <input nz-input formControlName="RegistrationNumber" placeholder="Enter Registration Number"
+                id="RegistrationNumber" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Year">Year
+        </nz-form-label>
+        <nz-form-control [nzErrorTip]="carForm.get('Year').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+            <input nz-input formControlName="Year" placeholder="Enter Year" id="Year" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Make">Make
+        </nz-form-label>
+        <nz-form-control [nzErrorTip]="carForm.get('Make').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+            <input nz-input formControlName="Make" placeholder="Enter Make" id="Make" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Model">Model
+        </nz-form-label>
+        <nz-form-control [nzErrorTip]="carForm.get('Model').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+            <input nz-input formControlName="Model" placeholder="Enter Model" id="Model" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Mileage">Mileage
+        </nz-form-label>
+        <nz-form-control [nzErrorTip]="carForm.get('Mileage').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+            <input nz-input formControlName="Mileage" placeholder="Enter Mileage" id="Mileage" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item nz-row>
+        <nz-form-control [nzSpan]="14" [nzOffset]="6">
+            <button nz-button nzType="primary" [disabled]="carForm.invalid">Save Car</button>
+        </nz-form-control>
+    </nz-form-item>
+
+</form>
