@@ -115,6 +115,9 @@
     <None Update="ClientApp\src\app\classes\IdentityRoleDto.ts">
       <CustomToolNamespace>Dtos\IdentityRoleDto.cs</CustomToolNamespace>
     </None>
+    <None Update="ClientApp\src\app\classes\InvoiceDto.ts">
+      <CustomToolNamespace>Dtos\InvoiceDto.cs</CustomToolNamespace>
+    </None>
     <None Update="ClientApp\src\app\classes\LoginDto.ts">
       <CustomToolNamespace>Dtos\LoginDto.cs</CustomToolNamespace>
     </None>
@@ -123,6 +126,9 @@
     </None>
     <None Update="ClientApp\src\app\classes\PagedAndSortedInputDto.ts">
       <CustomToolNamespace>Helpers\PagedAndSortedInputDto.cs</CustomToolNamespace>
+    </None>
+    <None Update="ClientApp\src\app\classes\PaymentDto.ts">
+      <CustomToolNamespace>Dtos\PaymentDto.cs</CustomToolNamespace>
     </None>
     <None Update="ClientApp\src\app\classes\RegistrationDto.ts">
       <CustomToolNamespace>Dtos\RegistrationDto.cs</CustomToolNamespace>

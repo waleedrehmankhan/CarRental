@@ -52,7 +52,17 @@ const routes: Routes = [
           "data": { "breadcrumb": "Branch" }
         },
 
-       
+        {
+          "path": "test",
+          "loadChildren": () => import("./pages/test/test.module").then(m => m.TestModule),
+          "data": { "breadcrumb": "test" }
+        },
+        
+        {
+          "path": "payment",
+          "loadChildren": () => import("./pages/payment/payment.module").then(m => m.PaymentModule),
+          "data": { "breadcrumb": "payment" }
+        },
         
       ]
 

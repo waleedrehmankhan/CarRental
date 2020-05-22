@@ -22,6 +22,7 @@ export class ViewCarComponent implements OnInit {
   ngOnInit() {
     this.getCarData();
   }
+  membershipurl: string = "membership/getMemberShip";
   getCarData() {
 
     this._dataService.postData("car/getCarDetails", {  }).subscribe(

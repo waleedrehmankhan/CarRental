@@ -4,13 +4,13 @@ namespace CarRental.Dtos
 {
     public class RegisterUserDto : LoginUserDto
     {
-        [Required]
+         
         public string FirstName { get; set; }
 
-        [Required]
+        
         public string LastName { get; set; }
 
-        [Required]
+         
         public string UserRole { get; set; }
         public string CurrentToken { get; set; }
     }

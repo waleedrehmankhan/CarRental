@@ -1,25 +1,22 @@
-<div style="display:flex;justify-content:center;align-items:center;padding:20px;border:1px solid #dddddd;border-radius:10px;margin:10px">
-  <div style="flex:2">
+<div style="display:flex;justify-content:center;align-items:center;padding:5px;border:1px solid #dddddd;border-radius:10px;margin:10px">
+  <div style="flex:2; text-align:center">
 
     <label nz-checkbox [nzValue]="[extra.ExtraId]" [(ngModel)]="checked" (ngModelChange)="selected()"> </label>
   </div>
-  <div style="flex:2;padding:20px">
+  <div style="flex:4;padding:5px">
     <label>{{extra.Name}}</label>
   </div>
-  <div style="flex:2">
+  <div style="flex:1; padding:5px;">
     <nz-input-number   [nzStep]="1" [(ngModel)]="extra.Count" (ngModelChange)="selected()"></nz-input-number>
   </div>
 
  
-  <div style="flex:2">
+  <div style="flex:1">
     X <label>{{extra.Price}}</label>
-  </div>
-  <div style="flex:2">
     <label>=</label>
-  </div>
-  <div style="flex:2">
     <label>{{extra.Price*extra.Count}}</label>
   </div>
+ 
 
 
 

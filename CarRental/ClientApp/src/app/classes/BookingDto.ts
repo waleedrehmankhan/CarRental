@@ -1,6 +1,6 @@
-﻿import { BookingExtraDto } from "./BookingExtraDto";
+﻿import { CustomerDto } from "./CustomerDto";
 import { BranchDto } from "./BranchDto";
-import { CustomerDto } from "./CustomerDto";
+import { BookingExtraDto } from "./BookingExtraDto";
 import { CarDto } from "./CarDto";
 
  

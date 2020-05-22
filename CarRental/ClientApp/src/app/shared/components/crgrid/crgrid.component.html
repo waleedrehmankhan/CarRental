@@ -3,17 +3,23 @@
 <nz-table [nzFrontPagination]="false" #Table [nzData]="records">
   <thead>
     <tr>
-      <th *ngFor="let column of columns">{{ column }}</th>
-      <th colspan="2">Action</th>
+      <th nzShowSort nzSortKey="{{column}}" nzShowFilter *ngFor="let column of columns">{{ column }}</th>
+      <th [attr.colspan]="[actions.length]">Action</th>
 
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let data of Table.data">
       <td *ngFor="let column of columns">{{ data[column] }}</td>
-      <td> <a><i nz-icon nzType="edit" (click)="editClicked(data)" nzTheme="twotone"></i></a></td>
+      <!--<td> <a><i nz-icon nzType="edit" (click)="editClicked(data)" nzTheme="twotone"></i></a></td>
       <td>
         <a><i nz-icon nzType="delete" (click)="deleteClicked(data)" nzTheme="twotone"></i></a>
+      </td>-->
+
+      <td *ngFor="let column of actions">
+        <a><i nz-icon nzType="{{ column }}" (click)="callActions([column],data)" nzTheme="twotone"></i></a>
+
+
       </td>
     </tr>
   </tbody>

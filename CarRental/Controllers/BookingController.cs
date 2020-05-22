@@ -48,6 +48,7 @@ namespace CarRental.Controllers
                     item.bookingextras = GetBookingExtras(new GetBookingExtraInput() { BookingId = item.Id });
                    
                 }
+                
                 return this.Content(rm.returnMessage(new PagedResultDto<BookingDto>
                     (bookingdToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
                     "application/json");
@@ -71,6 +72,8 @@ namespace CarRental.Controllers
         {
              
             Booking bookingToAdd = null;
+            Invoice invoicetoadd = null;
+            Customer customer = null;
             ReturnMessage returnmessage = new ReturnMessage(1, "Booking Added ");
             try
             {
@@ -81,11 +84,13 @@ namespace CarRental.Controllers
                     if(!bookingDto.IsNewCustomer&& bookingDto.CustomerId !=0)
                     {
                         bookingToAdd.Customer = null;
+                       customer= _unitOfWork.Customers.Find(x => x.Id == bookingDto.CustomerId).First();
                     }
-                    bookingToAdd.FromDate = Utility.ConvertToDatetime(bookingDto.FromDate);
-                    bookingToAdd.ReturnDate = Utility.ConvertToDatetime(bookingDto.ReturnDate);
+                    
                     _unitOfWork.Bookings.Add(bookingToAdd);
-                 
+
+
+
                     //foreach (var item in bookingDto.bookingextras)
                     //{
                     //    var itemtoadd = _mapper.Map<BookingExtra>(item);
@@ -93,7 +98,25 @@ namespace CarRental.Controllers
 
                     //    _unitOfWork.BookingExtras.Add(itemtoadd);
                     //}
-                    
+
+                    long maxbookingid = _unitOfWork.Invoices.GetMaxBookingId();
+                    InvoiceDto invoiceDto = new InvoiceDto()
+                    {
+                        InvoiceNumber ="INV-" +((int)maxbookingid + 1).ToString(),
+                        //  InvoiceNumber = "INV-" + bookingToAdd.Id.ToString(),
+                        CustomerId = bookingToAdd.CustomerId,
+                        IssueDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm"),
+                        DueDate = bookingToAdd.FromDate.ToString("yyyy/MM/dd HH:mm"),
+                        Description = "Invoice Created For the Booking by " + customer.FirstName,
+                        Amount = 0
+
+
+                    };
+
+                    invoicetoadd = _mapper.Map<Invoice>(invoiceDto);
+                    invoicetoadd.Booking = bookingToAdd;
+                    _unitOfWork.Invoices.Add(invoicetoadd);
+
                 }
                 else
                 {
@@ -118,6 +141,9 @@ namespace CarRental.Controllers
                    else
                     _unitOfWork.BookingExtras.Add(itemtoadd);
                 }
+          
+
+
                 var status = _unitOfWork.Complete();
                 _logger.LogInformation("Log:Add Booking for ID: {Id}", bookingToAdd.Id);
                 return this.Content(returnmessage.returnMessage(null),

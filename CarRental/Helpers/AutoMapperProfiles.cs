@@ -46,6 +46,9 @@ namespace CarRental.Helpers
 
             CreateMap<IdentityRole, IdentityRoleDto>();
             CreateMap<IdentityRoleDto, IdentityRole>();
+
+            CreateMap<InvoiceDto, Invoice>();
+            CreateMap<Invoice, InvoiceDto>();
         }
     }
 }

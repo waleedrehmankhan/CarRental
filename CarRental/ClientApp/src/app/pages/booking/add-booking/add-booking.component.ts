@@ -47,6 +47,9 @@ export class AddBookingComponent implements OnInit {
 
         response => {
           const [booking] = response.data.Items;
+          console.log(booking.FromDate);
+          booking.FromDate = new Date(booking.FromDate);
+          booking.ReturnDate = new Date(booking.ReturnDate);
           this.booking.patchValue(booking);
 
         }

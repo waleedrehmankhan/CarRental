@@ -41,11 +41,11 @@
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CarId">Car</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('CarId').errors?.errors" [nzSm]="14" [nzXs]="24">
       <crselect [url]="carurl" key="Model" value="Id" formControlName="CarId"></crselect>
-  <label nz-checkbox formControlName="IsNewCustomer">{{checkboxname}}</label>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
+  <label nz-checkbox formControlName="IsNewCustomer">{{checkboxname}}</label>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CustomerId">Customer</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('CustomerId').errors?.errors" [nzSm]="14" [nzXs]="24">
 
@@ -117,11 +117,11 @@
   </ng-container>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Extra">Booking Extras</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Extra">Booking Addons</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24">
 
       <nz-collapse>
-        <nz-collapse-panel nzHeader="Booking Extra">
+        <nz-collapse-panel nzHeader="Booking Addons">
           <app-view-extra (dataChange)="dataChange($event)"></app-view-extra>
         </nz-collapse-panel>
       </nz-collapse>

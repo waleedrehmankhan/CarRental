@@ -13,11 +13,11 @@ namespace CarRental.Helpers
             DateTime date;
             return DateTime.TryParse(value, out date);
         }
-        public static DateTime ConvertToDatetime(string value)
+        public static string ConvertToDatetime(string value)
         {
             DateTime date;
             DateTime.TryParse(value, out date);
-            return date;
+            return date.ToString("yyyy/MM/dd hh:mm tt");
         }
         public static bool NotPastDate(string value)
         {
