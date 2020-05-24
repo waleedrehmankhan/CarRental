@@ -39,6 +39,7 @@ export class SidebarmenuService {
     {
       title: "Payment", icon: "pay-circle", children: [
         { title: "Payment Details", routerLink: "/payment/view" }
+       
       ]
     },
     {
@@ -66,7 +67,8 @@ export class SidebarmenuService {
     },
     {
       title: "Payment", icon: "pay-circle", children: [
-        { title: "Payment Details", routerLink: "/payment/view" }
+        { title: "Payment Details", routerLink: "/payment/view" },
+       
       ]
     }
     

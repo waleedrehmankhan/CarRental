@@ -40,7 +40,7 @@ namespace CarRental.Controllers
             try
             {
                 ReturnMessage rm = new ReturnMessage(1, "Success");
-                var invoices = await Task.Run(() => _unitOfWork.Invoices.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true,includeProperties:"Customer"));
+                var invoices = await Task.Run(() => _unitOfWork.Invoices.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true,includeProperties:"Customer,Booking"));
                 var invoicesToReturn = _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
                 return this.Content(rm.returnMessage(new PagedResultDto<InvoiceDto>
                     (invoicesToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
@@ -55,7 +55,49 @@ namespace CarRental.Controllers
                 }), "application/json");
             }
         }
+        [HttpPost("getInvoiceItemDetails")]
+        public async Task<ContentResult> GetInvoiceItem(GetInvoiceInput input)
+        {
+            try
+            {
+                List<ExtraDto> extralist = new List<ExtraDto> ();
+                ReturnMessage rm = new ReturnMessage(1, "Success");
+                var invoices = await Task.Run(() => _unitOfWork.Invoices.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true, includeProperties: "Customer,Booking"));
+                var invoicesToReturn = _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
+                //  var extra = _unitOfWork.BookingExtras.Find(x => x.BookingId == invoices.First().Booking.Id);
+                var extra = await Task.Run(() => _unitOfWork.BookingExtras.GetAsync(filter: w => w.BookingId == invoices.First().BookingId, includeProperties: "Extra"));
+                var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w =>w.Id== invoices.First().Booking.CarId, includeProperties: "CarClassification"));
+               var car= _mapper.Map<IEnumerable<CarDto>>(cars).First();
+                foreach (var item in extra)
+                {
+                    var extraDto = _mapper.Map<ExtraDto>(item.Extra);
+                    extraDto.Count = item.Count??0;
+                    extralist.Add(extraDto);
+                }
+                InvoiceDetailDto invoiceDetail = new InvoiceDetailDto()
+                {
+                    Invoice = invoicesToReturn.First(),
+                    InvoiceId = invoicesToReturn.First().Id,
+                    Booking = invoicesToReturn.First().Booking,
+                    BookingExtraList = extralist,
+                    Car = car
+                };
+                List<InvoiceDetailDto> invoicedetailList = new List<InvoiceDetailDto>();
+                invoicedetailList.Add(invoiceDetail);
 
+                return this.Content(rm.returnMessage(new PagedResultDto<InvoiceDetailDto>
+                   (invoicedetailList.AsQueryable(), input.pagenumber, input.pagesize)),
+                   "application/json");
+            }
+            catch (Exception ex)
+            {
+                return this.Content(JsonConvert.SerializeObject(new
+                {
+                    msgCode = -3,
+                    msg = ex.Message
+                }), "application/json");
+            }
+        }
 
     }
 }

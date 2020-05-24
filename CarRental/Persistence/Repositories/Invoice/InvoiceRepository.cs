@@ -16,7 +16,8 @@ namespace CarRental.Persistence
 
         public long GetMaxBookingId()
         {
-            return  this.dbSet.Select(x=>x.BookingId).Max();
+            var id= this.dbSet.Select(x => x.BookingId);
+            return   id.Count()==0?0:id.Max();
         }
     }
 }

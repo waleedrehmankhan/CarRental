@@ -1,6 +1,6 @@
 <!--<div><app-crgrid [refresh]="refresh" (deleteClick)="deleteClicked($event)" (editClick)="editClicked($event)" [columns]="lstcolumns" [url]="url"></app-crgrid></div>-->
 
-  <div style=" justify-content:center;padding:10px;align-items:center; border:1px solid #dddddd;border-radius:10px; ">
+  <!--<div style=" justify-content:center;padding:10px;align-items:center; border:1px solid #dddddd;border-radius:10px; ">
 
     <form nz-form [formGroup]="validateForm" class="ant-advanced-search-form">
       <div nz-row [nzGutter]="24">
@@ -28,6 +28,6 @@
         </div>
       </div>
     </form>
-    </div>
+    </div>-->
 
     <app-car-item *ngFor="let car of carItems" [car]="car"></app-car-item>

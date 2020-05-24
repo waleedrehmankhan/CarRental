@@ -5,17 +5,17 @@ import { LoginComponent } from './account/login/login.component';
 import {
   AuthGuardService as AuthGuard
 } from './auth/auth-guard.service';
+ import { VoucherComponent } from './pages/payment/voucher/voucher.component';
 const routes: Routes = [
   {
     "path": "error",
     "loadChildren": () => import("./pages/error/error.module").then(m => m.ErrorModule),
   },
- 
+   
   {
   
     path: 'login', component: LoginComponent
   },
-  
   {
     canActivate: [AuthGuard],
     path: '', component: LayoutComponent,

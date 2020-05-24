@@ -20,7 +20,7 @@ export class CrgridComponent  implements OnInit {
   @Input() refresh: Observable<boolean>;
   @Output() editClick = new EventEmitter<any>();
   @Output() deleteClick = new EventEmitter<any>();
-  @Output() payClick = new EventEmitter<any>();
+  @Output() infoClick = new EventEmitter<any>();
   @Output() callAction = new EventEmitter<any>();
 
 
@@ -89,9 +89,9 @@ export class CrgridComponent  implements OnInit {
     this.deleteClick.next(data);
   }
 
-  payClicked(data: any) {
+  infoClicked(data: any) {
     console.log(data);
-    this.payClick.next(data);
+    this.infoClick.next(data);
   }
 
 
@@ -103,7 +103,7 @@ export class CrgridComponent  implements OnInit {
      
       case 'edit': return this.editClicked(data);
       case 'delete': return this.deleteClicked(data);
-      case 'dollar': return this.payClicked(data);
+      case 'info-circle': return this.infoClicked(data);
    
     }
   }

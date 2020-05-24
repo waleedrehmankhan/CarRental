@@ -3,6 +3,7 @@ import { DataService } from '../../../data.service';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Subject } from 'rxjs';
+import { InvoiceDto } from '../../../classes/InvoiceDto';
 
 @Component({
   selector: 'app-view-payment',
@@ -19,5 +20,12 @@ export class ViewPaymentComponent implements OnInit {
   ngOnInit() {
   }
   lstcolumns: string[] = ["InvoiceNumber","Customer.FirstName","Amount","IssueDate","DueDate","Description"]
-  lstactions:string[]=["edit","delete","dollar"]
+   
+
+  editClicked(data: InvoiceDto) {
+    console.log(data);
+    this.router.navigateByUrl(`payment/voucher/${data.Id}`)
+  }
+ 
+
 }

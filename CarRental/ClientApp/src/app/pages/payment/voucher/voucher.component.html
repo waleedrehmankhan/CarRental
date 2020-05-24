@@ -1,0 +1,113 @@
+
+  <div>
+    <button nz-button nzType="default" (click)="print()"><i nz-icon nzType="printer" nzTheme="outline"></i> Print</button>
+  </div>
+  <div class="printArea">
+
+
+    <div class="invoice-box">
+      <!--<header>Customer Copy </header>-->
+      <table cellpadding="0" cellspacing="0">
+        <tr class="top">
+          <td colspan="2">
+            <table>
+              <tr>
+                <td class="title">
+                  <img src="/StaticFiles/images/logo.png" style="width:100%; max-width:300px;">
+                </td>
+
+                <td>
+                  Invoice #: {{invoiceDetails.Invoice.InvoiceNumber}}<br>
+                  Created: {{invoiceDetails.Invoice.IssueDate}}<br>
+                  Due: {{invoiceDetails.Invoice.DueDate}}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr class="information">
+          <td colspan="2">
+            <table>
+              <tr>
+                <td>
+                  Car Rental Company.<br>
+                  3/100 Hudson Street<br>
+                  Hurstville 2220 <br>
+                  02xxxxxxxxxxxx
+                </td>
+
+                <td>
+                  {{invoiceDetails.Invoice.Customer.FirstName}}  {{invoiceDetails.Invoice.Customer.LastName}}    <br>
+                  {{invoiceDetails.Invoice.Customer.EmailAddress}}<br>
+                  {{invoiceDetails.Invoice.Customer.PhoneNumber}}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!--<tr class="heading">
+    <td>
+      Payment Method
+    </td>
+
+    <td>
+      Check #
+    </td>
+  </tr>-->
+        <!--<tr class="details">
+    <td>
+      Check
+    </td>
+
+    <td>
+      1000
+    </td>
+  </tr>-->
+
+        <tr class="heading">
+          <td>
+            Item
+          </td>
+
+          <td>
+            Price
+          </td>
+        </tr>
+
+        <tr class="item">
+          <td>
+            {{ invoiceDetails.Car.Make}}| {{invoiceDetails.Car.Model}}| {{invoiceDetails.Car.Year}}
+          </td>
+
+          <td>
+            $ {{ invoiceDetails.Car.CarClassification.CostPerDay}}
+          </td>
+        </tr>
+
+
+        <tr *ngFor="let data of bookingextralist">
+           
+          <td>
+            {{ data.Name }} * {{ data.Count }}
+          </td>
+
+          <td>
+            $ {{ data.Price*data.Count }}
+          </td>
+        </tr>
+
+  
+
+        <tr class="total">
+          <td></td>
+
+          <td>
+            Total: $00.00
+          </td>
+        </tr>
+      </table>
+    </div>
+  
+  </div>
