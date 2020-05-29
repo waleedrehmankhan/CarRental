@@ -1,5 +1,4 @@
-
-  <div style="    background-color: #ffffff;
+<div style="    background-color: #ffffff;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -13,28 +12,29 @@
     box-shadow: 13px 3px 36px -9px rgba(117,115,117,1);
   ">
 
-   
 
 
-      <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm()">
 
-        <nz-form-item>
-          <nz-form-control nzErrorTip="Please input your username!">
-            <nz-input-group nzPrefixIcon="user">
-              <input type="text" nz-input formControlName="userName" placeholder="Username" formControlName="Email" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
+  <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm()">
 
-        <nz-form-item>
-          <nz-form-control nzErrorTip="Please input your Password!">
-            <nz-input-group nzPrefixIcon="lock">
-              <input type="password" nz-input formControlName="password" placeholder="Password" formControlName="Password" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your username!">
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="userName" placeholder="Username" formControlName="Username" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
 
-        <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
-      </form>
-   
-  </div>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your Password!">
+        <nz-input-group nzPrefixIcon="lock">
+          <input type="password" nz-input formControlName="password" placeholder="Password"
+            formControlName="Password" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
+  </form>
+
+</div>

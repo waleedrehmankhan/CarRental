@@ -31,7 +31,7 @@ namespace CarRental.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<AccountController> _logger;
 
-        public AccountController(SignInManager<ApplicationUser> signInManager, 
+        public AccountController(SignInManager<ApplicationUser> signInManager,
             ILogger<AccountController> logger,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
@@ -49,7 +49,7 @@ namespace CarRental.Controllers
         [HttpPost]
         [Route("Register")]
         [ValidateFilter]
-        public async Task<Object> OnRegisterAsync(RegisterUserDto Input) 
+        public async Task<Object> OnRegisterAsync(RegisterUserDto Input)
         {
             ReturnMessage returnmessage = new ReturnMessage(1, "User Created Successfully ");
             try
@@ -63,7 +63,7 @@ namespace CarRental.Controllers
                 }
                 else
                 {
-                    var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName };
+                    var user = new ApplicationUser { UserName = Input.Username, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName };
                     var result = await _userManager.CreateAsync(user, Input.Password);
 
                     if (result.Succeeded)
@@ -80,6 +80,11 @@ namespace CarRental.Controllers
                         await _userManager.AddToRoleAsync(user, Input.UserRole);
 
                     }
+                    else
+                    {
+                        returnmessage.msg = result.Errors.FirstOrDefault().Description;
+                        returnmessage.msgCode = -3;
+                    }
                 }
 
                 return this.Content(returnmessage.returnMessage(null),
@@ -93,7 +98,7 @@ namespace CarRental.Controllers
                 return this.Content(returnmessage.returnMessage(null));
             }
 
-       
+
 
         }
 
@@ -108,13 +113,13 @@ namespace CarRental.Controllers
 
                 ReturnMessage rm = new ReturnMessage(1, "Login Succesful");
                 List<RegisterUserDto> registeruserlist = new List<RegisterUserDto>();
-                var user = await _userManager.FindByNameAsync(Input.Email);
+                var user = await _userManager.FindByNameOrEmailAsync(Input.Username);
                 if (user != null && await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
                     var token = GenerateSecurityToken(user);
                     var usertoreturn = _mapper.Map<RegisterUserDto>(user);
                     usertoreturn.CurrentToken = token;
-                    var role= await _userManager.GetRolesAsync(user);
+                    var role = await _userManager.GetRolesAsync(user);
                     usertoreturn.UserRole = role[0];
                     registeruserlist.Add(usertoreturn);
                 }
@@ -136,7 +141,7 @@ namespace CarRental.Controllers
                 }), "application/json");
             }
 
-           
+
         }
 
         [HttpPost]
@@ -147,7 +152,7 @@ namespace CarRental.Controllers
             // have to do pagination thing, otherwise angular component wasn't working.
             ReturnMessage rm = new ReturnMessage(1, "Success");
             var identityRoles = _roleManager.Roles.ToList();
-            var userRolesToReturn = 
+            var userRolesToReturn =
                 _mapper.Map<IEnumerable<IdentityRoleDto>>(identityRoles);
 
             return this.Content(rm.returnMessage(new PagedResultDto<IdentityRoleDto>
@@ -162,11 +167,11 @@ namespace CarRental.Controllers
         [Authorize]
         public async Task<Object> UserProfile()
         {
-            
-            string userId = User.Claims.First( u => u.Type == "UserID").Value;
+
+            string userId = User.Claims.First(u => u.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
 
-            return new 
+            return new
             {
                 user.Id,
                 user.FirstName,

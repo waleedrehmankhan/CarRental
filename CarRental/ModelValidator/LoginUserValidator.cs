@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace CarRental.ModelValidator
 {
-    public class LoginUserValidator: AbstractValidator<LoginUserDto>
+    public class LoginUserValidator : AbstractValidator<LoginUserDto>
     {
         public LoginUserValidator()
         {
-            RuleFor(x => x.Email).NotNull().NotEmpty().WithMessage("UserName is required");
+            RuleFor(x => x.Username).NotNull().NotEmpty().WithMessage("UserName is required");
             RuleFor(x => x.Password).NotNull().NotEmpty();
         }
     }
