@@ -19,6 +19,8 @@ export class VoucherComponent implements OnInit {
   @Input() data:any
 
   invoiceDetails: InvoiceDetailDto;
+  amountreceived: number = 0;
+  amountreturn: number = 0;
   bookingextralist: ExtraDto[];
   url: string = "invoice/getInvoiceItemDetails"
   constructor(private _dataService: DataService, private _printingService: PrintingService, private activatedRoute: ActivatedRoute, private fb: FormBuilder) { }
@@ -29,7 +31,8 @@ export class VoucherComponent implements OnInit {
 
         TotalAmount: new FormControl(),
         AmountReceived: new FormControl(),
-        AmountReturn: new FormControl()
+        AmountReturn: new FormControl(),
+        Remarks: new FormControl()
       });
     const invoiceId = this.activatedRoute.snapshot.params.Id;
     this.getInvoiceDetails(invoiceId);
@@ -223,4 +226,11 @@ export class VoucherComponent implements OnInit {
   submitForm() {
     console.log('test');
   }
+
+  onKeydown(event) {
+    debugger;
+     
+    this.amountreturn = this.amountreceived - this.invoiceDetails.Invoice.Amount;
+  }
+   
 }

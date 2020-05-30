@@ -14,7 +14,7 @@ namespace CarRental.Helpers
     {
         public static IServiceCollection AddTokenAuthentication(this IServiceCollection services, IConfiguration config)
         {
-            var secret = config.GetSection("JwtConfig").GetSection("secret").Value;
+            var secret = "PDv7DrqznYL6nv7DrqzjnQYO9JxIsWdcjnQYL6nu0f";
 
             var key = Encoding.ASCII.GetBytes(secret);
             services.AddAuthentication(x =>

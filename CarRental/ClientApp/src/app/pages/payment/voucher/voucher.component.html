@@ -112,7 +112,7 @@
             <td></td>
 
             <td>
-              Total: $00.00
+              Total: ${{invoiceDetails.Invoice.Amount}}
             </td>
           </tr>
         </table>
@@ -130,29 +130,53 @@
 
       <form nz-form [formGroup]="paymentForm" (ngSubmit)="submitForm()">
         <nz-form-item>
-          <nz-form-control nzErrorTip="Please input your username!">
-            <nz-input-group nzPrefixIcon="dollar">
-              <input formControlName="TotalAmount" type="number" disabled="disabled" nz-input placeholder="Amount" />
-  
-            </nz-input-group>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="TotalAmount">Total Due Amount</nz-form-label >
+          <nz-form-control  [nzSm]="14" [nzXs]="24">
+            <input [(ngModel)]="invoiceDetails.Invoice.Amount" formControlName="TotalAmount" type="number" disabled="disabled" nz-input placeholder="Amount" />
+
+           
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-control nzErrorTip="Please amount received">
-            <nz-input-group nzPrefixIcon="dollar">
-              <input formControlName="AmountReceived" type="number" nz-input placeholder="Amount Received" />
-            </nz-input-group>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="AmountReceived">Amount Received</nz-form-label>
+          <nz-form-control nzErrorTip="Please amount received"  [nzSm]="14" [nzXs]="24">
+              <input [(ngModel)]="amountreceived" formControlName="AmountReceived" (keyup)="onKeydown($event)" type="number" nz-input placeholder="Amount Received" />
+ 
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-control>
-            <nz-input-group nzPrefixIcon="dollar">
-              <input formControlName="AmountReturn" type="number" disabled="disabled" nz-input placeholder="Amount to Return" />
-            </nz-input-group>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="AmountReturn">Return Amount</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input [(ngModel)]="amountreturn" formControlName="AmountReturn" type="number" disabled="disabled" nz-input placeholder="Amount to Return" />
+             
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="PaymentType">Payment Type</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+
+            <nz-select formControlName="PaymentType" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type">
+              <nz-option nzLabel="Cash" nzValue="1"></nz-option>
+              <nz-option nzLabel="Cheque" nzValue="2"></nz-option>
+              <nz-option nzLabel="Bank Deposit" nzValue="3"></nz-option>
+            </nz-select>
+
+
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-          <nz-form-control>
+            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Remarks">Remarks</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+
+            <textarea nz-input formControlName="Remarks" placeholder="Remarks"></textarea>
+             
+          </nz-form-control>
+        </nz-form-item>
+
+
+        <nz-form-item nz-row>
+          <nz-form-control [nzSpan]="14" [nzOffset]="8">
             <button nz-button nzType="primary">Pay</button>
           </nz-form-control>
         </nz-form-item>

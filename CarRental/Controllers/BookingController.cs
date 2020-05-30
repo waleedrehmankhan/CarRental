@@ -70,16 +70,19 @@ namespace CarRental.Controllers
         [ValidateFilter]
         public async Task<ContentResult> CreateOrUpdateBooking(BookingDto bookingDto)
         {
-             
+            float totalinvoiceamount = 0;
             Booking bookingToAdd = null;
             Invoice invoicetoadd = null;
             Customer customer = null;
             ReturnMessage returnmessage = new ReturnMessage(1, "Booking Added ");
             try
             {
+                int totaldays = (int)(Convert.ToDateTime(bookingDto.ReturnDate) - Convert.ToDateTime(bookingDto.FromDate)).TotalDays;
                 var booking = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => w.Id == bookingDto.Id, includeProperties:( bookingDto.IsNewCustomer? "Customer":"")));
                 bookingToAdd = _mapper.Map<Booking>(bookingDto);
-                 if (booking.Count() == 0)
+                var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => w.Id == bookingDto.CarId, includeProperties: "CarClassification"));
+                totalinvoiceamount = totalinvoiceamount + ((cars.First().CarClassification.CostPerDay * totaldays));
+                if (booking.Count() == 0)
                 {
                     if(!bookingDto.IsNewCustomer&& bookingDto.CustomerId !=0)
                     {
@@ -88,35 +91,7 @@ namespace CarRental.Controllers
                     }
                     
                     _unitOfWork.Bookings.Add(bookingToAdd);
-
-
-
-                    //foreach (var item in bookingDto.bookingextras)
-                    //{
-                    //    var itemtoadd = _mapper.Map<BookingExtra>(item);
-                    //    itemtoadd.Booking = bookingToAdd;
-
-                    //    _unitOfWork.BookingExtras.Add(itemtoadd);
-                    //}
-
-                    long maxbookingid = _unitOfWork.Invoices.GetMaxBookingId();
-                    InvoiceDto invoiceDto = new InvoiceDto()
-                    {
-                        InvoiceNumber ="INV-" +((int)maxbookingid + 1).ToString(),
-                        //  InvoiceNumber = "INV-" + bookingToAdd.Id.ToString(),
-                        CustomerId = bookingToAdd.CustomerId,
-                        IssueDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm"),
-                        DueDate = bookingToAdd.FromDate.ToString("yyyy/MM/dd HH:mm"),
-                        Description = "Invoice Created For the Booking by " + customer.FirstName,
-                        Amount = 0
-
-
-                    };
-
-                    invoicetoadd = _mapper.Map<Invoice>(invoiceDto);
-                    invoicetoadd.Booking = bookingToAdd;
-                    _unitOfWork.Invoices.Add(invoicetoadd);
-
+ 
                 }
                 else
                 {
@@ -130,6 +105,10 @@ namespace CarRental.Controllers
                 }
                 foreach (var item in bookingDto.bookingextras)
                 {
+                    if (item.PriceType==2 )
+                    {
+                        item.Count = totaldays;
+                    }
                     var itemtoadd = _mapper.Map<BookingExtra>(item);
                     itemtoadd.Booking = bookingToAdd;
                     var extra = _unitOfWork.BookingExtras.Find(x => x.BookingId == itemtoadd.Booking.Id && x.ExtraId == itemtoadd.ExtraId);
@@ -140,9 +119,32 @@ namespace CarRental.Controllers
                     }
                    else
                     _unitOfWork.BookingExtras.Add(itemtoadd);
+                    float itemprice =( itemtoadd.Count * item.Price)??0;
+                    totalinvoiceamount = totalinvoiceamount += itemprice;
                 }
           
+                if(bookingDto.Id==0)
+                {
+                    long maxbookingid = _unitOfWork.Invoices.GetMaxBookingId();
 
+                    InvoiceDto invoiceDto = new InvoiceDto()
+                    {
+                        InvoiceNumber = "INV-" + ((int)maxbookingid + 1).ToString(),
+                        //  InvoiceNumber = "INV-" + bookingToAdd.Id.ToString(),
+                        CustomerId = bookingToAdd.CustomerId,
+                        IssueDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm"),
+                        DueDate = bookingToAdd.FromDate.ToString("yyyy/MM/dd HH:mm"),
+                        Description = "Invoice Created For the Booking by " + customer.FirstName,
+                        Amount = totalinvoiceamount
+
+
+                    };
+
+                    invoicetoadd = _mapper.Map<Invoice>(invoiceDto);
+                    invoicetoadd.Booking = bookingToAdd;
+                    _unitOfWork.Invoices.Add(invoicetoadd);
+
+                }
 
                 var status = _unitOfWork.Complete();
                 _logger.LogInformation("Log:Add Booking for ID: {Id}", bookingToAdd.Id);

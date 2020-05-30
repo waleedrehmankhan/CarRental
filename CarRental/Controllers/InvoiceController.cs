@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CarRental.Dtos;
 using CarRental.Helpers;
+using CarRental.Models;
 using CarRental.Persistence;
 using CarRental.Persistence.Repositories.Invoice;
 using Microsoft.AspNetCore.Mvc;
@@ -97,6 +98,38 @@ namespace CarRental.Controllers
                     msg = ex.Message
                 }), "application/json");
             }
+        }
+
+
+
+        [HttpPost("PayInvoice")]
+        [ValidateFilter]
+        public   ContentResult MakePayment(PaymentDto payDto)
+        {
+
+            ReturnMessage returnmessage = new ReturnMessage(1, "Payment Made ");
+            try
+            {
+                 
+                var paymenttotadd = _mapper.Map<Payment>(payDto);
+                
+               
+                     _unitOfWork.Payments.Add(paymenttotadd);
+
+               
+                
+                var status = _unitOfWork.Complete();
+                _logger.LogInformation("Log:Add Payment for ID: {Id}", paymenttotadd.Id);
+                return this.Content(returnmessage.returnMessage(null),
+                         "application/json");
+            }
+            catch (Exception ex)
+            {
+                returnmessage.msg = ex.Message.ToString();
+                returnmessage.msgCode = -3;
+                return this.Content(returnmessage.returnMessage(null));
+            }
+
         }
 
     }

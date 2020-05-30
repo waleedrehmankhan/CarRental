@@ -19,6 +19,7 @@ namespace CarRental.Persistence
             Extras = new ExtraRepository(_context);
             BookingExtras = new BookingExtraRepository(_context);
             Invoices = new InvoiceRepository(_context);
+            Payments = new PaymentRepository(_context);
         }
 
         public ICustomerRepository Customers { get; private set; }
@@ -32,6 +33,7 @@ namespace CarRental.Persistence
         public IBookingExtraRepository BookingExtras { get; private set; }
 
         public IInvoiceRepository Invoices { get; private set; }
+        public IPaymentRepository Payments { get; private set; }
 
         public int Complete()
 

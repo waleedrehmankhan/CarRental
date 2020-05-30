@@ -29,5 +29,19 @@ namespace CarRental.Helpers
             return false;
 
         }
+
+        enum PaymentType : int
+        {
+            Cash = 1,
+            Cheque = 2,
+            BankDeposit = 3,
+        }
+
+        enum InvoiceStatus : int
+        {
+            Invoiced = 1,
+            Paid = 2,
+            Cancelled = 3,
+        }
     }
 }
