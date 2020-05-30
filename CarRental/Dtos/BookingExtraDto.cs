@@ -16,5 +16,7 @@ namespace CarRental.Dtos
         public int ExtraId { get; set; }
         public int BookingId { get; set; }
         public float Price { get; set; }
+        public string Name { get; set; }
+        public int PriceType { get; set; }
     }
 }

@@ -4,6 +4,7 @@ import { DataService } from '../../../data.service';
 import { PrintingService } from '../../../printing.service';
 import { ExtraDto } from '../../../classes/ExtraDto';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 interface keyable {
   [key: string]: any;
 }
@@ -14,16 +15,25 @@ interface keyable {
   styleUrls: ['./voucher.component.css']
 })
 export class VoucherComponent implements OnInit {
+  paymentForm: FormGroup
   @Input() data:any
 
   invoiceDetails: InvoiceDetailDto;
   bookingextralist: ExtraDto[];
   url: string = "invoice/getInvoiceItemDetails"
-  constructor(private _dataService: DataService, private _printingService: PrintingService, private activatedRoute: ActivatedRoute) { }
+  constructor(private _dataService: DataService, private _printingService: PrintingService, private activatedRoute: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit() {
+    this.paymentForm = new FormGroup(
+      {
+
+        TotalAmount: new FormControl(),
+        AmountReceived: new FormControl(),
+        AmountReturn: new FormControl()
+      });
     const invoiceId = this.activatedRoute.snapshot.params.Id;
     this.getInvoiceDetails(invoiceId);
+    
   }
 
   getInvoiceDetails(id) {
@@ -209,5 +219,8 @@ export class VoucherComponent implements OnInit {
 
         
       `);
+  }
+  submitForm() {
+    console.log('test');
   }
 }

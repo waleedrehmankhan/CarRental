@@ -13,7 +13,7 @@ export class ExtraItemComponent implements OnInit {
   @Output("select") select = new EventEmitter<{ extra: BookingExtraDto, checked: boolean }>(); 
   count: number = this.extra&& this.extra.Count;
   checked = false;
-
+  isDisabled: boolean;
 
   constructor() { }
 
@@ -23,6 +23,10 @@ export class ExtraItemComponent implements OnInit {
       this.checked = true;
       this.selected();
     }
+    this.isDisabled = (this.extra && (this.extra.PriceType == 1)) ? false : true
+
+    console.log(this.extra.PriceType);
+    console.log((this.extra && (this.extra.PriceType == 1)) ? false : true)
   }
 
   selected() {

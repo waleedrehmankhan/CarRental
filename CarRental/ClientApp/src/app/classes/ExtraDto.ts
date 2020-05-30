@@ -19,5 +19,7 @@
         public Price: number = 0;
         // Count
         public Count: number = 0;
+        // PriceType
+        public PriceType: number = 0;
     }
 

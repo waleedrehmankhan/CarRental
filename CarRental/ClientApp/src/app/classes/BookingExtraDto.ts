@@ -1,4 +1,4 @@
-﻿import { BookingDto } from "./BookingDto";
+import { BookingDto } from "./BookingDto";
 import { ExtraDto } from "./ExtraDto";
 
  
@@ -27,5 +27,9 @@ import { ExtraDto } from "./ExtraDto";
         public BookingId: number = 0;
         // Price
         public Price: number = 0;
+        // Name
+        public Name: string = null;
+        // PriceType
+        public PriceType: number = 0;
     }
 

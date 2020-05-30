@@ -7,7 +7,7 @@ import { ViewExtraComponent } from './view-extra/view-extra.component';
 
 
 @NgModule({
-  declarations: [ExtraItemComponent, ViewExtraComponent],
+  declarations: [],
   imports: [
     CommonModule,
     ExtraRoutingModule

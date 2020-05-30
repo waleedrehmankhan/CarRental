@@ -7,7 +7,7 @@
     <label>{{extra.Name}}</label>
   </div>
   <div style="flex:1; padding:5px;">
-    <nz-input-number   [nzStep]="1" [(ngModel)]="extra.Count" (ngModelChange)="selected()"></nz-input-number>
+    <nz-input-number  [nzDisabled]="isDisabled" [nzStep]="1" [(ngModel)]="extra.Count" (ngModelChange)="selected()"></nz-input-number>
   </div>
 
  
