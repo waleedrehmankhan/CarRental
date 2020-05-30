@@ -4,13 +4,14 @@ namespace CarRental.Dtos
 {
     public class RegisterUserDto : LoginUserDto
     {
-         
+        [EmailAddress]
+        public string Email { get; set; }
         public string FirstName { get; set; }
 
-        
+
         public string LastName { get; set; }
 
-         
+
         public string UserRole { get; set; }
         public string CurrentToken { get; set; }
     }
@@ -18,8 +19,7 @@ namespace CarRental.Dtos
     public class LoginUserDto
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

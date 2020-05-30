@@ -13,7 +13,8 @@ namespace CarRental.ModelValidator
         {
             RuleFor(x => x.FirstName).NotNull().NotEmpty().WithMessage("First Name is Required");
             RuleFor(x => x.LastName).NotNull().NotEmpty().WithMessage("Last Name is Required");
-            RuleFor(x => x.Email).NotNull().NotEmpty();
+            RuleFor(x => x.Email).EmailAddress().NotNull().NotEmpty();
+            RuleFor(x => x.Username).NotNull().NotEmpty();
             RuleFor(x => x.Password).NotNull().NotEmpty();
             RuleFor(x => x.UserRole).NotNull().NotEmpty().WithMessage("Role is Required");
         }

@@ -1,53 +1,65 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
-import { DataService } from 'src/app/data.service';
-import { RegisterUserDto } from 'src/app/classes/RegisterUserDto';
-import { NzMessageService } from 'ng-zorro-antd';
+import { Component, OnInit } from "@angular/core";
+import {
+  FormBuilder,
+  Validators,
+  FormGroup,
+  ReactiveFormsModule,
+  FormControl,
+} from "@angular/forms";
+import { DataService } from "src/app/data.service";
+import { RegisterUserDto } from "src/app/classes/RegisterUserDto";
+import { NzMessageService } from "ng-zorro-antd";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"],
 })
 export class RegisterComponent implements OnInit {
-
-  errors: string[]
+  errors: string[];
   registerForm: FormGroup;
   registerDto = new RegisterUserDto();
   userRolesUrl: string = "account/roles";
 
-  constructor(private fb: FormBuilder, private _dataService: DataService, private message: NzMessageService) {
+  constructor(
+    private fb: FormBuilder,
+    private _dataService: DataService,
+    private message: NzMessageService
+  ) {
     this.registerForm = new FormGroup({
       Email: new FormControl(),
+      Username: new FormControl(),
       Password: new FormControl(),
       FirstName: new FormControl(),
       LastName: new FormControl(),
-      UserRole: new FormControl()
-   });
-   }
+      UserRole: new FormControl(),
+    });
+  }
 
   ngOnInit() {
     this.registerForm.reset();
   }
 
-  submitForm = ( ) => {
+  submitForm = () => {
     this.errors = [];
     if (this.registerForm.valid) {
-      console.log(this.registerForm)
+      console.log(this.registerForm);
       debugger;
 
       //object
-      this.registerDto.Email =this.registerForm.value.Email
-      this.registerDto.Password =this.registerForm.value.Password
-      this.registerDto.FirstName =this.registerForm.value.FirstName
-      this.registerDto.LastName =this.registerForm.value.LastName
-      this.registerDto.UserRole =this.registerForm.value.UserRole
-      
+      this.registerDto.Email = this.registerForm.value.Email;
+      this.registerDto.Username = this.registerForm.value.Username;
+      this.registerDto.Password = this.registerForm.value.Password;
+      this.registerDto.FirstName = this.registerForm.value.FirstName;
+      this.registerDto.LastName = this.registerForm.value.LastName;
+      this.registerDto.UserRole = this.registerForm.value.UserRole;
+
       console.log(this.registerDto);
 
       debugger;
-      this._dataService.postData("account/register", this.registerDto).subscribe(
-        (res: any) => {
+      this._dataService
+        .postData("account/register", this.registerDto)
+        .subscribe((res: any) => {
           console.log(res);
           //if(res.succeded){
           //  this.registerForm.reset();
@@ -69,13 +81,11 @@ export class RegisterComponent implements OnInit {
           //}
 
           if (res.data && res.data.message.msgCode == -2) {
-
             let validationErrorDictionary = res.data.message.msg;
             debugger;
             console.log(validationErrorDictionary);
 
             setTimeout(() => {
-
               for (var fieldName in validationErrorDictionary) {
                 this.registerForm.markAsDirty();
                 this.registerForm.markAllAsTouched();
@@ -83,60 +93,41 @@ export class RegisterComponent implements OnInit {
                   debugger;
                   this.errors.push(validationErrorDictionary[fieldName]);
                   if (this.registerForm.get(fieldName)) {
-                 
-
-                    this.registerForm.get(fieldName).setErrors({ invalid: true, errors: validationErrorDictionary[fieldName] });
+                    this.registerForm
+                      .get(fieldName)
+                      .setErrors({
+                        invalid: true,
+                        errors: validationErrorDictionary[fieldName],
+                      });
                     this.registerForm.get(fieldName).markAsTouched();
                     this.registerForm.get(fieldName).markAsDirty();
 
-
-
                     console.log(validationErrorDictionary[fieldName]);
-                  }
-
-                  else {
+                  } else {
                     debugger;
                     // if we have cross field validation then show the validation error at the top of the screen
                     this.errors.push(validationErrorDictionary[fieldName]);
                   }
                 }
               }
-
-
-
             }, 100);
-
-
-          }
-          else if (res.message.msgCode == "1") {
-            
-
+          } else if (res.message.msgCode == "1") {
             this.message.success(res.message.msg, {
-              nzDuration: 5000
+              nzDuration: 5000,
             });
             this.registerForm.reset();
-            
-          }
-          else if (res.message && res.message.msgCode == -3) {
+          } else if (res.message && res.message.msgCode == -3) {
             debugger;
-            console.log('hello');
+            console.log("hello");
             this.errors.push(res.message.msg);
             this.message.error(res.message.msg, {
-              nzDuration: 5000
+              nzDuration: 5000,
             });
-          }
-          else {
+          } else {
             this.errors.push("something went wrong!");
-
-
-
           }
           this.registerForm.markAsDirty();
-
-        }
-           
-      );
+        });
     }
-  }
-
+  };
 }
