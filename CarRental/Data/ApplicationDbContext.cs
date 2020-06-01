@@ -25,7 +25,7 @@ namespace CarRental.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<ServiceHistory> ServiceHistory { get; set; }
-        public DbSet<UserBranch> UserBranches { get; set; }
+        public DbSet<BranchStaff> BranchStaffs { get; set; }
 
 
         public ApplicationDbContext(

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarRental.Models
 {
-    public class UserBranch
+    public class BranchStaff
     {
         public int Id { get; set; }
         public ApplicationUser Staff { get; set; }
