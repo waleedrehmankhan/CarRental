@@ -18,7 +18,7 @@ namespace CarRental.ModelValidator
             RuleFor(x => x.Mileage).NotNull().NotEmpty();
             RuleFor(x => x.isAvailable).NotNull().NotEmpty();
             RuleFor(x => x.isActive).NotNull().NotEmpty();
-            RuleFor(x => x.CarClassificationId).NotNull().NotEmpty();
+            RuleFor(x => x.CarClassification).SetValidator(new CarClassificationValidator());
         }
     }
 }

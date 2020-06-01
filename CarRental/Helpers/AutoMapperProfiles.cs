@@ -15,7 +15,7 @@ namespace CarRental.Helpers
 
             // Dto to Domain
             CreateMap<CustomerDto, Customer>();
-               // .ForMember(c => c.CustomerID, opt => opt.Ignore());
+            // .ForMember(c => c.CustomerID, opt => opt.Ignore());
 
 
             CreateMap<MembershipTypeDto, MembershipType>()
@@ -23,6 +23,9 @@ namespace CarRental.Helpers
 
             CreateMap<CarDto, Car>();
             CreateMap<Car, CarDto>();
+
+            CreateMap<CarClassificationDto, CarClassification>();
+            CreateMap<CarClassification, CarClassificationDto>();
 
 
             CreateMap<BookingDto, Booking>();

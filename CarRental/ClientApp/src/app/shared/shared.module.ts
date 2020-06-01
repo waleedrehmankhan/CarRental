@@ -6,12 +6,13 @@ import { CrselectComponent } from './components/crselect/crselect.component';
 import { CrgridComponent } from './components/crgrid/crgrid.component';
 import { ViewExtraComponent } from '../pages/extra/view-extra/view-extra.component';
 import { ExtraItemComponent } from '../pages/extra/extra-item/extra-item.component';
+import { CruploadComponent } from './components/crupload/crupload.component';
  
  
 
 
 @NgModule({
-  declarations: [CrselectComponent,CrgridComponent,ViewExtraComponent,ExtraItemComponent],
+  declarations: [CrselectComponent,CrgridComponent,ViewExtraComponent,ExtraItemComponent, CruploadComponent],
   imports: [
     CommonModule,
     FormsModule,

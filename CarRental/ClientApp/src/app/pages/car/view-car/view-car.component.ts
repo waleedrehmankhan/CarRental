@@ -1,36 +1,45 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { DataService } from '../../../data.service';
-import { Subject } from 'rxjs';
-import { NzMessageService } from 'ng-zorro-antd';
-import { CarDto } from '../../../classes/CarDto';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from "@angular/core";
+import { DataService } from "../../../data.service";
+import { Subject } from "rxjs";
+import { NzMessageService } from "ng-zorro-antd";
+import { CarDto } from "../../../classes/CarDto";
+import { Router } from "@angular/router";
 interface keyable {
   [key: string]: any;
 }
 @Component({
-  selector: 'app-view-car',
-  templateUrl: './view-car.component.html',
-  styleUrls: ['./view-car.component.css']
+  selector: "app-view-car",
+  templateUrl: "./view-car.component.html",
+  styleUrls: ["./view-car.component.css"],
 })
 export class ViewCarComponent implements OnInit {
-  url: string = "car/getcardetails"
-  lstcolumns: string[] = ["Model", "Mileage", "RegistrationNumber", "Year", "Make", "IsAvailable", "IsActive"]
+  url: string = "car/getcardetails";
+  lstcolumns: string[] = [
+    "Model",
+    "Mileage",
+    "RegistrationNumber",
+    "Year",
+    "Make",
+    "IsAvailable",
+    "IsActive",
+  ];
   refresh = new Subject<boolean>();
-  carItems : CarDto[]
-  constructor(private _dataService: DataService, private message: NzMessageService, private router: Router) { }
+  carItems: CarDto[];
+  constructor(
+    private _dataService: DataService,
+    private message: NzMessageService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getCarData();
   }
-  membershipurl: string = "membership/getMemberShip";
   getCarData() {
-
-    this._dataService.postData("car/getCarDetails", {  }).subscribe(
-
-      response => {
-
+    this._dataService
+      .postData("car/getCarDetails", {})
+      .subscribe((response) => {
         console.log(response.data.Items);
-        
+
         var itemsarray = new Array();
         for (var v in response.data.Items) {
           debugger;
@@ -38,34 +47,26 @@ export class ViewCarComponent implements OnInit {
         }
 
         this.carItems = itemsarray;
-        console.log(this.carItems)
-
-
-      }
-    );
-
+        console.log(this.carItems);
+      });
   }
   deleteClicked(data) {
     console.log("data:", data);
     debugger;
-    this._dataService.postData("car/deleteCar", { "Id": data.Id }).subscribe(
-
-      response => {
-
+    this._dataService
+      .postData("car/deleteCar", { Id: data.Id })
+      .subscribe((response) => {
         this.refresh.next(true);
         this.message.success(response.message.msg, {
-          nzDuration: 5000
+          nzDuration: 5000,
         });
-      }
-    );
+      });
   }
 
   editClicked(data: CarDto) {
     console.log(data);
-    this.router.navigateByUrl(`car/edit/${data.Id}`)
-
+    this.router.navigateByUrl(`car/edit/${data.Id}`);
   }
-
 
   convertIntoOneLevelJson = (activity: any, key = ""): any => {
     let response: keyable = {};
@@ -83,12 +84,12 @@ export class ViewCarComponent implements OnInit {
           if (key) {
             response = {
               ...response,
-              ...this.convertIntoOneLevelJson(activity[k], `${key}.${k}`)
+              ...this.convertIntoOneLevelJson(activity[k], `${key}.${k}`),
             };
           } else {
             response = {
               ...response,
-              ...this.convertIntoOneLevelJson(activity[k], `${k}`)
+              ...this.convertIntoOneLevelJson(activity[k], `${k}`),
             };
           }
         }
@@ -97,7 +98,7 @@ export class ViewCarComponent implements OnInit {
       for (let i = 0; i < activity.length; i++) {
         response = {
           ...response,
-          ...this.convertIntoOneLevelJson(activity[i], `${key}[${i}]`)
+          ...this.convertIntoOneLevelJson(activity[i], `${key}[${i}]`),
         };
       }
     } else {
@@ -105,6 +106,4 @@ export class ViewCarComponent implements OnInit {
     }
     return response;
   };
-
-
 }

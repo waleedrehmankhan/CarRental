@@ -27,17 +27,10 @@ export class AddCarComponent implements OnInit {
   ) {}
 
   carTypeUrl: string = "membership/getMemberShip";
+  branchLocationUrl: string = "car/branchLocation";
 
   ngOnInit() {
     const Id = this.activatedRoute.snapshot.params.Id;
-
-    Id &&
-      this._dataService
-        .postData("car/getCarDetails", { Id: Id })
-        .subscribe((response) => {
-          const [car] = response.data.Items;
-          this.carForm.patchValue(car);
-        });
 
     this.carForm = this.fb.group({
       Id: Id || -1,
@@ -48,7 +41,10 @@ export class AddCarComponent implements OnInit {
       Mileage: new FormControl(),
       isActive: new FormControl(),
       isAvailable: new FormControl(),
-      CarClassificationId: new FormControl(),
+      PassengerCount: new FormControl(),
+      CostPerHour: new FormControl(),
+      CostPerDay: new FormControl(),
+      LateFeePerHour: new FormControl(),
     });
 
     console.log(this.carForm);
@@ -69,7 +65,10 @@ export class AddCarComponent implements OnInit {
       this.carDto.Mileage = this.carForm.value.Mileage;
       this.carDto.isActive = this.carForm.value.isActive || true;
       this.carDto.isAvailable = this.carForm.value.isAvailable || true;
-      this.carDto.CarClassificationId = 1;
+      this.carDto.CarClassification.PassengerCount = this.carForm.value.PassengerCount;
+      this.carDto.CarClassification.CostPerHour = this.carForm.value.CostPerHour;
+      this.carDto.CarClassification.CostPerDay = this.carForm.value.CostPerDay;
+      this.carDto.CarClassification.LateFeePerHour = this.carForm.value.LateFeePerHour;
 
       console.log(this.carDto);
 

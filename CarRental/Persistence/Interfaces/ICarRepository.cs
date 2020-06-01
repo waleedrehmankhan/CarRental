@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarRental.Persistence.Interfaces
 {
-   public interface ICarRepository:IRepository<Car>
+    public interface ICarRepository : IRepository<Car>
     {
     }
 }

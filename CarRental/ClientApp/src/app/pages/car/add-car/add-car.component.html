@@ -47,6 +47,42 @@
         </nz-form-control>
     </nz-form-item>
 
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Mileage">No. Of Passengers
+        </nz-form-label>
+        <nz-form-control [nzErrorTip]="carForm.get('PassengerCount').errors?.errors" [nzSm]="14" [nzXs]="24"
+            nzHasFeedBack>
+            <input nz-input formControlName="PassengerCount" placeholder="Enter Number of Passengers"
+                id="PassengerCount" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Mileage">Cost/hour ($)
+        </nz-form-label>
+        <nz-form-control [nzErrorTip]="carForm.get('CostPerHour').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+            <input nz-input formControlName="CostPerHour" placeholder="Enter Cost Per Hour" id="CostPerHour" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Mileage">Cost/day ($)
+        </nz-form-label>
+        <nz-form-control [nzErrorTip]="carForm.get('CostPerDay').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+            <input nz-input formControlName="CostPerDay" placeholder="Enter Cost Per Day" id="CostPerDay" />
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Mileage">Late Fee/hour ($)
+        </nz-form-label>
+        <nz-form-control [nzErrorTip]="carForm.get('LateFeePerHour').errors?.errors" [nzSm]="14" [nzXs]="24"
+            nzHasFeedBack>
+            <input nz-input formControlName="LateFeePerHour" placeholder="Enter Late Fee Per Hour"
+                id="LateFeePerHour" />
+        </nz-form-control>
+    </nz-form-item>
+
     <nz-form-item nz-row>
         <nz-form-control [nzSpan]="14" [nzOffset]="6">
             <button nz-button nzType="primary" [disabled]="carForm.invalid">Save Car</button>

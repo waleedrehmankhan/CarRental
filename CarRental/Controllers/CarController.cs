@@ -65,14 +65,19 @@ namespace CarRental.Controllers
             {
                 var car = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => w.Id == carDto.Id));
                 var carToAdd = _mapper.Map<Car>(carDto);
+                var carClassificationToAdd = _mapper.Map<CarClassification>(carDto.CarClassification);
+
                 if (car.Count() == 0)
                 {
                     carToAdd.Id = 0;
+                    carToAdd.CarClassification = carClassificationToAdd;
+                    _unitOfWork.CarClassification.Add(carClassificationToAdd);
                     _unitOfWork.Cars.Add(carToAdd);
 
                 }
                 else
                 {
+                    _unitOfWork.CarClassification.Update(carClassificationToAdd);
                     _unitOfWork.Cars.Update(carToAdd);
                 }
                 var status = _unitOfWork.Complete();
@@ -120,6 +125,7 @@ namespace CarRental.Controllers
                 return this.Content(returnmessage.returnMessage(null));
             }
         }
+
 
     }
 

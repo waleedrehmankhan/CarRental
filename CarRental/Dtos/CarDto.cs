@@ -17,8 +17,6 @@ namespace CarRental.Dtos
         public long Mileage { get; set; }
         public bool isAvailable { get; set; }
         public bool isActive { get; set; }
-        public int CarClassificationId { get; set; }
-        public CarClassification CarClassification { get; set; }
-        public string image { get; set; }
+        public CarClassificationDto CarClassification { get; set; }
     }
 }
