@@ -36,11 +36,19 @@ namespace CarRental.Controllers
         [HttpPost("getCarDetails")]
         public async Task<ContentResult> GetCar(GetCarInput input)
         {
+
+           
+
+
             try
             {
                 ReturnMessage rm = new ReturnMessage(1, "Success");
                 var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true, includeProperties: "CarClassification"));
                 var carsToReturn = _mapper.Map<IEnumerable<CarDto>>(cars);
+                foreach (var item in carsToReturn)
+                {
+                    item.CarAvailability = GetavailableTime(new GetCarInput() { Id=item.Id});
+                }
                 return this.Content(rm.returnMessage(new PagedResultDto<CarDto>
                     (carsToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
                     "application/json");
@@ -127,8 +135,87 @@ namespace CarRental.Controllers
         }
 
 
+
+
+        public List<CarAvailbilityTimeDto> GetavailableTime(GetCarInput input)
+        {
+            input.AvailableDateCheck = DateTime.Now.Date.AddDays(1);
+            IEnumerable<int> notin = new List<int>();
+            List<string> test = new List<string>();
+            List<CarAvailbilityTimeDto> caravailabilitytimelist = new List<CarAvailbilityTimeDto>();
+            var bookings = _unitOfWork.Bookings.Find(x => x.CarId == input.Id && x.isActive == true && input.AvailableDateCheck.Date>=x.FromDate.Date && input.AvailableDateCheck.Date<=x.ReturnDate.Date);
+            List<int> totalhours = new List<int>();
+            for (int i = 0; i < 24; i++)
+            {
+                totalhours.Add(i);
+               
+            }
+           
+            foreach (var item in bookings)
+            {
+                TimeSpan ts = item.ReturnDate - input.AvailableDateCheck;
+                IList<int> hoursBetween = Enumerable.Range(0, (int)ts.TotalHours)
+                    .Select(i => input.AvailableDateCheck.AddHours(i).Hour).ToList();
+                for (int i = 0; i < hoursBetween.Count(); i++)
+                {
+
+
+                    var date = input.AvailableDateCheck;
+                    if (i != 0&& hoursBetween[i]==0)
+                    {
+                        break;
+                        //date = input.AvailableDateCheck.AddDays(1);
+                    }
+                    CarAvailbilityTimeDto carAvailbility = new CarAvailbilityTimeDto()
+                    {
+                        BookingId = item.Id,
+                        CarId = item.CarId,
+                        Date = date,
+                        time = string.Format("{0}:00", hoursBetween[i].ToString()),
+                        IsAvailable = false,
+                        Hour= hoursBetween[i]
+
+                    };
+                    caravailabilitytimelist.Add(carAvailbility);
+                }
+                notin = totalhours.Where(p => caravailabilitytimelist.All(p2 => p2.Hour != p));
+                foreach (var item1 in notin)
+                {
+                    CarAvailbilityTimeDto carAvailbility = new CarAvailbilityTimeDto()
+                    {
+                        BookingId = item.Id,
+                        CarId = item.CarId,
+                        Date = input.AvailableDateCheck,
+                        time = string.Format("{0}:00", item1.ToString()),
+                        IsAvailable = true,
+                        Hour =item1
+
+                    };
+                    caravailabilitytimelist.Add(carAvailbility);
+                }
+
+
+            }
+            notin = totalhours.Where(p => caravailabilitytimelist.All(p2 => p2.Hour != p));
+            foreach (var item1 in notin)
+            {
+                CarAvailbilityTimeDto carAvailbility = new CarAvailbilityTimeDto()
+                {
+                    BookingId = 0,
+                    CarId = input.Id,
+                    Date = input.AvailableDateCheck,
+                    time = string.Format("{0}:00", item1.ToString()),
+                    IsAvailable = true,
+                    Hour = item1
+
+                };
+                caravailabilitytimelist.Add(carAvailbility);
+            }
+            return caravailabilitytimelist.OrderBy(x=>x.Hour).ToList();
+        }
+
     }
 
 
-
+   
 }

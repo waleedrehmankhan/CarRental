@@ -8,5 +8,6 @@ namespace CarRental.Persistence.Interfaces
 {
     public interface ICarRepository : IRepository<Car>
     {
+        bool IsCarAvailable(int Carid, DateTime fromdate, DateTime todate, int branchid);
     }
 }

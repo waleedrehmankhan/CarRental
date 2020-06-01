@@ -12,6 +12,7 @@ namespace CarRental.Persistence.Repositories.Car
         public int Model;
         public bool IsAvailable;
         public int  CarClassificationId;
+        public DateTime  AvailableDateCheck;
 
     }
 }

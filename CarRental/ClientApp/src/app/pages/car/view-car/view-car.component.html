@@ -1,33 +1,50 @@
 <!--<div><app-crgrid [refresh]="refresh" (deleteClick)="deleteClicked($event)" (editClick)="editClicked($event)" [columns]="lstcolumns" [url]="url"></app-crgrid></div>-->
+<div style="text-align:center"><nz-spin [nzSpinning]="isSpinning"><ng-content></ng-content></nz-spin></div>
 
-  <!--<div style=" justify-content:center;padding:10px;align-items:center; border:1px solid #dddddd;border-radius:10px; ">
+<div style=" justify-content:center;padding:10px;align-items:center; border:1px solid #dddddd;border-radius:10px; ">
 
-    <form nz-form [formGroup]="validateForm" class="ant-advanced-search-form">
-      <div nz-row [nzGutter]="24">
-        <div nz-col [nzSpan]="14">
-          <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="SearchKey">Search Options</nz-form-label>
-            <nz-form-control [nzSm]="14" [nzXs]="24">
-              <crselect [url]="membershipurl" key="Name" value="Id" id="MembershipTypeId" formControlName="MembershipTypeId"></crselect>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-        <div nz-col [nzSpan]="14">
-          <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="SearchValue">Search Value</nz-form-label>
-            <nz-form-control [nzSm]="14" [nzXs]="24">
-              <input nz-input formControlName="SearchValue" placeholder="Enter Search Value" id="SearchValue" />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
+  <form nz-form [formGroup]="searchForm" (ngSubmit)="submitForm()" class="ant-advanced-search-form">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="14">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="SearchKey">Search Options</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-select formControlName="SearchKey" nzShowSearch nzAllowClear nzPlaceHolder="Select Search Key">
+              <nz-option nzLabel="Year" nzValue="Year"></nz-option>
+              <nz-option nzLabel="Make" nzValue="Make"></nz-option>
+              <nz-option nzLabel="Model" nzValue="Model"></nz-option>
+              <nz-option nzLabel="RegistrationNumber" nzValue="RegistrationNumber"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
       </div>
-      <div nz-row  style=" justify-content:center;align-items:center;">
-        <div   >
-          <button nz-button [nzType]="'primary'">Search</button>
-          
-        </div>
+      <div nz-col [nzSpan]="14">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="SearchValue">Search Value</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input formControlName="SearchValue" placeholder="Enter Search Value" id="SearchValue" />
+          </nz-form-control>
+        </nz-form-item>
       </div>
-    </form>
-    </div>-->
+    </div>
+    <div nz-row style=" justify-content:center;align-items:center;">
+      <div>
+        <button nz-button [nzType]="'primary'">Search</button>
 
-    <app-car-item *ngFor="let car of carItems" [car]="car"></app-car-item>
+      </div>
+    </div>
+  </form>
+</div>
+<div style="display: flex; flex-direction: row-reverse">
+  <nz-pagination [nzShowSizeChanger]="true" [nzPageIndex]="pagenumber" [nzTotal]="totalcount" (nzPageIndexChange)="pageIndexChanged($event)" (nzPageSizeChange)="pageSizeChanged($event)"></nz-pagination>
+
+</div>
+<app-car-item *ngFor="let car of carItems" [car]="car"></app-car-item>
+
+
+<div style="display: flex; flex-direction: row-reverse">
+  <nz-pagination [nzShowSizeChanger]="true" [nzPageIndex]="pagenumber" [nzTotal]="totalcount" (nzPageIndexChange)="pageIndexChanged($event)" (nzPageSizeChange)="pageSizeChanged($event)"></nz-pagination>
+
+</div>
+<div style="text-align:center"><nz-spin [nzSpinning]="isSpinning"><ng-content></ng-content></nz-spin></div>
+

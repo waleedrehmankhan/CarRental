@@ -100,6 +100,9 @@
     <None Update="ClientApp\src\app\classes\BranchDto.ts">
       <CustomToolNamespace>Dtos\BranchDto.cs</CustomToolNamespace>
     </None>
+    <None Update="ClientApp\src\app\classes\CarAvailbilityTimeDto.ts">
+      <CustomToolNamespace>Dtos\CarAvailbilityTimeDto.cs</CustomToolNamespace>
+    </None>
     <None Update="ClientApp\src\app\classes\CarClassificationDto.ts">
       <CustomToolNamespace>Dtos\CarClassificationDto.cs</CustomToolNamespace>
     </None>

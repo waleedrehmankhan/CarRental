@@ -1,0 +1,10 @@
+a.active:hover {
+  background-color: darkgreen !important;
+}
+a:hover{
+   background-color: #333 !important;
+}
+a{
+    transition: all ease 300ms;
+    border-radius: 5px;
+}

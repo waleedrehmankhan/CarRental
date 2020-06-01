@@ -14,5 +14,10 @@ namespace CarRental.Persistence
            : base(context)
         {
         }
+
+        public bool IsCarAvailable(int Carid, DateTime fromdate, DateTime todate, int branchid)
+        {
+            return false;
+        }
     }
 }

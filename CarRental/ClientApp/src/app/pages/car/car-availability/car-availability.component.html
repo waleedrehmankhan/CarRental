@@ -1,0 +1,8 @@
+<div>
+  <div *ngFor="let data of eventData" style="display: inline-block; text-align:center; width: 30px; height: 30px; margin: 5px">
+    {{ data.time }}
+  </div>
+  <div></div>
+  <a [class]="data.IsAvailable? 'active':''" href="#" *ngFor="let data of eventData" style="display: inline-block; width: 30px; height: 30px; margin: 5px" [style.background]="getColor(data)">
+  </a>
+</div>
