@@ -83,6 +83,16 @@
         </nz-form-control>
     </nz-form-item>
 
+    <div class="col-md-12">
+        <img style="width:250px;height:250px;" [src]="imageUrl" alt="">
+        <input type="file" #Image accept="image/*" (change)="onFileSelected($event.target.files)">
+        <button class="btn btn-primary" type="button" (click)="onUpload()"
+            [disabled]="Image.value == ''">Upload</button>
+
+    </div>
+
+
+
     <nz-form-item nz-row>
         <nz-form-control [nzSpan]="14" [nzOffset]="6">
             <button nz-button nzType="primary" [disabled]="carForm.invalid">Save Car</button>

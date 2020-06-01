@@ -11,11 +11,13 @@ import { NzMessageService } from "ng-zorro-antd";
   styleUrls: ["./add-car.component.css"],
 })
 export class AddCarComponent implements OnInit {
+  imageUrl: string = "/assets/image-icon.png";
   carForm: FormGroup;
   return: string = "";
   carDto = new CarDto();
   successfulSave: boolean;
   errors: string[];
+  filetoUpload: File = null;
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +30,7 @@ export class AddCarComponent implements OnInit {
 
   carTypeUrl: string = "membership/getMemberShip";
   branchLocationUrl: string = "car/branchLocation";
+  imageUploadUrl = "image/uploadcarimage";
 
   ngOnInit() {
     const Id = this.activatedRoute.snapshot.params.Id;
@@ -50,6 +53,19 @@ export class AddCarComponent implements OnInit {
     console.log(this.carForm);
     this.errors = [];
   }
+
+  onFileSelected(file: FileList) {
+    debugger;
+    this.filetoUpload = file[0];
+    // Reader to Show Image
+    var reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.imageUrl = event.target.result;
+    };
+    reader.readAsDataURL(this.filetoUpload);
+  }
+
+  onUpload() {}
 
   submitForm = () => {
     this.errors = [];
