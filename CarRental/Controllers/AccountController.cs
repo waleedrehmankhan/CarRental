@@ -9,6 +9,7 @@ using AutoMapper;
 using CarRental.Dtos;
 using CarRental.Helpers;
 using CarRental.Models;
+using CarRental.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,8 @@ namespace CarRental.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
+        private IUnitOfWork _unitOfWork;
+
         private readonly IConfiguration _config;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<AccountController> _logger;
@@ -36,10 +39,12 @@ namespace CarRental.Controllers
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IMapper mapper,
+            IUnitOfWork unitOfWork,
             IConfiguration config)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _config = config;
             _signInManager = signInManager;
@@ -54,6 +59,7 @@ namespace CarRental.Controllers
             ReturnMessage returnmessage = new ReturnMessage(1, "User Created Successfully ");
             try
             {
+
                 var existinguser = await _userManager.FindByNameAsync(Input.Email);
 
                 if (existinguser != null)
@@ -71,6 +77,7 @@ namespace CarRental.Controllers
                         _logger.LogInformation("User created a new account with password.");
 
                         var roleCheck = await _roleManager.RoleExistsAsync(Input.UserRole);
+
                         if (!roleCheck)
                         {
                             returnmessage.msg = "Role Doesnot Exist";
@@ -78,6 +85,12 @@ namespace CarRental.Controllers
                         }
 
                         await _userManager.AddToRoleAsync(user, Input.UserRole);
+                        _unitOfWork.BranchStaff.Add(new BranchStaff
+                        {
+                            StaffId = user.Id,
+                            BranchId = Input.BranchId
+                        });
+                        _unitOfWork.Complete();
 
                     }
                     else

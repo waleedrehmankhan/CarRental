@@ -36,9 +36,17 @@
     </nz-form-item>
 
     <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="UserRoleId">Role</nz-form-label>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="UserRole">Role</nz-form-label>
         <nz-form-control [nzErrorTip]="registerForm.get('UserRole').errors?.errors" [nzSm]="14" [nzXs]="24">
             <crselect [url]="userRolesUrl" key="Name" value="Name" id="UserRole" formControlName="UserRole"></crselect>
+        </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="BranchId">Branch</nz-form-label>
+        <nz-form-control [nzErrorTip]="registerForm.get('BranchId').errors?.errors" [nzSm]="14" [nzXs]="24">
+            <crselect [url]="BranchUrl" key="BranchName" value="Id" id="BranchId" formControlName="BranchId">
+            </crselect>
         </nz-form-control>
     </nz-form-item>
 

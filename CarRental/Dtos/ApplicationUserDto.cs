@@ -7,12 +7,10 @@ namespace CarRental.Dtos
         [EmailAddress]
         public string Email { get; set; }
         public string FirstName { get; set; }
-
-
         public string LastName { get; set; }
-
-
         public string UserRole { get; set; }
+        [Required]
+        public int BranchId { get; set; }
         public string CurrentToken { get; set; }
     }
 

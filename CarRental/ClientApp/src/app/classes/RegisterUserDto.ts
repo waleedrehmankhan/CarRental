@@ -18,4 +18,6 @@ export class RegisterUserDto {
   public LastName: string = null;
   // User Role
   public UserRole: string = null;
+  // Branch Id
+  public BranchId?: number = null;
 }

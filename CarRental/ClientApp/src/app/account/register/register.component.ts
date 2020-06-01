@@ -20,6 +20,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   registerDto = new RegisterUserDto();
   userRolesUrl: string = "account/roles";
+  BranchUrl: string = "branch/getBranchDetails";
 
   constructor(
     private fb: FormBuilder,
@@ -33,6 +34,7 @@ export class RegisterComponent implements OnInit {
       FirstName: new FormControl(),
       LastName: new FormControl(),
       UserRole: new FormControl(),
+      BranchId: new FormControl(),
     });
   }
 
@@ -53,6 +55,7 @@ export class RegisterComponent implements OnInit {
       this.registerDto.FirstName = this.registerForm.value.FirstName;
       this.registerDto.LastName = this.registerForm.value.LastName;
       this.registerDto.UserRole = this.registerForm.value.UserRole;
+      this.registerDto.BranchId = this.registerForm.value.BranchId;
 
       console.log(this.registerDto);
 
@@ -93,12 +96,10 @@ export class RegisterComponent implements OnInit {
                   debugger;
                   this.errors.push(validationErrorDictionary[fieldName]);
                   if (this.registerForm.get(fieldName)) {
-                    this.registerForm
-                      .get(fieldName)
-                      .setErrors({
-                        invalid: true,
-                        errors: validationErrorDictionary[fieldName],
-                      });
+                    this.registerForm.get(fieldName).setErrors({
+                      invalid: true,
+                      errors: validationErrorDictionary[fieldName],
+                    });
                     this.registerForm.get(fieldName).markAsTouched();
                     this.registerForm.get(fieldName).markAsDirty();
 
