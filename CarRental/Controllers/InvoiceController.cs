@@ -27,7 +27,7 @@ namespace CarRental.Controllers
 
 
         // GET: /<controller>/
-        public InvoiceController (ILogger<InvoiceController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public InvoiceController(ILogger<InvoiceController> logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -41,7 +41,7 @@ namespace CarRental.Controllers
             try
             {
                 ReturnMessage rm = new ReturnMessage(1, "Success");
-                var invoices = await Task.Run(() => _unitOfWork.Invoices.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true,includeProperties:"Customer,Booking"));
+                var invoices = await Task.Run(() => _unitOfWork.Invoices.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true, includeProperties: "Customer,Booking"));
                 var invoicesToReturn = _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
                 return this.Content(rm.returnMessage(new PagedResultDto<InvoiceDto>
                     (invoicesToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
@@ -61,18 +61,22 @@ namespace CarRental.Controllers
         {
             try
             {
-                List<ExtraDto> extralist = new List<ExtraDto> ();
+                List<ExtraDto> extralist = new List<ExtraDto>();
                 ReturnMessage rm = new ReturnMessage(1, "Success");
                 var invoices = await Task.Run(() => _unitOfWork.Invoices.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true, includeProperties: "Customer,Booking"));
                 var invoicesToReturn = _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
                 //  var extra = _unitOfWork.BookingExtras.Find(x => x.BookingId == invoices.First().Booking.Id);
                 var extra = await Task.Run(() => _unitOfWork.BookingExtras.GetAsync(filter: w => w.BookingId == invoices.First().BookingId, includeProperties: "Extra"));
-                var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w =>w.Id== invoices.First().Booking.CarId, includeProperties: "CarClassification"));
-               var car= _mapper.Map<IEnumerable<CarDto>>(cars).First();
+                var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => w.Id == invoices.First().Booking.CarId, includeProperties: "CarClassification"));
+                var car = _mapper.Map<IEnumerable<CarDto>>(cars).First();
+                var payment = _unitOfWork.Payments.Find(x => x.InvoiceId == input.Id).SingleOrDefault();
+                PaymentDto paymentDto = _mapper.Map<PaymentDto>(payment);
+                if(paymentDto!=null)
+                    paymentDto.PaymentType = ((Utility.PaymentType)Convert.ToInt32( paymentDto.PaymentType)).ToString();
                 foreach (var item in extra)
                 {
                     var extraDto = _mapper.Map<ExtraDto>(item.Extra);
-                    extraDto.Count = item.Count??0;
+                    extraDto.Count = item.Count ?? 0;
                     extralist.Add(extraDto);
                 }
                 InvoiceDetailDto invoiceDetail = new InvoiceDetailDto()
@@ -81,8 +85,10 @@ namespace CarRental.Controllers
                     InvoiceId = invoicesToReturn.First().Id,
                     Booking = invoicesToReturn.First().Booking,
                     BookingExtraList = extralist,
-                    Car = car
+                    Car = car,
+                    Payment= paymentDto
                 };
+                
                 List<InvoiceDetailDto> invoicedetailList = new List<InvoiceDetailDto>();
                 invoicedetailList.Add(invoiceDetail);
 
@@ -104,20 +110,19 @@ namespace CarRental.Controllers
 
         [HttpPost("PayInvoice")]
         [ValidateFilter]
-        public   ContentResult MakePayment(PaymentDto payDto)
+        public ContentResult MakePayment(PaymentDto payDto)
         {
 
             ReturnMessage returnmessage = new ReturnMessage(1, "Payment Made ");
             try
             {
-                 
-                var paymenttotadd = _mapper.Map<Payment>(payDto);
-                
-               
-                     _unitOfWork.Payments.Add(paymenttotadd);
+                var invoice = _unitOfWork.Invoices.Find(x => x.Id == payDto.InvoiceId).SingleOrDefault();
 
-               
-                
+                invoice.status = true;
+                var paymenttotadd = _mapper.Map<Payment>(payDto);
+                paymenttotadd.ReceiptNumber = "REC-" + payDto.InvoiceId.ToString();
+                _unitOfWork.Payments.Add(paymenttotadd);
+                _unitOfWork.Invoices.Update(invoice);
                 var status = _unitOfWork.Complete();
                 _logger.LogInformation("Log:Add Payment for ID: {Id}", paymenttotadd.Id);
                 return this.Content(returnmessage.returnMessage(null),

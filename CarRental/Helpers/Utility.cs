@@ -30,14 +30,14 @@ namespace CarRental.Helpers
 
         }
 
-        enum PaymentType : int
+       public enum PaymentType :int
         {
             Cash = 1,
             Cheque = 2,
             BankDeposit = 3,
         }
 
-        enum InvoiceStatus : int
+        public enum InvoiceStatus : int
         {
             Invoiced = 1,
             Paid = 2,

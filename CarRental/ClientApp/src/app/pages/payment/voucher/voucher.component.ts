@@ -5,6 +5,8 @@ import { PrintingService } from '../../../printing.service';
 import { ExtraDto } from '../../../classes/ExtraDto';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { PaymentDto } from '../../../classes/PaymentDto';
+import { NzMessageService } from 'ng-zorro-antd';
 interface keyable {
   [key: string]: any;
 }
@@ -15,15 +17,17 @@ interface keyable {
   styleUrls: ['./voucher.component.css']
 })
 export class VoucherComponent implements OnInit {
+  errors: string[]
   paymentForm: FormGroup
   @Input() data:any
 
   invoiceDetails: InvoiceDetailDto;
+  paymentDto = new PaymentDto();
   amountreceived: number = 0;
   amountreturn: number = 0;
   bookingextralist: ExtraDto[];
   url: string = "invoice/getInvoiceItemDetails"
-  constructor(private _dataService: DataService, private _printingService: PrintingService, private activatedRoute: ActivatedRoute, private fb: FormBuilder) { }
+  constructor(private _dataService: DataService, private _printingService: PrintingService, private activatedRoute: ActivatedRoute, private fb: FormBuilder, private message: NzMessageService) { }
 
   ngOnInit() {
     this.paymentForm = new FormGroup(
@@ -32,8 +36,14 @@ export class VoucherComponent implements OnInit {
         TotalAmount: new FormControl(),
         AmountReceived: new FormControl(),
         AmountReturn: new FormControl(),
-        Remarks: new FormControl()
+        Remarks: new FormControl(),
+        PaymentDate:new FormControl(),
+        PaymentType: new FormControl(),
+        InvoiceId: new FormControl(),
+      
       });
+
+
     const invoiceId = this.activatedRoute.snapshot.params.Id;
     this.getInvoiceDetails(invoiceId);
     
@@ -52,6 +62,7 @@ export class VoucherComponent implements OnInit {
           }
          
           this.invoiceDetails = response.data.Items[0];
+          if (!this.invoiceDetails.Payment) { this.invoiceDetails.Payment = new PaymentDto() }
           console.log(this.invoiceDetails);
           this.bookingextralist = this.invoiceDetails.BookingExtraList;
         }
@@ -223,8 +234,103 @@ export class VoucherComponent implements OnInit {
         
       `);
   }
-  submitForm() {
-    console.log('test');
+  submitForm = () => {
+    if (this.paymentForm.valid) {
+
+      this.paymentDto = this.mapValues(this.paymentForm.value);
+      this.errors = [];
+      console.log(this.paymentDto);
+      this._dataService.postData("invoice/PayInvoice", this.paymentDto).subscribe(
+
+        response => {
+
+          console.log(response);
+          console.log();
+
+
+          if (response.data && response.data.message.msgCode == -2) {
+
+            let validationErrorDictionary = response.data.message.msg;
+            debugger;
+            console.log(validationErrorDictionary);
+
+            setTimeout(() => {
+
+              for (var fieldName in validationErrorDictionary) {
+                this.paymentForm.markAsDirty();
+                this.paymentForm.markAllAsTouched();
+                if (validationErrorDictionary.hasOwnProperty(fieldName)) {
+                  this.errors.push(validationErrorDictionary[fieldName]);
+                  if (this.paymentForm.controls[fieldName]) {
+                    // integrate into angular's validation if we have field validation
+                    // this.customerForm.controls[fieldName].setErrors({ invalid: true });
+
+                    this.paymentForm.get(fieldName).setErrors({ invalid: true, errors: validationErrorDictionary[fieldName] });
+                    this.paymentForm.get(fieldName).markAsTouched();
+                    this.paymentForm.get(fieldName).markAsDirty();
+
+
+
+                    console.log(validationErrorDictionary[fieldName]);
+                  }
+
+                  else {
+                    debugger;
+                    // if we have cross field validation then show the validation error at the top of the screen
+                    this.errors.push(validationErrorDictionary[fieldName]);
+                  }
+                }
+              }
+
+
+
+            }, 100);
+
+
+          }
+          else if (response.message.msgCode == "1") {
+           
+
+            this.message.success(response.message.msg, {
+              nzDuration: 5000
+            });
+       
+
+            this.invoiceDetails.Invoice.status = true;
+            setTimeout(function () {
+              let element: HTMLElement = document.getElementById('printReceipt') as HTMLElement
+              element.click(); },5000)
+           
+          }
+          else if (response.data && response.data.message.msgCode == -3) {
+            debugger;
+            console.log('hello');
+            this.errors.push(response.data.message.msg);
+
+          }
+          else {
+            this.errors.push("something went wrong!");
+
+
+
+          }
+          this.paymentForm.markAsDirty();
+        }
+
+      )
+
+    }
+  }
+
+  mapValues(value: any): PaymentDto {
+    debugger;
+    const paymentDto: PaymentDto = new PaymentDto();
+    for (const key in paymentDto) {
+      if ((key in value) && value[key]) {
+        paymentDto[key] = value[key];
+      }
+    }
+    return paymentDto;
   }
 
   onKeydown(event) {

@@ -7,182 +7,295 @@
 <!--<nz-collapse>
   <nz-collapse-panel nzHeader="Invoice" [nzActive]="true">-->
 
-<nz-tabset>
-  <nz-tab nzTitle="Invoice">
-    <div>
-      <button nz-button nzType="default" (click)="print()"><i nz-icon nzType="printer" nzTheme="outline"></i> Print</button>
-    </div>
-    <div class="printArea">
-      <div class="invoice-box">
-        <!--<header>Customer Copy </header>-->
-        <table cellpadding="0" cellspacing="0">
-          <tr class="top">
-            <td colspan="2">
-              <table>
-                <tr>
-                  <td class="title">
-                    <img src="/StaticFiles/images/logo.png" style="width:100%; max-width:300px;">
-                  </td>
-
-                  <td>
-                    Invoice #: {{invoiceDetails.Invoice.InvoiceNumber}}<br>
-                    Created: {{invoiceDetails.Invoice.IssueDate}}<br>
-                    Due: {{invoiceDetails.Invoice.DueDate}}
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <tr class="information">
-            <td colspan="2">
-              <table>
-                <tr>
-                  <td>
-                    Car Rental Company.<br>
-                    3/100 Hudson Street<br>
-                    Hurstville 2220 <br>
-                    02xxxxxxxxxxxx
-                  </td>
-
-                  <td>
-                    {{invoiceDetails.Invoice.Customer.FirstName}}  {{invoiceDetails.Invoice.Customer.LastName}}    <br>
-                    {{invoiceDetails.Invoice.Customer.EmailAddress}}<br>
-                    {{invoiceDetails.Invoice.Customer.PhoneNumber}}
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!--<tr class="heading">
-          <td>
-            Payment Method
-          </td>
-
-          <td>
-            Check #
-          </td>
-        </tr>-->
-          <!--<tr class="details">
-          <td>
-            Check
-          </td>
-
-          <td>
-            1000
-          </td>
-        </tr>-->
-
-          <tr class="heading">
-            <td>
-              Item
-            </td>
-
-            <td>
-              Price
-            </td>
-          </tr>
-
-          <tr class="item">
-            <td>
-              {{ invoiceDetails.Car.Make}}| {{invoiceDetails.Car.Model}}| {{invoiceDetails.Car.Year}}
-            </td>
-
-            <td>
-              $ {{ invoiceDetails.Car.CarClassification.CostPerDay}}
-            </td>
-          </tr>
-
-
-          <tr *ngFor="let data of bookingextralist">
-
-            <td>
-              {{ data.Name }} * {{ data.Count }}
-            </td>
-
-            <td>
-              $ {{ data.Price*data.Count }}
-            </td>
-          </tr>
-
-
-
-          <tr class="total">
-            <td></td>
-
-            <td>
-              Total: ${{invoiceDetails.Invoice.Amount}}
-            </td>
-          </tr>
-        </table>
+  <nz-tabset>
+    <nz-tab nzTitle="Invoice">
+      <div>
+        <button nz-button nzType="default" (click)="print()"><i nz-icon nzType="printer" nzTheme="outline"></i> Print</button>
       </div>
+      <div class="printArea">
+        <div class="invoice-box">
+          <!--<header>Customer Copy </header>-->
+          <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td class="title">
+                      <img src="/StaticFiles/images/logo.png" style="width:100%; max-width:300px;">
+                    </td>
 
-    </div>
-  </nz-tab>
-  <!--</nz-collapse-panel>
-  </nz-collapse>-->
-  <!--<nz-collapse>
-    <nz-collapse-panel nzHeader="Pay Invoice">-->
-  <nz-tab nzTitle="Make Payment">
-    <div class="invoice-box">
+                    <td>
+                      Invoice #: {{invoiceDetails.Invoice.InvoiceNumber}}<br>
+                      Created: {{invoiceDetails.Invoice.IssueDate}}<br>
+                      Due: {{invoiceDetails.Invoice.DueDate}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr class="information">
+              <td colspan="2">
+                <table>
+                  <tr>
+                    <td>
+                      Car Rental Company.<br>
+                      3/100 Hudson Street<br>
+                      Hurstville 2220 <br>
+                      02xxxxxxxxxxxx
+                    </td>
+
+                    <td>
+                      {{invoiceDetails.Invoice.Customer.FirstName}}  {{invoiceDetails.Invoice.Customer.LastName}}    <br>
+                      {{invoiceDetails.Invoice.Customer.EmailAddress}}<br>
+                      {{invoiceDetails.Invoice.Customer.PhoneNumber}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr class="heading">
+              <td>
+                Item
+              </td>
+
+              <td>
+                Price
+              </td>
+            </tr>
+
+            <tr class="item">
+              <td>
+                {{ invoiceDetails.Car.Make}}| {{invoiceDetails.Car.Model}}| {{invoiceDetails.Car.Year}}
+              </td>
+
+              <td>
+                $ {{ invoiceDetails.Car.CarClassification.CostPerDay}}
+              </td>
+            </tr>
 
 
-      <form nz-form [formGroup]="paymentForm" (ngSubmit)="submitForm()">
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="TotalAmount">Total Due Amount</nz-form-label >
-          <nz-form-control  [nzSm]="14" [nzXs]="24">
-            <input [(ngModel)]="invoiceDetails.Invoice.Amount" formControlName="TotalAmount" type="number" disabled="disabled" nz-input placeholder="Amount" />
+            <tr *ngFor="let data of bookingextralist">
 
-           
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="AmountReceived">Amount Received</nz-form-label>
-          <nz-form-control nzErrorTip="Please amount received"  [nzSm]="14" [nzXs]="24">
-              <input [(ngModel)]="amountreceived" formControlName="AmountReceived" (keyup)="onKeydown($event)" type="number" nz-input placeholder="Amount Received" />
+              <td>
+                {{ data.Name }} * {{ data.Count }}
+              </td>
+
+              <td>
+                $ {{ data.Price*data.Count }}
+              </td>
+            </tr>
+
+
+
+            <tr class="total">
+              <td></td>
+
+              <td>
+                Total: ${{invoiceDetails.Invoice.Amount}}
+              </td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+    </nz-tab>
  
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="AmountReturn">Return Amount</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24">
-            <input [(ngModel)]="amountreturn" formControlName="AmountReturn" type="number" disabled="disabled" nz-input placeholder="Amount to Return" />
-             
-          </nz-form-control>
-        </nz-form-item>
-
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="PaymentType">Payment Type</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24">
-
-            <nz-select formControlName="PaymentType" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type">
-              <nz-option nzLabel="Cash" nzValue="1"></nz-option>
-              <nz-option nzLabel="Cheque" nzValue="2"></nz-option>
-              <nz-option nzLabel="Bank Deposit" nzValue="3"></nz-option>
-            </nz-select>
+    <div *ngIf="invoiceDetails.Invoice.status==false">
+      <nz-tab nzTitle="Make Payment">
+        <div class="invoice-box">
 
 
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Remarks">Remarks</nz-form-label>
-          <nz-form-control [nzSm]="14" [nzXs]="24">
+          <form nz-form [formGroup]="paymentForm" (ngSubmit)="submitForm()">
 
-            <textarea nz-input formControlName="Remarks" placeholder="Remarks"></textarea>
-             
-          </nz-form-control>
-        </nz-form-item>
+            <input type="hidden" formControlName="InvoiceId" [ngModel]="invoiceDetails.Invoice.Id">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="TotalAmount">Total Due Amount</nz-form-label>
+              <nz-form-control [nzErrorTip]="paymentForm.get('TotalAmount').errors?.errors" [nzSm]="14" [nzXs]="24">
+                <input [(ngModel)]="invoiceDetails.Invoice.Amount" formControlName="TotalAmount" type="number" disabled="disabled" nz-input placeholder="Amount" />
 
 
-        <nz-form-item nz-row>
-          <nz-form-control [nzSpan]="14" [nzOffset]="8">
-            <button nz-button nzType="primary">Pay</button>
-          </nz-form-control>
-        </nz-form-item>
-      </form>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="AmountReceived">Amount Received</nz-form-label>
+              <nz-form-control nzErrorTip="Please amount received" [nzSm]="14" [nzXs]="24">
+                <input [(ngModel)]="amountreceived" formControlName="AmountReceived" (keyup)="onKeydown($event)" type="number" nz-input placeholder="Amount Received" />
+
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="AmountReturn">Return Amount</nz-form-label>
+              <nz-form-control [nzSm]="14" [nzXs]="24">
+                <input [(ngModel)]="amountreturn" formControlName="AmountReturn" type="number" disabled="disabled" nz-input placeholder="Amount to Return" />
+
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="PaymentType">Payment Type</nz-form-label>
+              <nz-form-control [nzErrorTip]="paymentForm.get('PaymentType').errors?.errors" [nzSm]="14" [nzXs]="24">
+
+                <nz-select formControlName="PaymentType" nzShowSearch nzAllowClear nzPlaceHolder="Select Payment Type">
+                  <nz-option nzLabel="Cash" nzValue="1"></nz-option>
+                  <nz-option nzLabel="Cheque" nzValue="2"></nz-option>
+                  <nz-option nzLabel="Bank Deposit" nzValue="3"></nz-option>
+                </nz-select>
+
+
+
+
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="PaymentDate">Date of Payment</nz-form-label>
+              <nz-form-control [nzErrorTip]="paymentForm.get('PaymentDate').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+                <nz-date-picker formControlName="PaymentDate" nzFormat="yyyy/MM/dd"></nz-date-picker>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Remarks">Remarks</nz-form-label>
+              <nz-form-control [nzErrorTip]="paymentForm.get('Remarks').errors?.errors" [nzSm]="14" [nzXs]="24">
+
+                <textarea nz-input formControlName="Remarks" placeholder="Remarks"></textarea>
+
+              </nz-form-control>
+            </nz-form-item>
+
+
+            <nz-form-item nz-row>
+              <nz-form-control [nzSpan]="14" [nzOffset]="8">
+                <button nz-button nzType="primary">Pay</button>
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+        </div>
+      </nz-tab>
     </div>
-  </nz-tab>
+
+    <div *ngIf="invoiceDetails.Invoice.status==true">
+
+      <nz-tab nzTitle="Receipt">
+        <div>
+          <button id="printReceipt" nz-button nzType="default" (click)="print()"><i nz-icon nzType="printer" nzTheme="outline"></i> Print</button>
+        </div>
+        <div class="printArea">
+          <div class="invoice-box">
+             
+            <table cellpadding="0" cellspacing="0">
+              <tr class="top">
+                <td colspan="2">
+                  <table>
+                    <tr>
+                      <td class="title">
+                        <img src="/StaticFiles/images/logo.png" style="width:100%; max-width:300px;">
+                      </td>
+
+                      <td>
+                        Receipt #: {{invoiceDetails.Payment.ReceiptNumber}}<br>
+                        Created: {{invoiceDetails.Invoice.IssueDate}}<br>
+                        DueDate: {{invoiceDetails.Invoice.DueDate}}<br>
+                        Paid Date: {{invoiceDetails.Payment.PaymentDate}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <tr class="information">
+                <td colspan="2">
+                  <table>
+                    <tr>
+                      <td>
+                        Car Rental Company.<br>
+                        3/100 Hudson Street<br>
+                        Hurstville 2220 <br>
+                        02xxxxxxxxxxxx
+                      </td>
+
+                      <td>
+                        {{invoiceDetails.Invoice.Customer.FirstName}}  {{invoiceDetails.Invoice.Customer.LastName}}    <br>
+                        {{invoiceDetails.Invoice.Customer.EmailAddress}}<br>
+                        {{invoiceDetails.Invoice.Customer.PhoneNumber}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+
+
+              <tr class="heading">
+                <td>
+                  Item
+                </td>
+
+                <td>
+                  Price
+                </td>
+              </tr>
+
+              <tr class="item">
+                <td>
+                  {{ invoiceDetails.Car.Make}}| {{invoiceDetails.Car.Model}}| {{invoiceDetails.Car.Year}}
+                </td>
+
+                <td>
+                  $ {{ invoiceDetails.Car.CarClassification.CostPerDay}}
+                </td>
+              </tr>
+
+
+              <tr *ngFor="let data of bookingextralist">
+
+                <td>
+                  {{ data.Name }} * {{ data.Count }}
+                </td>
+
+                <td>
+                  $ {{ data.Price*data.Count }}
+                </td>
+              </tr>
+              <tr class="heading">
+                <td>
+                  PaymentType
+                </td>
+
+                <td>
+                  {{invoiceDetails.Payment.PaymentType}}
+                </td>
+              </tr>
+
+
+
+              <tr class="total">
+                <td> </td>
+
+                <td>
+                  Total Amount: ${{invoiceDetails.Payment.TotalAmount}}
+                </td>
+              </tr>
+
+              <p>Notes: {{invoiceDetails.Payment.Remarks}}</p>
+              <tr class="total">
+                <td>
+                </td>
+
+                <td>
+                   
+                  Staff Signature
+                </td>
+              </tr>
+
+            </table>
+
+            
+          </div>
+
+        </div>
+      </nz-tab>
+    </div>
   </nz-tabset>
     <!--</nz-collapse-panel>
     </nz-collapse>-->
