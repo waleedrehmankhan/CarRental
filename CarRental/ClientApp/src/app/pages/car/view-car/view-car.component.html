@@ -40,7 +40,7 @@
   <nz-pagination [nzShowSizeChanger]="true" [nzPageIndex]="pagenumber" [nzTotal]="totalcount" (nzPageIndexChange)="pageIndexChanged($event)" (nzPageSizeChange)="pageSizeChanged($event)"></nz-pagination>
 
 </div>
-<nz-date-picker [(ngModel)]="date" nzFormat="yyyy/MM/dd" (ngModelChange)="datechange($event)" [nzSize]="size"></nz-date-picker>
+<nz-date-picker [(ngModel)]="date" nzFormat="yyyy/MM/dd" (ngModelChange)="datechange($event)" ></nz-date-picker>
 
 <app-car-item *ngFor="let car of carItems" [car]="car"></app-car-item>
 

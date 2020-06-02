@@ -37,8 +37,9 @@ namespace CarRental.Controllers
         public async Task<ContentResult> GetCar(GetCarInput input)
         {
 
-           
 
+            var est = TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time");
+            input.AvailableDateCheck= TimeZoneInfo.ConvertTime(input.AvailableDateCheck, est);
 
             try
             {

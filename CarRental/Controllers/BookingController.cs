@@ -80,6 +80,9 @@ namespace CarRental.Controllers
                 int totaldays = (int)(Convert.ToDateTime(bookingDto.ReturnDate) - Convert.ToDateTime(bookingDto.FromDate)).TotalDays;
                 var booking = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => w.Id == bookingDto.Id, includeProperties:( bookingDto.IsNewCustomer? "Customer":"")));
                 bookingToAdd = _mapper.Map<Booking>(bookingDto);
+                var est = TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time");
+                bookingToAdd.FromDate = TimeZoneInfo.ConvertTime(bookingToAdd.FromDate, est);
+                bookingToAdd.ReturnDate = TimeZoneInfo.ConvertTime(bookingToAdd.ReturnDate, est);
                 var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => w.Id == bookingDto.CarId, includeProperties: "CarClassification"));
                 totalinvoiceamount = totalinvoiceamount + ((cars.First().CarClassification.CostPerDay * totaldays));
                 if (booking.Count() == 0)

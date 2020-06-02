@@ -106,4 +106,5 @@ export class ViewCarComponent implements OnInit {
     console.log(this.date);
     this.getCarData();
   }
+  submitForm() {}
 }
