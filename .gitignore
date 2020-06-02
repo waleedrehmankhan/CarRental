@@ -2,3 +2,5 @@
 .vs
 *.db
 CarRental/app.db*
+/CarRental/UploadedFiles/images
+/CarRental/wwwroot/uploads

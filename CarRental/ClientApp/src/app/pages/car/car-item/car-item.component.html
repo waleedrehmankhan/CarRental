@@ -11,12 +11,12 @@
     font-weight: 500;">
         Registration Number: {{car.RegistrationNumber}}
       </h2>
-      <p> Daily Rate ${{car['CarClassification.CostPerDay'] }} </p>
-      <p> Hourly Rate ${{car['CarClassification.CostPerHour'] }} </p>
-      <p> LateFeePerHour ${{car['CarClassification.LateFeePerHour'] }} </p>
+      <p> Daily Rate ${{car.CarClassification.CostPerDay }} </p>
+      <p> Hourly Rate ${{car.CarClassification.CostPerHour }} </p>
+      <p> LateFeePerHour ${{car.CarClassification.LateFeePerHour }} </p>
     </div>
     <div style="flex:2">
-      <strong>Total Passenger :{{car['CarClassification.PassengerCount']}}</strong>
+      <strong>Total Passenger :{{car.CarClassification.PassengerCount}}</strong>
     </div>
 
   </div>

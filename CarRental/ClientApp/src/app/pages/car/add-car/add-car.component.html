@@ -3,100 +3,111 @@
 </div>
 
 <form nz-form [formGroup]="carForm" (ngSubmit)="submitForm()">
-    <input style="display: none;" nz-input formControlName="Id" id="Id" />
+  <input style="display: none;" nz-input formControlName="Id" id="Id" />
 
-    <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="RegistrationNumber">Registration Number
-        </nz-form-label>
-        <nz-form-control [nzErrorTip]="carForm.get('RegistrationNumber').errors?.errors" [nzSm]="14" [nzXs]="24"
-            nzHasFeedBack>
-            <input nz-input formControlName="RegistrationNumber" placeholder="Enter Registration Number"
-                id="RegistrationNumber" />
-        </nz-form-control>
-    </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="RegistrationNumber">
+      Registration Number
+    </nz-form-label>
+    <nz-form-control [nzErrorTip]="carForm.get('RegistrationNumber').errors?.errors" [nzSm]="14" [nzXs]="24"
+                     nzHasFeedBack>
+      <input nz-input formControlName="RegistrationNumber" placeholder="Enter Registration Number"
+             id="RegistrationNumber" />
+    </nz-form-control>
+  </nz-form-item>
 
-    <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Year">Year
-        </nz-form-label>
-        <nz-form-control [nzErrorTip]="carForm.get('Year').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <input nz-input formControlName="Year" placeholder="Enter Year" id="Year" />
-        </nz-form-control>
-    </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Year">
+      Year
+    </nz-form-label>
+    <nz-form-control [nzErrorTip]="carForm.get('Year').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <input nz-input formControlName="Year" placeholder="Enter Year" id="Year" />
+    </nz-form-control>
+  </nz-form-item>
 
-    <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Make">Make
-        </nz-form-label>
-        <nz-form-control [nzErrorTip]="carForm.get('Make').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <input nz-input formControlName="Make" placeholder="Enter Make" id="Make" />
-        </nz-form-control>
-    </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Make">
+      Make
+    </nz-form-label>
+    <nz-form-control [nzErrorTip]="carForm.get('Make').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <input nz-input formControlName="Make" placeholder="Enter Make" id="Make" />
+    </nz-form-control>
+  </nz-form-item>
 
-    <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Model">Model
-        </nz-form-label>
-        <nz-form-control [nzErrorTip]="carForm.get('Model').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <input nz-input formControlName="Model" placeholder="Enter Model" id="Model" />
-        </nz-form-control>
-    </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Model">
+      Model
+    </nz-form-label>
+    <nz-form-control [nzErrorTip]="carForm.get('Model').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <input nz-input formControlName="Model" placeholder="Enter Model" id="Model" />
+    </nz-form-control>
+  </nz-form-item>
 
-    <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Mileage">Mileage
-        </nz-form-label>
-        <nz-form-control [nzErrorTip]="carForm.get('Mileage').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <input nz-input formControlName="Mileage" placeholder="Enter Mileage" id="Mileage" />
-        </nz-form-control>
-    </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Mileage">
+      Mileage
+    </nz-form-label>
+    <nz-form-control [nzErrorTip]="carForm.get('Mileage').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <input nz-input formControlName="Mileage" placeholder="Enter Mileage" id="Mileage" />
+    </nz-form-control>
+  </nz-form-item>
 
-    <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Mileage">No. Of Passengers
-        </nz-form-label>
-        <nz-form-control [nzErrorTip]="carForm.get('PassengerCount').errors?.errors" [nzSm]="14" [nzXs]="24"
-            nzHasFeedBack>
-            <input nz-input formControlName="PassengerCount" placeholder="Enter Number of Passengers"
-                id="PassengerCount" />
-        </nz-form-control>
-    </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="PassengerCount">
+      No. Of Passengers
+    </nz-form-label>
+    <nz-form-control [nzErrorTip]="carForm.get('PassengerCount').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <input nz-input formControlName="PassengerCount" placeholder="Enter Number of Passengers"/>
+    </nz-form-control>
+  </nz-form-item>
 
-    <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Mileage">Cost/hour ($)
-        </nz-form-label>
-        <nz-form-control [nzErrorTip]="carForm.get('CostPerHour').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <input nz-input formControlName="CostPerHour" placeholder="Enter Cost Per Hour" id="CostPerHour" />
-        </nz-form-control>
-    </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CostPerHour">
+      Cost/hour ($)
+    </nz-form-label>
+    <nz-form-control [nzErrorTip]="carForm.get('CostPerHour').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <input nz-input formControlName="CostPerHour" placeholder="Enter Cost Per Hour" id="CostPerHour" />
+    </nz-form-control>
+  </nz-form-item>
 
-    <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Mileage">Cost/day ($)
-        </nz-form-label>
-        <nz-form-control [nzErrorTip]="carForm.get('CostPerDay').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <input nz-input formControlName="CostPerDay" placeholder="Enter Cost Per Day" id="CostPerDay" />
-        </nz-form-control>
-    </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CostPerDay">
+      Cost/day ($)
+    </nz-form-label>
+    <nz-form-control [nzErrorTip]="carForm.get('CostPerDay').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <input nz-input formControlName="CostPerDay" placeholder="Enter Cost Per Day" id="CostPerDay" />
+    </nz-form-control>
+  </nz-form-item>
 
-    <nz-form-item>
-        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Mileage">Late Fee/hour ($)
-        </nz-form-label>
-        <nz-form-control [nzErrorTip]="carForm.get('LateFeePerHour').errors?.errors" [nzSm]="14" [nzXs]="24"
-            nzHasFeedBack>
-            <input nz-input formControlName="LateFeePerHour" placeholder="Enter Late Fee Per Hour"
-                id="LateFeePerHour" />
-        </nz-form-control>
-    </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="LateFeePerHour">
+      Late Fee/hour ($)
+    </nz-form-label>
+    <nz-form-control [nzErrorTip]="carForm.get('LateFeePerHour').errors?.errors" [nzSm]="14" [nzXs]="24"
+                     nzHasFeedBack>
+      <input nz-input formControlName="LateFeePerHour" placeholder="Enter Late Fee Per Hour"
+             id="LateFeePerHour" />
+    </nz-form-control>
+  </nz-form-item>
 
-    <div class="col-md-12">
-        <img style="width:250px;height:250px;" [src]="imageUrl" alt="">
-        <input type="file" #Image accept="image/*" (change)="onFileSelected($event.target.files)">
-        <button class="btn btn-primary" type="button" (click)="onUpload()"
-            [disabled]="Image.value == ''">Upload</button>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Image">
+      Image
+    </nz-form-label>
+    <nz-form-control  [nzErrorTip]="carForm.get('Image').errors?.errors" [nzSm]="14" [nzXs]="24"
+                     nzHasFeedBack>
+     <crfile formControlName="Image"></crfile>
+    </nz-form-control>
+  </nz-form-item>
 
-    </div>
+   
 
 
 
-    <nz-form-item nz-row>
-        <nz-form-control [nzSpan]="14" [nzOffset]="6">
-            <button nz-button nzType="primary" [disabled]="carForm.invalid">Save Car</button>
-        </nz-form-control>
-    </nz-form-item>
+  <nz-form-item nz-row>
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" [disabled]="carForm.invalid">Save Car</button>
+    </nz-form-control>
+  </nz-form-item>
 
 </form>

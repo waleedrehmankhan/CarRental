@@ -32,7 +32,7 @@ export class ViewCarComponent implements OnInit {
   pagenumber: number = 1;
   pagesize: number = 10;
   totalcount: number =0;
-
+  date =  new Date();
   constructor(
     private _dataService: DataService,
     private message: NzMessageService,
@@ -52,9 +52,10 @@ export class ViewCarComponent implements OnInit {
     this.getCarData();
   }
   getCarData() {
+    console.log(this.date)
     this.isSpinning = true;
     this._dataService
-      .postData("car/getCarDetails", { "pagenumber": this.pagenumber, "pagesize": this.pagesize })
+      .postData("car/getCarDetails", { "pagenumber": this.pagenumber, "pagesize": this.pagesize, "AvailableDateCheck": this.date})
       .subscribe((response) => {
         console.log(response.data.Items);
         this.totalcount = response.data.TotalCount;
@@ -101,42 +102,8 @@ export class ViewCarComponent implements OnInit {
     this.router.navigateByUrl(`car/edit/${data.Id}`);
   }
 
-  convertIntoOneLevelJson = (activity: any, key = ""): any => {
-    let response: keyable = {};
-    if (
-      activity &&
-      (activity["constructor"] === "".constructor ||
-        activity["constructor"] === (0).constructor)
-    ) {
-      response[key] = activity;
-    } else if (activity === null) {
-      response[key] = null;
-    } else if (activity && activity["constructor"] === {}.constructor) {
-      for (const k in activity) {
-        if (k in activity) {
-          if (key) {
-            response = {
-              ...response,
-              ...this.convertIntoOneLevelJson(activity[k], `${key}.${k}`),
-            };
-          } else {
-            response = {
-              ...response,
-              ...this.convertIntoOneLevelJson(activity[k], `${k}`),
-            };
-          }
-        }
-      }
-    } else if (activity && activity["constructor"] === [].constructor) {
-      for (let i = 0; i < activity.length; i++) {
-        response = {
-          ...response,
-          ...this.convertIntoOneLevelJson(activity[i], `${key}[${i}]`),
-        };
-      }
-    } else {
-      response[key] = activity;
-    }
-    return response;
-  };
+  datechange(data) {
+    console.log(this.date);
+    this.getCarData();
+  }
 }

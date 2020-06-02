@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+
 namespace ImageUploadDemo.Controllers
 {
     [Route("api/[controller]")]
@@ -17,31 +19,36 @@ namespace ImageUploadDemo.Controllers
         }
 
         [HttpPost("uploadCarImage")]
-        public async Task<string> OnPostUpload([FromForm] IFormFile file)
+        public async Task<JObject> OnPostUpload([FromForm] IFormFile file)
         {
             if (file != null)
             {
                 try
                 {
-                    if (!Directory.Exists(_environment.WebRootPath + "/uploads/"))
+                 var directory=   Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "UploadedFiles/images/"));
+
+                    if (!Directory.Exists(directory))
                     {
-                        Directory.CreateDirectory(_environment.WebRootPath + "/uploads");
+                        Directory.CreateDirectory(directory);
                     }
-                    var currentPath = _environment.WebRootPath + "/uploads/" + DateTime.Now.Ticks + "-" + file.FileName;
+                    var newfilename = DateTime.Now.Ticks + "-" + file.FileName;
+                    var currentPath = directory + newfilename;
                     using (var stream = new FileStream(currentPath, FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
                     }
-                    return file.FileName;
+                    dynamic result = new JObject();
+                    result.url= string.Format("/StaticFiles/images/{0}", newfilename);
+                    return result;
                 }
                 catch (Exception ex)
                 {
-                    return ex.ToString();
+                    return null;
                 }
             }
             else
             {
-                return "Unsuccessful";
+                return null;
             }
         }
     }

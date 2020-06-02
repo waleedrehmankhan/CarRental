@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { CarDto } from "src/app/classes/CarDto";
 import { DataService } from "src/app/data.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NzMessageService } from "ng-zorro-antd";
+import { NzMessageService, UploadFile } from "ng-zorro-antd";
+import { Observable, Observer } from "rxjs";
+import { CarClassificationDto } from "../../../classes/CarClassificationDto";
 
 @Component({
   selector: "app-add-car",
@@ -25,12 +27,14 @@ export class AddCarComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private message: NzMessageService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private msg: NzMessageService
   ) {}
 
   carTypeUrl: string = "membership/getMemberShip";
   branchLocationUrl: string = "car/branchLocation";
   imageUploadUrl = "image/uploadcarimage";
+ 
 
   ngOnInit() {
     const Id = this.activatedRoute.snapshot.params.Id;
@@ -44,10 +48,12 @@ export class AddCarComponent implements OnInit {
       Mileage: new FormControl(),
       isActive: new FormControl(),
       isAvailable: new FormControl(),
+      CarClassification: new CarClassificationDto(),
       PassengerCount: new FormControl(),
       CostPerHour: new FormControl(),
       CostPerDay: new FormControl(),
       LateFeePerHour: new FormControl(),
+      Image: new FormControl()
     });
 
     console.log(this.carForm);
@@ -81,10 +87,11 @@ export class AddCarComponent implements OnInit {
       this.carDto.Mileage = this.carForm.value.Mileage;
       this.carDto.isActive = this.carForm.value.isActive || true;
       this.carDto.isAvailable = this.carForm.value.isAvailable || true;
-      this.carDto.CarClassification.PassengerCount = this.carForm.value.PassengerCount;
-      this.carDto.CarClassification.CostPerHour = this.carForm.value.CostPerHour;
-      this.carDto.CarClassification.CostPerDay = this.carForm.value.CostPerDay;
-      this.carDto.CarClassification.LateFeePerHour = this.carForm.value.LateFeePerHour;
+      this.carDto.Image = this.carForm.value.Image;
+      this.carDto.PassengerCount = this.carForm.value.PassengerCount;
+      this.carDto.CostPerHour = this.carForm.value.CostPerHour;
+      this.carDto.CostPerDay = this.carForm.value.CostPerDay;
+      this.carDto.LateFeePerHour = this.carForm.value.LateFeePerHour;
 
       console.log(this.carDto);
 
@@ -142,4 +149,5 @@ export class AddCarComponent implements OnInit {
         );
     }
   };
+ 
 }

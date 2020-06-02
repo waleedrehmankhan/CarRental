@@ -6,6 +6,7 @@ import { CrselectComponent } from "./components/crselect/crselect.component";
 import { CrgridComponent } from "./components/crgrid/crgrid.component";
 import { ViewExtraComponent } from "../pages/extra/view-extra/view-extra.component";
 import { ExtraItemComponent } from "../pages/extra/extra-item/extra-item.component";
+import { CrfileComponent } from './components/crfile/crfile.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { ExtraItemComponent } from "../pages/extra/extra-item/extra-item.compone
     CrgridComponent,
     ViewExtraComponent,
     ExtraItemComponent,
+    CrfileComponent,
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, NgZorroAntdModule],
   exports: [
@@ -24,6 +26,7 @@ import { ExtraItemComponent } from "../pages/extra/extra-item/extra-item.compone
     CrgridComponent,
     ViewExtraComponent,
     ExtraItemComponent,
+    CrfileComponent
   ],
 })
 export class SharedModule {}
