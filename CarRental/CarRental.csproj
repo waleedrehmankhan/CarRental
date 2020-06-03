@@ -139,6 +139,9 @@
     <None Update="ClientApp\src\app\classes\RegistrationDto.ts">
       <CustomToolNamespace>Dtos\RegistrationDto.cs</CustomToolNamespace>
     </None>
+    <None Update="ClientApp\src\app\classes\ServiceHistoryDto.ts">
+      <CustomToolNamespace>Dtos\ServiceHistoryDto.cs</CustomToolNamespace>
+    </None>
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <Exec Command="node --version" ContinueOnError="true">

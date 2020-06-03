@@ -63,6 +63,12 @@ const routes: Routes = [
           "loadChildren": () => import("./pages/payment/payment.module").then(m => m.PaymentModule),
           "data": { "breadcrumb": "payment" }
         },
+
+        {
+          "path": "servicehistory",
+          "loadChildren": () => import("./pages/servicehistory/servicehistory.module").then(m => m.ServicehistoryModule),
+          "data": { "breadcrumb": "servicehistory" }
+        }
         
       ]
 
