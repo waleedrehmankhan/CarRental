@@ -8,6 +8,7 @@ using CarRental.Helpers;
 using CarRental.Models;
 using CarRental.Persistence;
 using CarRental.Persistence.Repositories.Car;
+using CarRental.Persistence.Repositories.ServiceHistory;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -247,6 +248,68 @@ namespace CarRental.Controllers
             }
             }
 
+
+
+        [HttpPost("createOrUpdateCarService")]
+        [ValidateFilter]
+        public async Task<ContentResult> createOrUpdateCarService(ServiceHistoryDto carserviceDto)
+        {
+
+            ReturnMessage returnmessage = new ReturnMessage(1, "Car Service History Saved Succesfully");
+            try
+            {
+                
+                var service = await Task.Run(() => _unitOfWork.ServiceHistory.GetAsync(filter: w => w.Id == carserviceDto.Id));
+                var serviceToAdd = _mapper.Map<ServiceHistory>(carserviceDto);
+             
+
+                if (service.Count() == 0)
+                {
+                    
+                    _unitOfWork.ServiceHistory.Add(serviceToAdd);
+
+                }
+                else
+                {
+                   
+                    _unitOfWork.ServiceHistory.Update(serviceToAdd);
+                }
+                var status = _unitOfWork.Complete();
+                _logger.LogInformation("Log:Add Car Service for ID: {Id}", serviceToAdd.Id);
+                return this.Content(returnmessage.returnMessage(null),
+                         "application/json");
+            }
+            catch (Exception ex)
+            {
+                returnmessage.msg = ex.Message.ToString();
+                returnmessage.msgCode = -3;
+                return this.Content(returnmessage.returnMessage(null));
+            }
+
+        }
+
+
+        [HttpPost("getCarServiceDetails")]
+        public async Task<ContentResult> GetCarServiceDetails( GetServiceInput input)
+        {
+            try
+            {
+                ReturnMessage rm = new ReturnMessage(1, "Success");
+                var services = await Task.Run(() => _unitOfWork.ServiceHistory.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true));
+                var servicestoReturn = _mapper.Map<IEnumerable<ServiceHistoryDto>>(services);
+                return this.Content(rm.returnMessage(new PagedResultDto<ServiceHistoryDto>
+                    (servicestoReturn.AsQueryable(), input.pagenumber, input.pagesize)),
+                    "application/json");
+            }
+            catch (Exception ex)
+            {
+                return this.Content(JsonConvert.SerializeObject(new
+                {
+                    msgCode = -3,
+                    msg = ex.Message
+                }), "application/json");
+            }
+        }
     }
 
 

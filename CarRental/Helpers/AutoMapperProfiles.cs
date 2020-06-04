@@ -56,6 +56,9 @@ namespace CarRental.Helpers
             CreateMap<Invoice, InvoiceDto>();
             CreateMap<Payment, PaymentDto>();
             CreateMap<PaymentDto, Payment>();
+
+            CreateMap<ServiceHistory, ServiceHistoryDto>();
+            CreateMap<ServiceHistoryDto, ServiceHistory>();
         }
     }
 }

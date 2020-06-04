@@ -1,0 +1,43 @@
+<form nz-form [formGroup]="serviceForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Description">Description</nz-form-label>
+    <nz-form-control [nzErrorTip]="serviceForm.get('Description').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <textarea nz-input formControlName="Description" placeholder="Description"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="DueDate">Date</nz-form-label>
+    <nz-form-control [nzErrorTip]="serviceForm.get('DueDate').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <nz-date-picker formControlName="DueDate" nzFormat="yyyy/MM/dd"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Status">Status</nz-form-label>
+    <nz-form-control [nzErrorTip]="serviceForm.get('Status').errors?.errors" [nzSm]="14" [nzXs]="24">
+      <nz-select formControlName="Status" nzShowSearch nzAllowClear nzPlaceHolder="Select Status">
+        <nz-option nzLabel="Due" nzValue="false"></nz-option>
+        <nz-option nzLabel="Completed" nzValue="true"></nz-option>
+
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CarId">Car</nz-form-label>
+    <nz-form-control [nzErrorTip]="serviceForm.get('CarId').errors?.errors" [nzSm]="14" [nzXs]="24">
+      <crselect [url]="carurl" key="Model" value="Id" formControlName="CarId"></crselect>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nz-row>
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" [disabled]="serviceForm.invalid">Save</button>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>
+
+
+
+<div><app-crgrid [refresh]="refresh" (deleteClick)="deleteClicked($event)" (editClick)="editClicked($event)" [columns]="lstcolumns" [url]="url"></app-crgrid></div>

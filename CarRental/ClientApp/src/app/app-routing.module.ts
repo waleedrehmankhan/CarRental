@@ -31,13 +31,13 @@ const routes: Routes = [
           import("./pages/dashboard/dashboard.module").then(
             (m) => m.DashboardModule
           ),
-        data: { breadcrumb: "Dashboard" },
+        data: { breadcrumb: "Account" },
       },
       {
         path: "account",
         loadChildren: () =>
           import("./account/account.module").then((m) => m.AccountModule),
-        data: { breadcrumb: "Staff" },
+        data: { breadcrumb: "Account" },
       },
       {
         path: "customer",
@@ -65,11 +65,28 @@ const routes: Routes = [
           import("./pages/branch/branch.module").then((m) => m.BranchModule),
         data: { breadcrumb: "Branch" },
       },
+
+      {
+        path: "test",
+        loadChildren: () =>
+          import("./pages/test/test.module").then((m) => m.TestModule),
+        data: { breadcrumb: "test" },
+      },
+
       {
         path: "payment",
         loadChildren: () =>
           import("./pages/payment/payment.module").then((m) => m.PaymentModule),
-        data: { breadcrumb: "Payment" },
+        data: { breadcrumb: "payment" },
+      },
+
+      {
+        path: "servicehistory",
+        loadChildren: () =>
+          import("./pages/servicehistory/servicehistory.module").then(
+            (m) => m.ServicehistoryModule
+          ),
+        data: { breadcrumb: "servicehistory" },
       },
     ],
   },

@@ -16,6 +16,7 @@ namespace CarRental.Persistence
         IInvoiceRepository Invoices { get; }
         IPaymentRepository Payments { get; }
         ICarClassificationRepository CarClassification { get; }
+        IServiceRepository ServiceHistory { get; }
         int Complete();
     }
 }

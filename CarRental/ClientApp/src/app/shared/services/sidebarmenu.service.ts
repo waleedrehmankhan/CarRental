@@ -41,8 +41,9 @@ export class SidebarmenuService {
       title: "Car",
       icon: "car",
       children: [
-        { title: "View Car", icon: "info", routerLink: "/car/view" },
-        { title: "Add Car", icon: "plus", routerLink: "/car/add" },
+        { title: "View Car", routerLink: "/car/view" },
+        { title: "Add Car", routerLink: "/car/add" },
+        { title: "Car Service History", routerLink: "/servicehistory/add" },
       ],
     },
     {
@@ -79,6 +80,7 @@ export class SidebarmenuService {
       children: [
         { title: "View Car", routerLink: "/car/view" },
         { title: "Add Car", routerLink: "/car/add" },
+        { title: "Car Service History", routerLink: "/servicehistory/add" },
       ],
     },
     {
