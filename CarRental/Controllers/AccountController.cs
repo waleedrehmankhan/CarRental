@@ -10,6 +10,7 @@ using CarRental.Dtos;
 using CarRental.Helpers;
 using CarRental.Models;
 using CarRental.Persistence;
+using CarRental.Persistence.Repositories.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -52,11 +53,77 @@ namespace CarRental.Controllers
         }
 
         [HttpPost]
+        [Route("getUserDetails")]
+        public ContentResult GetAll(GetUserInput input)
+        {
+            try
+            {
+                ReturnMessage rm = new ReturnMessage(1, "Success");
+                var userInDb = _userManager.Users.ToList();
+                var userToReturn = _mapper.Map<IEnumerable<UserDto>>(userInDb);
+                return this.Content(rm.returnMessage(new PagedResultDto<UserDto>
+                        (userToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
+                        "application/json");
+            }
+            catch (Exception ex)
+            {
+                return this.Content(JsonConvert.SerializeObject(new
+                {
+                    msgCode = -3,
+                    msg = ex.Message
+                }), "application/json");
+            }
+        }
+
+        [HttpPost]
+        [Route("deleteUser")]
+        public async Task<ContentResult> DeleteUser(GetUserInput input)
+        {
+            ReturnMessage returnmessage = new ReturnMessage(1, "Staff Deleted Succesfully");
+            try
+            {
+                if (string.IsNullOrEmpty(input.Email))
+                {
+                    returnmessage.msg = "Staff Not Found";
+                    returnmessage.msgCode = -2;
+                    return this.Content(returnmessage.returnMessage(null));
+                }
+
+                var user = await _userManager.FindByEmailAsync(input.Email);
+
+                if (user == null)
+                {
+                    returnmessage.msg = "Staff Not Found";
+                    returnmessage.msgCode = -2;
+                    return this.Content(returnmessage.returnMessage(null));
+                }
+
+                // If User is a Registered Branch Staff Then Remove it.
+                var staffOfBranch = await _unitOfWork.BranchStaff.GetAsync(filter: w => w.StaffId == user.Id);
+                if (staffOfBranch != null)
+                    _unitOfWork.BranchStaff.Remove(staffOfBranch.First());
+
+                await _userManager.DeleteAsync(user);
+
+                _logger.LogInformation("Log:Delete Staff for Email: {Email}", user.Email);
+
+                return this.Content(returnmessage.returnMessage(null),
+                            "application/json");
+            }
+            catch (Exception ex)
+            {
+                returnmessage.msg = ex.Message.ToString();
+                returnmessage.msgCode = -3;
+                return this.Content(returnmessage.returnMessage(null));
+            }
+        }
+
+        [HttpPost]
         [Route("Register")]
         [ValidateFilter]
         public async Task<Object> OnRegisterAsync(RegisterUserDto Input)
         {
-            ReturnMessage returnmessage = new ReturnMessage(1, "User Created Successfully ");
+            ReturnMessage returnmessage = new ReturnMessage(1, "Staff Created Successfully ");
             try
             {
 
@@ -64,7 +131,7 @@ namespace CarRental.Controllers
 
                 if (existinguser != null)
                 {
-                    returnmessage.msg = "User Already Exist";
+                    returnmessage.msg = "Staff Already Exist";
                     returnmessage.msgCode = -3;
                 }
                 else
@@ -74,7 +141,7 @@ namespace CarRental.Controllers
 
                     if (result.Succeeded)
                     {
-                        _logger.LogInformation("User created a new account with password.");
+                        _logger.LogInformation("Staff created a new account with password.");
 
                         var roleCheck = await _roleManager.RoleExistsAsync(Input.UserRole);
 
@@ -156,6 +223,7 @@ namespace CarRental.Controllers
 
 
         }
+
 
         [HttpPost]
         [Route("Roles")]
