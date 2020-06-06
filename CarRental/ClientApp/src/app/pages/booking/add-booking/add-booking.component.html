@@ -45,7 +45,7 @@
   </nz-form-item>
 
   <nz-form-item>
-  <label nz-checkbox formControlName="IsNewCustomer">{{checkboxname}}</label>
+    <label nz-checkbox formControlName="IsNewCustomer">{{checkboxname}}</label>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CustomerId">Customer</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('CustomerId').errors?.errors" [nzSm]="14" [nzXs]="24">
 
@@ -129,7 +129,16 @@
     </nz-form-control>
   </nz-form-item>
 
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="isActive">Status</nz-form-label>
+    <nz-form-control [nzErrorTip]="booking.get('isActive').errors?.errors" [nzSm]="14" [nzXs]="24">
+      <nz-select formControlName="isActive" nzShowSearch nzAllowClear nzPlaceHolder="Select Status">
+        <nz-option nzLabel="Active" nzValue="True"></nz-option>
+        <nz-option nzLabel="Completed" nzValue="False"></nz-option>
 
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
 
 
 

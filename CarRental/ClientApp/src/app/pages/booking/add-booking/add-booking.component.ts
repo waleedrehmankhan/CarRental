@@ -37,8 +37,9 @@ export class AddBookingComponent implements OnInit {
   membershipurl: string = "membership/getMemberShip";
 
   ngOnInit() {
-
+    console.log(this.activatedRoute.snapshot.params);
     const bookingId = this.activatedRoute.snapshot.params.Id;
+    const carId = this.activatedRoute.snapshot.params.CarId;
     if (bookingId) {
       this.checkboxname="View Customer Details"
     }
@@ -71,7 +72,7 @@ export class AddBookingComponent implements OnInit {
       FromDate: [null],
       ReturnDate: [null],
       CustomerId: [""],
-      CarId: [""],
+      CarId: carId ? [carId]:[""],
       isActive: [true],
       FromBranchID: [""],
       ToBranchID: [""],

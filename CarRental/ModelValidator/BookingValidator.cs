@@ -28,6 +28,8 @@ namespace CarRental.ModelValidator
                 }
             });
 
+            When(x => x.Id == 0, () => { 
+
             RuleFor(x => x.FromDate).Custom((x, context) => {
                 if (!Helpers.Utility.NotPastDate(x))
                 {
@@ -40,6 +42,9 @@ namespace CarRental.ModelValidator
                     context.AddFailure("Return Date can not be past date");
                 }
             });
+            });
+
+
             When(x => x.IsNewCustomer, () =>
             {
                 RuleFor(x => x.Customer.CustomerCode).NotNull().NotEmpty();

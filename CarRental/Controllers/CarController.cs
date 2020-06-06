@@ -310,6 +310,50 @@ namespace CarRental.Controllers
                 }), "application/json");
             }
         }
+
+        //[HttpPost("getAvailableCarDetails")]
+        //public async Task<ContentResult> GetAvailableCars(GetCarInput input)
+        //{
+
+
+        //    var est = TimeZoneInfo.FindSystemTimeZoneById("AUS Eastern Standard Time");
+        //    input.FromDate = TimeZoneInfo.ConvertTime(input.FromDate, est);
+        //    input.ReturnDate = TimeZoneInfo.ConvertTime(input.ReturnDate, est);
+
+        //    try
+        //    {
+        //        ReturnMessage rm = new ReturnMessage(1, "Success");
+        //        var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true, includeProperties: "CarClassification"));
+        //        var carsToReturn = _mapper.Map<IEnumerable<CarDto>>(cars);
+        //        foreach (var item in carsToReturn)
+        //        {
+
+        //            var bookingsFromDate = _unitOfWork.Bookings.Find(x => x.CarId == input.Id && x.isActive == true && input.FromDate.Date >= x.FromDate.Date && input.FromDate.Date <= x.ReturnDate.Date);
+        //            var bookingsToDate = _unitOfWork.Bookings.Find(x => x.CarId == input.Id && x.isActive == true && input.ReturnDate.Date >= x.FromDate.Date && input.ReturnDate.Date <= x.ReturnDate.Date);
+
+        //            if(bookingsFromDate.Count()>0|| bookingsToDate.Count()>0 )
+        //            {
+        //                carsToReturn.ToList().Remove(item);
+        //            }
+        //        }
+        //        return this.Content(rm.returnMessage(new PagedResultDto<CarDto>
+        //            (carsToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
+        //            "application/json");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return this.Content(JsonConvert.SerializeObject(new
+        //        {
+        //            msgCode = -3,
+        //            msg = ex.Message
+        //        }), "application/json");
+        //    }
+        //}
+
+       
+
+
+
     }
 
 

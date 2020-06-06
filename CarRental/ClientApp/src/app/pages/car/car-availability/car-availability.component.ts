@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-car-availability',
@@ -9,7 +10,7 @@ export class CarAvailabilityComponent implements OnInit {
   @Input() eventData:  []
  
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
@@ -17,5 +18,12 @@ export class CarAvailabilityComponent implements OnInit {
   getColor(data: {time: string, IsAvailable: boolean}) {
     return data.IsAvailable ? 'green' : '#999';
   }
+
+  gotobooking(data) {
+    console.log(data)
+    this.router.navigate([`booking/add/${data.CarId}`, {
+      "CarId": data.CarId 
+    }]);
+       }
 
 }

@@ -18,7 +18,7 @@ export class ViewBookingComponent implements OnInit {
 
   url: string = "booking/getBookings"
   refresh = new Subject<boolean>();
-  lstcolumns: string[] = ["Customer.FirstName","FromBranch.BranchName","ToBranch.BranchName","FromDate","ReturnDate"]
+  lstcolumns: string[] = ["Customer.FirstName", "FromBranch.BranchName", "ToBranch.BranchName", "FromDate", "ReturnDate","Status"]
   ngOnInit() {
   }
 

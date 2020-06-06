@@ -8,6 +8,7 @@ const routes: Routes = [
 
   { path: "view", component: ViewBookingComponent },
   { path: "add", component: AddBookingComponent },
+  { path: "add/:Id", component: AddBookingComponent },
   { path: "edit/:Id", component: AddBookingComponent },
 
 ];

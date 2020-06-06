@@ -43,7 +43,17 @@ namespace CarRental.Dtos
             }
         }
         //  public DateTime ActualReturnDate { get; set; }
-        public bool isActive { get; set; }
+        public string isActive { get; set; }
+        public string Status {
+            get
+            {
+                return isActive == "True" ? "Active" : "Completed";
+                     
+
+            }
+            
+
+        }
         public int CustomerId { get; set; }
         public int CarId { get; set; }
         public int FromBranchID { get; set; }

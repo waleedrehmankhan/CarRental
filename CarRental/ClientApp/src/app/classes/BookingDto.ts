@@ -1,4 +1,4 @@
-﻿import { CustomerDto } from "./CustomerDto";
+import { CustomerDto } from "./CustomerDto";
 import { BranchDto } from "./BranchDto";
 import { BookingExtraDto } from "./BookingExtraDto";
 import { CarDto } from "./CarDto";
@@ -32,7 +32,9 @@ import { CarDto } from "./CarDto";
         // ReturnDate
         public ReturnDate: string = null;
         // isActive
-        public isActive: boolean = false;
+        public isActive: string = null;
+        // Status
+        public Status: string = null;
         // CustomerId
         public CustomerId: number = 0;
         // CarId
