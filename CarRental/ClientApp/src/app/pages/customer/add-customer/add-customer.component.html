@@ -17,7 +17,7 @@
     Customer saved successfully!
   </div>
 
-  <form nz-form [formGroup]="customerForm" (ngSubmit)="submitForm()">
+  <form nz-form [formGroup]="customerForm" *ngIf="customerForm" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CustomerCode">Customer Code</nz-form-label>
       <nz-form-control [nzErrorTip]="customerForm.get('CustomerCode').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
