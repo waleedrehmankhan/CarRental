@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="booking" (ngSubmit)="submitForm()">
+<form *ngIf="booking" nz-form [formGroup]="booking" (ngSubmit)="submitForm()">
 
 
   <nz-form-item>
@@ -133,7 +133,8 @@
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="isActive">Status</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('isActive').errors?.errors" [nzSm]="14" [nzXs]="24">
       <nz-select formControlName="isActive" nzShowSearch nzAllowClear nzPlaceHolder="Select Status">
-        <nz-option nzLabel="Active" nzValue="True"></nz-option>
+        <nz-option nzLabel="Active
+                   " nzValue="True"></nz-option>
         <nz-option nzLabel="Completed" nzValue="False"></nz-option>
 
       </nz-select>
