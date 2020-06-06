@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from "@angular/core";
 import {
   FormGroup,
   Validators,
@@ -9,24 +9,28 @@ import { LoginUserDto } from "src/app/classes/LoginUserDto";
 import { DataService } from "src/app/data.service";
 import { NzMessageService } from "ng-zorro-antd";
 import { Router, ActivatedRoute } from "@angular/router";
+import { TokenInterceptor } from "../../interceptor/token.interceptor";
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
   return: string = "";
   loginDto = new LoginUserDto();
   errors: string[];
-
+  isSpinning: boolean= false;
   constructor(
     private fb: FormBuilder,
     private _dataService: DataService,
     private message: NzMessageService,
     private router: Router,
     private route: ActivatedRoute
+    , private interceptor: TokenInterceptor
+    , private cdRef: ChangeDetectorRef
+
   ) {
     this.loginForm = new FormGroup({
       Username: new FormControl(),
@@ -40,7 +44,14 @@ export class LoginComponent implements OnInit {
     );
     this.loginForm.reset();
   }
-
+  ngAfterViewInit() {
+    //console.log("test",this.interceptor.loading);
+    this.interceptor.loading.subscribe(d => {
+      console.log("loading: ", d);
+      this.isSpinning = d;
+      this.cdRef.detectChanges();
+    });
+  }
   submitForm = () => {
     this.errors = [];
     if (this.loginForm.valid) {
