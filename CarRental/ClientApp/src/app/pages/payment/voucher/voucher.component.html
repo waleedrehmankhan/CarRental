@@ -25,9 +25,9 @@
                     </td>
 
                     <td>
-                      Invoice #: {{invoiceDetails.Invoice.InvoiceNumber}}<br>
-                      Created: {{invoiceDetails.Invoice.IssueDate}}<br>
-                      Due: {{invoiceDetails.Invoice.DueDate}}
+                      Invoice #: {{invoiceDetails&&invoiceDetails.Invoice.InvoiceNumber}}<br>
+                      Created: {{invoiceDetails&&invoiceDetails.Invoice.IssueDate}}<br>
+                      Due: {{invoiceDetails&&invoiceDetails.Invoice.DueDate}}
                     </td>
                   </tr>
                 </table>
@@ -46,9 +46,9 @@
                     </td>
 
                     <td>
-                      {{invoiceDetails.Invoice.Customer.FirstName}}  {{invoiceDetails.Invoice.Customer.LastName}}    <br>
-                      {{invoiceDetails.Invoice.Customer.EmailAddress}}<br>
-                      {{invoiceDetails.Invoice.Customer.PhoneNumber}}
+                      {{invoiceDetails&&invoiceDetails.Invoice.Customer.FirstName}}  {{invoiceDetails&&invoiceDetails.Invoice.Customer.LastName}}    <br>
+                      {{invoiceDetails&&invoiceDetails.Invoice.Customer.EmailAddress}}<br>
+                      {{invoiceDetails&&invoiceDetails.Invoice.Customer.PhoneNumber}}
                     </td>
                   </tr>
                 </table>
@@ -67,11 +67,11 @@
 
             <tr class="item">
               <td>
-                {{ invoiceDetails.Car.Make}}| {{invoiceDetails.Car.Model}}| {{invoiceDetails.Car.Year}}
+                {{ invoiceDetails&&invoiceDetails.Car.Make}}| {{invoiceDetails&&invoiceDetails.Car.Model}}| {{invoiceDetails&&invoiceDetails.Car.Year}}
               </td>
 
               <td>
-                $ {{ invoiceDetails.Car.CarClassification.CostPerDay}}
+                $ {{ invoiceDetails&&invoiceDetails.Car.CarClassification.CostPerDay}}
               </td>
             </tr>
 
@@ -93,7 +93,7 @@
               <td></td>
 
               <td>
-                Total: ${{invoiceDetails.Invoice.Amount}}
+                Total: ${{invoiceDetails&&invoiceDetails.Invoice.Amount}}
               </td>
             </tr>
           </table>
@@ -102,7 +102,7 @@
       </div>
     </nz-tab>
  
-    <div *ngIf="invoiceDetails.Invoice.status==false">
+    <div *ngIf="invoiceDetails&&invoiceDetails.Invoice.status==false">
       <nz-tab nzTitle="Make Payment">
         <div class="invoice-box">
 
@@ -174,7 +174,7 @@
       </nz-tab>
     </div>
 
-    <div *ngIf="invoiceDetails.Invoice.status==true">
+    <div *ngIf="invoiceDetails&&invoiceDetails.Invoice.status==true">
 
       <nz-tab nzTitle="Receipt">
         <div>
@@ -193,10 +193,10 @@
                       </td>
 
                       <td>
-                        Receipt #: {{invoiceDetails.Payment.ReceiptNumber}}<br>
-                        Created: {{invoiceDetails.Invoice.IssueDate}}<br>
-                        DueDate: {{invoiceDetails.Invoice.DueDate}}<br>
-                        Paid Date: {{invoiceDetails.Payment.PaymentDate}}
+                        Receipt #: {{invoiceDetails&&invoiceDetails.Payment.ReceiptNumber}}<br>
+                        Created: {{invoiceDetails&&invoiceDetails.Invoice.IssueDate}}<br>
+                        DueDate: {{invoiceDetails&&invoiceDetails.Invoice.DueDate}}<br>
+                        Paid Date: {{invoiceDetails&&invoiceDetails.Payment.PaymentDate}}
                       </td>
                     </tr>
                   </table>
@@ -215,9 +215,9 @@
                       </td>
 
                       <td>
-                        {{invoiceDetails.Invoice.Customer.FirstName}}  {{invoiceDetails.Invoice.Customer.LastName}}    <br>
-                        {{invoiceDetails.Invoice.Customer.EmailAddress}}<br>
-                        {{invoiceDetails.Invoice.Customer.PhoneNumber}}
+                        {{invoiceDetails&&invoiceDetails.Invoice.Customer.FirstName}}  {{invoiceDetails&&invoiceDetails.Invoice.Customer.LastName}}    <br>
+                        {{invoiceDetails&&invoiceDetails.Invoice.Customer.EmailAddress}}<br>
+                        {{invoiceDetails&&invoiceDetails.Invoice.Customer.PhoneNumber}}
                       </td>
                     </tr>
                   </table>
@@ -238,15 +238,15 @@
 
               <tr class="item">
                 <td>
-                  {{ invoiceDetails.Car.Make}}| {{invoiceDetails.Car.Model}}| {{invoiceDetails.Car.Year}}
+                  {{ invoiceDetails&&invoiceDetails.Car.Make}}| {{invoiceDetails&&invoiceDetails.Car.Model}}| {{invoiceDetails&&invoiceDetails.Car.Year}}
                 </td>
 
                 <td>
-                  $ {{ invoiceDetails.Car.CarClassification.CostPerDay}}
+                  $ {{ invoiceDetails&&invoiceDetails.Car.CarClassification.CostPerDay}}
                 </td>
               </tr>
 
-
+              {{bookingextralist}}||json
               <tr *ngFor="let data of bookingextralist">
 
                 <td>
@@ -263,7 +263,7 @@
                 </td>
 
                 <td>
-                  {{invoiceDetails.Payment.PaymentType}}
+                  {{invoiceDetails&&invoiceDetails.Payment.PaymentType}}
                 </td>
               </tr>
 
@@ -273,17 +273,17 @@
                 <td> </td>
 
                 <td>
-                  Total Amount: ${{invoiceDetails.Payment.TotalAmount}}
+                  Total Amount: ${{invoiceDetails&&invoiceDetails.Payment.TotalAmount}}
                 </td>
               </tr>
 
-              <p>Notes: {{invoiceDetails.Payment.Remarks}}</p>
+              <p>Notes: {{invoiceDetails&&invoiceDetails.Payment.Remarks}}</p>
               <tr class="total">
                 <td>
                 </td>
 
                 <td>
-                   
+
                   Staff Signature
                 </td>
               </tr>
