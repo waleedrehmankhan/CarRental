@@ -17,8 +17,10 @@ namespace CarRental.Models
 
         [Display(Name = "Customer")]
         public int CustomerId { get; set; }
-        
+
         [Display(Name = "Booking")]
         public int BookingId { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
     }
 }
