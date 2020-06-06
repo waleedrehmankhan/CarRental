@@ -30,6 +30,8 @@ namespace CarRental.Models
 
         [Display(Name = "To Branch")]
         public int ToBranchId { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
 
     }
 }

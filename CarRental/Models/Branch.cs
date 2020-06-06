@@ -19,5 +19,7 @@ namespace CarRental.Models
         public string Longitude { get; set; }
         public string Latitude { get; set; }
         public bool isActive { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

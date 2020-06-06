@@ -18,5 +18,7 @@ namespace CarRental.Models
 
         [Display(Name = "Invoice")]
         public int InvoiceId { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

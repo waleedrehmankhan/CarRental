@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,7 +11,7 @@ namespace CarRental.Models
         [Required]
         public string RegistrationNumber { get; set; }
         public string Image { get; set; }
-        
+
         [Required]
         public int Year { get; set; }
 
@@ -29,6 +30,8 @@ namespace CarRental.Models
 
         [Display(Name = "Car Classification")]
         public int CarClassificationId { get; set; }
-        
+        public DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
+
     }
 }

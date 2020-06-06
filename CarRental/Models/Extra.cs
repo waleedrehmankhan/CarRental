@@ -1,3 +1,5 @@
+using System;
+
 namespace CarRental.Models
 {
     public class Extra
