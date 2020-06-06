@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { SidebarmenuService } from '../services/sidebarmenu.service';
+import { TokenInterceptor } from '../../interceptor/token.interceptor';
 
 @Component({
   selector: 'app-layout',
@@ -8,13 +9,12 @@ import { SidebarmenuService } from '../services/sidebarmenu.service';
 })
 export class LayoutComponent implements OnInit, AfterViewInit {
    
-  ngAfterViewInit(): void {
-
-  }
+   
 
   isCollapsed: Boolean = false;
   sidebarConfig: any;
-  constructor(private _menuService: SidebarmenuService) { }
+  isSpinning: boolean = false
+  constructor(private _menuService: SidebarmenuService, private interceptor: TokenInterceptor, private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     let currentuser = sessionStorage.getItem("current_user") && JSON.parse(sessionStorage.getItem("current_user"));
@@ -22,4 +22,12 @@ export class LayoutComponent implements OnInit, AfterViewInit {
     this._menuService.getMenu(currentuser.UserRole).subscribe(menu => this.sidebarConfig = menu)
   }
 
+  ngAfterViewInit() {
+    //console.log("test",this.interceptor.loading);
+    this.interceptor.loading.subscribe(d => {
+      console.log("loading: ", d);
+      this.isSpinning = d;
+      this.cdRef.detectChanges();
+    });
+  }
 }

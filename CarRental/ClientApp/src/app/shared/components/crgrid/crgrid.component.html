@@ -1,9 +1,16 @@
  
-<div><nz-spin [nzSpinning]="isSpinning"><ng-content></ng-content></nz-spin></div>
+ 
 <nz-table [nzFrontPagination]="false" #Table [nzData]="records">
   <thead>
     <tr>
-      <th nzShowSort nzSortKey="{{column}}" nzShowFilter *ngFor="let column of columns">{{ column }}</th>
+      <th  nzCustomFilter nzShowSort nzSortKey="{{column}}"   *ngFor="let column of columns">
+        {{ column }}
+
+        <!--<nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+          <i nz-icon nzType="search"></i>
+        </nz-filter-trigger>-->
+
+      </th>
       <th [attr.colspan]="[actions.length]">Action</th>
 
     </tr>
@@ -24,6 +31,19 @@
     </tr>
   </tbody>
 </nz-table>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+        Search
+      </button>
+      <button nz-button nzSize="small" (click)="reset()">Reset</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
 <div style="display: flex; flex-direction: row-reverse">
   <nz-pagination [nzShowSizeChanger]="true" [nzPageIndex]="pagenumber" [nzTotal]="totalcount" (nzPageIndexChange)="pageIndexChanged($event)" (nzPageSizeChange)="pageSizeChanged($event)"></nz-pagination>
 

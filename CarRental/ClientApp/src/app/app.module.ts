@@ -22,7 +22,8 @@ import { TokenInterceptor } from './interceptor/token.interceptor';
     LayoutModule,
     AccountModule,
     NzInputModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgZorroAntdModule.forRoot()
     //RouterModule.forRoot([
     //  { path: '', component: HomeComponent, pathMatch: 'full' },
     //  { path: 'counter', component: CounterComponent },
@@ -30,7 +31,8 @@ import { TokenInterceptor } from './interceptor/token.interceptor';
     //])
   ],
   providers: [DataService,
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }, { provide: NZ_I18N, useValue: en_US },
+    TokenInterceptor,
+    { provide: HTTP_INTERCEPTORS, useExisting: TokenInterceptor, multi: true }, { provide: NZ_I18N, useValue: en_US },
     { provide: "API_BASE_URL", useValue:"/api/" }
   ],
   bootstrap: [AppComponent]

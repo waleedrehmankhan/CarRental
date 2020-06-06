@@ -29,7 +29,8 @@ export class CrgridComponent  implements OnInit {
   pagesize: number = 10;
   totalcount: number = 0;
   records: any;
- 
+  visible = false;
+  searchValue = '';
 
   ngOnInit() {
     console.log(  this.url);
@@ -109,7 +110,15 @@ export class CrgridComponent  implements OnInit {
   }
  
 
+  reset(): void {
+    this.searchValue = '';
+    this.search();
+  }
 
+  search(): void {
+    this.visible = false;
+  //  this.listOfDisplayData = this.listOfData.filter((item: DataItem) => item.name.indexOf(this.searchValue) !== -1);
+  }
 
 
  convertIntoOneLevelJson = (activity: any, key = ""): any => {

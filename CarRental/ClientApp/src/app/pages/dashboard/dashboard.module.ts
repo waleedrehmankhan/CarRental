@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { ViewDashboardComponent } from './view-dashboard/view-dashboard.component';
 import { SharedModule } from '../../shared/shared.module';
+import { CrchartsModule } from '../crcharts/crcharts.module';
+ 
 
 
 @NgModule({
@@ -11,7 +13,8 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    SharedModule
+    SharedModule,
+    CrchartsModule
   ]
 })
 export class DashboardModule { }

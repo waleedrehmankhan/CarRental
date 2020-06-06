@@ -15,6 +15,7 @@
     </div>
     <app-sidebar [sidebarConfig]="sidebarConfig" [isCollapsed]="isCollapsed"></app-sidebar>
   </nz-sider>
+
   <nz-layout>
     <nz-header>
       <div class="app-header">
@@ -29,9 +30,11 @@
     </nz-header>
     <nz-content>
       <div class="inner-content" style="height: auto">
+        <nz-spin  [nzSpinning]="isSpinning">
         <nz-breadcrumb [nzAutoGenerate]="true">
         </nz-breadcrumb>
         <router-outlet></router-outlet>
+        </nz-spin>
       </div>
     </nz-content>
   </nz-layout>
