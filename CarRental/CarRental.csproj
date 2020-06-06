@@ -110,7 +110,7 @@
       <CustomToolNamespace>Dtos\CarDto.cs</CustomToolNamespace>
     </None>
     <None Update="ClientApp\src\app\classes\CustomerDto.ts">
-      <CustomToolNamespace>carent\Dtos\CustomerDto.cs</CustomToolNamespace>
+      <CustomToolNamespace>Dtos\CustomerDto.cs</CustomToolNamespace>
     </None>
     <None Update="ClientApp\src\app\classes\ExtraDto.ts">
       <CustomToolNamespace>Dtos\ExtraDto.cs</CustomToolNamespace>

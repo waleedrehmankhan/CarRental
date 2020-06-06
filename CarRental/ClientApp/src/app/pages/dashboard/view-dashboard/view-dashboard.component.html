@@ -1,1 +1,68 @@
-<app-branch-income-pie></app-branch-income-pie>
+
+  <nz-row [nzGutter]="16">
+    <nz-col [nzSpan]="6">
+      <nz-card>
+        <nz-statistic [nzValue]="(11.28 | number: '1.0-2')!"
+                      [nzTitle]="'Net Yearly Revenue'"
+                      [nzPrefix]="prefixTplOne"
+                      [nzSuffix]="'%'"
+                      [nzValueStyle]="{ color: '#3F8600' }">
+        </nz-statistic>
+        <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
+      </nz-card>
+    </nz-col>
+    <nz-col [nzSpan]="6">
+      <nz-card>
+        <nz-statistic [nzValue]="(11.28 | number: '1.0-2')!"
+                      [nzTitle]="'Bookings'"
+                      [nzPrefix]="prefixTplOne"
+                      [nzSuffix]="'%'"
+                      [nzValueStyle]="{ color: '#3F8600' }">
+        </nz-statistic>
+        <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
+      </nz-card>
+    </nz-col>
+    <nz-col [nzSpan]="6">
+      <nz-card>
+        <nz-statistic [nzValue]="(11.28 | number: '1.0-2')!"
+                      [nzTitle]="'Total Expense'"
+                      [nzPrefix]="prefixTplOne"
+                      [nzSuffix]="'%'"
+                      [nzValueStyle]="{ color: '#3F8600' }">
+        </nz-statistic>
+        <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
+      </nz-card>
+    </nz-col>
+    <nz-col [nzSpan]="6">
+      <nz-card>
+        <nz-statistic [nzValue]="(11.28 | number: '1.0-2')!"
+                      [nzTitle]="'Total Transaction'"
+                      [nzPrefix]="prefixTplOne"
+                      [nzSuffix]="'%'"
+                      [nzValueStyle]="{ color: '#3F8600' }">
+        </nz-statistic>
+        <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
+      </nz-card>
+    </nz-col>
+
+  </nz-row>
+<nz-row [nzGutter]="16">
+  <nz-col [nzSpan]="12">
+    <nz-card>
+      <app-branch-income-pie></app-branch-income-pie>
+    </nz-card>
+  </nz-col>
+  <nz-col [nzSpan]="12">
+    <nz-card>
+      <app-branch-income-pie></app-branch-income-pie>
+    </nz-card>
+  </nz-col>
+</nz-row>
+<nz-row [nzGutter]="16">
+  <nz-col [nzSpan]="24">
+    <nz-card nzTitle="Recent Bookings">
+      <div><app-crgrid [refresh]="refresh" (deleteClick)="deleteClicked($event)" (editClick)="editClicked($event)" [columns]="lstcolumns" [url]="url"></app-crgrid></div>
+    </nz-card>
+  </nz-col>
+  
+</nz-row>

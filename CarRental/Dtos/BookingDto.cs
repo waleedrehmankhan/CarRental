@@ -59,5 +59,7 @@ namespace CarRental.Dtos
         public int FromBranchID { get; set; }
         public int ToBranchID { get; set; }
         public bool IsNewCustomer { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

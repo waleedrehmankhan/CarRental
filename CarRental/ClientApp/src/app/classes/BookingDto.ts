@@ -1,7 +1,7 @@
-import { CustomerDto } from "./CustomerDto";
-import { BranchDto } from "./BranchDto";
 import { BookingExtraDto } from "./BookingExtraDto";
 import { CarDto } from "./CarDto";
+import { BranchDto } from "./BranchDto";
+import { CustomerDto } from "./CustomerDto";
 
  
 
@@ -45,5 +45,9 @@ import { CarDto } from "./CarDto";
         public ToBranchID: number = 0;
         // IsNewCustomer
         public IsNewCustomer: boolean = false;
+        // CreatedOn
+        public CreatedOn: Date = new Date(0);
+        // CreatedBy
+        public CreatedBy: string = null;
     }
 

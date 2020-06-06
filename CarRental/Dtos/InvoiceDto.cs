@@ -45,5 +45,7 @@ namespace CarRental.Dtos
         public int CustomerId { get; set; }
         public int BookingId { get; set; }
         public bool status { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

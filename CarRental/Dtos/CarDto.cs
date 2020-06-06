@@ -28,6 +28,8 @@ namespace CarRental.Dtos
         public float CostPerHour { get; set; }
         public float CostPerDay { get; set; }
         public float LateFeePerHour { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
 
     }
 }

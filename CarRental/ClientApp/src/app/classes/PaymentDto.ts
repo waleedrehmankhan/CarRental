@@ -32,5 +32,9 @@ import { InvoiceDto } from "./InvoiceDto";
         public Remarks: string = null;
         // InvoiceId
         public InvoiceId: number = 0;
+        // CreatedOn
+        public CreatedOn: Date = new Date(0);
+        // CreatedBy
+        public CreatedBy: string = null;
     }
 

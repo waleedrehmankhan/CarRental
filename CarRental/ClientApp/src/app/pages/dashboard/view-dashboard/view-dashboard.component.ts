@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../../../data.service';
+import { NzMessageService } from 'ng-zorro-antd';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-view-dashboard',
@@ -7,9 +11,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewDashboardComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private _dataService: DataService, private message: NzMessageService, private router: Router) { }
+  url: string = "booking/getBookings"
+  refresh = new Subject<boolean>();
+  lstcolumns: string[] = ["Customer.FirstName", "FromBranch.BranchName", "ToBranch.BranchName", "FromDate", "ReturnDate", "Status"]
   ngOnInit() {
   }
-
 }

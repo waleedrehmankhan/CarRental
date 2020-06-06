@@ -6,8 +6,6 @@ import { ViewDashboardComponent } from './view-dashboard/view-dashboard.componen
 import { SharedModule } from '../../shared/shared.module';
 import { CrchartsModule } from '../crcharts/crcharts.module';
  
-
-
 @NgModule({
   declarations: [ViewDashboardComponent],
   imports: [

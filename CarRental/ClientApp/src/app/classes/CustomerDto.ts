@@ -36,5 +36,9 @@ import { MembershipTypeDto } from "./MembershipTypeDto";
         public MembershipType: MembershipTypeDto = null;
         // MembershipTypeId
         public MembershipTypeId: number = 0;
+        // CreatedOn
+        public CreatedOn: Date = new Date(0);
+        // CreatedBy
+        public CreatedBy: string = null;
     }
 

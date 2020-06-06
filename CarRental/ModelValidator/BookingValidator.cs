@@ -10,9 +10,11 @@ namespace CarRental.ModelValidator
 
             RuleFor(x => x.FromBranchID).NotNull().NotEmpty().WithMessage("Pick Up Location Cannot be Empty");
             RuleFor(x => x.ToBranchID).NotNull().NotEmpty().WithMessage("Return Location Cannot be Empty");
+            RuleFor(x => x.isActive).NotNull().NotEmpty().WithMessage("Status Cannot be Empty");
+
             //RuleFor(x => x.FromDate).NotNull().NotEmpty().NotEqual("1970-01-01T00:00:00").WithMessage("From Date Cannot be Empty");
             //RuleFor(x => x.ReturnDate).NotNull().NotEmpty().WithMessage("Return Date Cannot be Empty");
-            
+
             RuleFor(x => x.CarId).NotNull().NotEmpty().WithMessage("Car Cannot be Empty");
             RuleFor(x => x.ToBranchID).NotEqual(x => x.FromBranchID).WithMessage("Pick up Location and Drop off Location Cannot be same.");
             RuleFor(x => x.FromDate).Custom((x, context) => {

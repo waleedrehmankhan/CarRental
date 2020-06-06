@@ -23,7 +23,7 @@ import { TokenInterceptor } from './interceptor/token.interceptor';
     AccountModule,
     NzInputModule,
     BrowserAnimationsModule,
-    NgZorroAntdModule.forRoot()
+    NgZorroAntdModule
     //RouterModule.forRoot([
     //  { path: '', component: HomeComponent, pathMatch: 'full' },
     //  { path: 'counter', component: CounterComponent },

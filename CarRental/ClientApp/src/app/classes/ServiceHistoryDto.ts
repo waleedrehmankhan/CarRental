@@ -24,5 +24,9 @@ import { CarDto } from "./CarDto";
         public Description: string = null;
         // CarId
         public CarId: number = 0;
+        // CreatedOn
+        public CreatedOn: Date = new Date(0);
+        // CreatedBy
+        public CreatedBy: string = null;
     }
 

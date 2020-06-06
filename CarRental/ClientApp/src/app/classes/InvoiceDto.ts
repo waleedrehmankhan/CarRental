@@ -35,5 +35,9 @@ import { BookingDto } from "./BookingDto";
         public BookingId: number = 0;
         // status
         public status: boolean = false;
+        // CreatedOn
+        public CreatedOn: Date = new Date(0);
+        // CreatedBy
+        public CreatedBy: string = null;
     }
 

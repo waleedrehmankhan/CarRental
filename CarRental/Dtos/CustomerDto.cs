@@ -35,6 +35,8 @@ namespace CarRental.Dtos
         public MembershipTypeDto MembershipType { get; set; }
        
         public byte MembershipTypeId { get; set; }
+        public DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
 
     }
 }

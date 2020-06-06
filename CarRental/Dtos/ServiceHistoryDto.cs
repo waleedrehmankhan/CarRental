@@ -14,5 +14,8 @@ namespace CarRental.Dtos
         public string Description { get; set; }
  
         public int CarId { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿import { CarClassificationDto } from "./CarClassificationDto";
+import { CarClassificationDto } from "./CarClassificationDto";
 import { CarAvailbilityTimeDto } from "./CarAvailbilityTimeDto";
 
  
@@ -43,5 +43,9 @@ import { CarAvailbilityTimeDto } from "./CarAvailbilityTimeDto";
         public CostPerDay: number = 0;
         // LateFeePerHour
         public LateFeePerHour: number = 0;
+        // CreatedOn
+        public CreatedOn: Date = new Date(0);
+        // CreatedBy
+        public CreatedBy: string = null;
     }
 
