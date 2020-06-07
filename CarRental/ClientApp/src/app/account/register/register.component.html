@@ -45,7 +45,7 @@
     <nz-form-item>
         <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="BranchId">Branch</nz-form-label>
         <nz-form-control [nzErrorTip]="registerForm.get('BranchId').errors?.errors" [nzSm]="14" [nzXs]="24">
-            <crselect [url]="BranchUrl" key="BranchName" value="Id" id="BranchId" formControlName="BranchId">
+            <crselect [url]="BranchUrl" key="BranchName" [disabled]="disabled" [defaultvalue]="BranchId" value="Id" id="BranchId" formControlName="BranchId">
             </crselect>
         </nz-form-control>
     </nz-form-item>

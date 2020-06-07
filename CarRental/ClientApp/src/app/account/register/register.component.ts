@@ -21,6 +21,9 @@ export class RegisterComponent implements OnInit {
   registerDto = new RegisterUserDto();
   userRolesUrl: string = "account/roles";
   BranchUrl: string = "branch/getBranchDetails";
+  current_user = JSON.parse(sessionStorage.getItem("current_user"))
+  BranchId = this.current_user.BranchId;
+  disabled: boolean = this.current_user.BranchId!=3
 
   constructor(
     private fb: FormBuilder,
@@ -34,8 +37,10 @@ export class RegisterComponent implements OnInit {
       FirstName: new FormControl(),
       LastName: new FormControl(),
       UserRole: new FormControl(),
-      BranchId: new FormControl(),
+      BranchId: new FormControl()
     });
+    this.registerDto.BranchId = this.BranchId;
+    console.log("test:", this.BranchId)
   }
 
   ngOnInit() {

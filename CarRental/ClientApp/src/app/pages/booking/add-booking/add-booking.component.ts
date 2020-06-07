@@ -26,7 +26,11 @@ export class AddBookingComponent implements OnInit {
   show: boolean = false;
   checked: boolean = false;
   checkboxname: string = "Is New Customer";
-    selectedExtra: any = [];
+  selectedExtra: any = [];
+  current_user = JSON.parse(sessionStorage.getItem("current_user"))
+  BranchId = this.current_user.BranchId;
+  disabled: boolean = this.current_user.BranchId != 3
+  selectedvalue:string="True"
  
   constructor(private fb: FormBuilder, private _dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router, private message: NzMessageService) {
   }
@@ -48,7 +52,6 @@ export class AddBookingComponent implements OnInit {
 
         response => {
           const [booking] = response.data.Items;
-          console.log(booking.FromDate);
           booking.FromDate = new Date(booking.FromDate);
           booking.ReturnDate = new Date(booking.ReturnDate);
           this.booking.patchValue(booking);

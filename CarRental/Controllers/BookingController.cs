@@ -40,8 +40,21 @@ namespace CarRental.Controllers
         {
             try
             {
+                IEnumerable<Booking> bookings;
                 ReturnMessage rm = new ReturnMessage(1, "Success");
-                var bookings = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true,includeProperties:"FromBranch,ToBranch,Car,Customer"));
+                var current_user = HttpContext.Session.GetObjectFromJson<RegisterUserDto>("current_user");
+                if(current_user.BranchId!=3||current_user.UserRole=="Staff")
+                {
+                    var users = await Task.Run(() => _unitOfWork.BranchStaff.GetAsync(filter: w =>w.BranchId==current_user.BranchId, includeProperties: "Staff"));
+                    List<string> usersinbranch = new List<string>();
+                    foreach (var item in users)
+                    {
+                        usersinbranch.Add(item.Staff.UserName);
+                    }
+                    bookings = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => (input.Id != 0 ? (w.Id == input.Id) : true)&& usersinbranch.Contains(w.CreatedBy), includeProperties: "FromBranch,ToBranch,Car,Customer"));
+                }
+                else 
+                    bookings=  await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true,includeProperties:"FromBranch,ToBranch,Car,Customer"));
                 var bookingdToReturn = _mapper.Map<IEnumerable<BookingDto>>(bookings);
                 foreach (var item in bookingdToReturn)
                 {
@@ -70,6 +83,7 @@ namespace CarRental.Controllers
         [ValidateFilter]
         public async Task<ContentResult> CreateOrUpdateBooking(BookingDto bookingDto)
         {
+            var current_user =  HttpContext.Session.GetObjectFromJson<RegisterUserDto>("current_user");
             float totalinvoiceamount = 0;
             Booking bookingToAdd = null;
             Invoice invoicetoadd = null;
@@ -85,9 +99,12 @@ namespace CarRental.Controllers
                 bookingToAdd.ReturnDate = TimeZoneInfo.ConvertTime(bookingToAdd.ReturnDate, est);
                 var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => w.Id == bookingDto.CarId, includeProperties: "CarClassification"));
                 totalinvoiceamount = totalinvoiceamount + ((cars.First().CarClassification.CostPerDay * totaldays));
+                bookingToAdd.CreatedOn = DateTime.Now;
+                bookingToAdd.CreatedBy = current_user.Username;
                 if (booking.Count() == 0)
                 {
-                    if(!bookingDto.IsNewCustomer&& bookingDto.CustomerId !=0)
+                   
+                    if (!bookingDto.IsNewCustomer&& bookingDto.CustomerId !=0)
                     {
                         bookingToAdd.Customer = null;
                        customer= _unitOfWork.Customers.Find(x => x.Id == bookingDto.CustomerId).First();
@@ -138,7 +155,9 @@ namespace CarRental.Controllers
                         IssueDate = DateTime.Now.ToString("yyyy/MM/dd HH:mm"),
                         DueDate = bookingToAdd.FromDate.ToString("yyyy/MM/dd HH:mm"),
                         Description = "Invoice Created For the Booking by " + customer.FirstName,
-                        Amount = totalinvoiceamount
+                        Amount = totalinvoiceamount,
+                        CreatedBy = current_user.Username,
+                        CreatedOn = DateTime.Now
 
 
                     };

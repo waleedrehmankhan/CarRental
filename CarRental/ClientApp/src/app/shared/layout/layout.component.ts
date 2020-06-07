@@ -12,6 +12,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
    
 
   isCollapsed: Boolean = false;
+  branchname: string;
   sidebarConfig: any;
   isSpinning: boolean = false
   constructor(private _menuService: SidebarmenuService, private interceptor: TokenInterceptor, private cdRef: ChangeDetectorRef) { }
@@ -20,6 +21,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
     let currentuser = sessionStorage.getItem("current_user") && JSON.parse(sessionStorage.getItem("current_user"));
     console.log(currentuser);
     this._menuService.getMenu(currentuser.UserRole).subscribe(menu => this.sidebarConfig = menu)
+    this.branchname = currentuser.BranchName;
   }
 
   ngAfterViewInit() {

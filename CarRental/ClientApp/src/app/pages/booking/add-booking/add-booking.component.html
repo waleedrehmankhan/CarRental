@@ -4,7 +4,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="FromBranchID">Pick up Location</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('FromBranchID').errors?.errors" [nzSm]="14" [nzXs]="24">
-      <crselect [url]="branchurl" key="BranchName" value="Id" formControlName="FromBranchID"></crselect>
+      <crselect [disabled]="disabled" [defaultvalue]="BranchId" [url]="branchurl" key="BranchName" value="Id" formControlName="FromBranchID"></crselect>
     </nz-form-control>
   </nz-form-item>
 
@@ -132,7 +132,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="isActive">Status</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('isActive').errors?.errors" [nzSm]="14" [nzXs]="24">
-      <nz-select formControlName="isActive" nzShowSearch nzAllowClear nzPlaceHolder="Select Status">
+      <nz-select [(ngModel)]="selectedvalue" formControlName="isActive" nzShowSearch nzAllowClear nzPlaceHolder="Select Status">
         <nz-option nzLabel="Active
                    " nzValue="True"></nz-option>
         <nz-option nzLabel="Completed" nzValue="False"></nz-option>

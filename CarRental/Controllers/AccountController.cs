@@ -54,12 +54,29 @@ namespace CarRental.Controllers
 
         [HttpPost]
         [Route("getUserDetails")]
-        public ContentResult GetAll(GetUserInput input)
+        public async Task<ContentResult> GetAll(GetUserInput input)
         {
             try
             {
                 ReturnMessage rm = new ReturnMessage(1, "Success");
-                var userInDb = _userManager.Users.ToList();
+                var current_user = HttpContext.Session.GetObjectFromJson<RegisterUserDto>("current_user");
+                IEnumerable<ApplicationUser> userInDb;
+                if (current_user.BranchId != 3)
+                {
+                    var users = await Task.Run(() => _unitOfWork.BranchStaff.GetAsync(filter: w => w.BranchId == current_user.BranchId, includeProperties: "Staff"));
+                    List<string> usersinbranch = new List<string>();
+                    foreach (var item in users)
+                    {
+                        usersinbranch.Add(item.Staff.Id);
+                    }
+
+                       userInDb = _userManager.Users.ToList().Where(x => usersinbranch.Contains(x.Id));
+                }
+                else
+                {
+                    userInDb = _userManager.Users.ToList();
+                }
+               
                 var userToReturn = _mapper.Map<IEnumerable<UserDto>>(userInDb);
                 return this.Content(rm.returnMessage(new PagedResultDto<UserDto>
                         (userToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
@@ -100,7 +117,7 @@ namespace CarRental.Controllers
 
                 // If User is a Registered Branch Staff Then Remove it.
                 var staffOfBranch = await _unitOfWork.BranchStaff.GetAsync(filter: w => w.StaffId == user.Id);
-                if (staffOfBranch != null)
+                if (staffOfBranch.Count() != 0)
                     _unitOfWork.BranchStaff.Remove(staffOfBranch.First());
 
                 await _userManager.DeleteAsync(user);
@@ -198,10 +215,15 @@ namespace CarRental.Controllers
                 {
                     var token = GenerateSecurityToken(user);
                     var usertoreturn = _mapper.Map<RegisterUserDto>(user);
+                    
+                    var branch = await Task.Run(() => _unitOfWork.BranchStaff.GetAsync(filter: w => w.StaffId == user.Id, includeProperties: "Branch"));
                     usertoreturn.CurrentToken = token;
+                    usertoreturn.BranchId = branch.ToList().First().BranchId;
+                    usertoreturn.BranchName = branch.ToList().First().Branch.BranchName;
                     var role = await _userManager.GetRolesAsync(user);
                     usertoreturn.UserRole = role[0];
                     registeruserlist.Add(usertoreturn);
+                    HttpContext.Session.SetObjectAsJson("current_user", usertoreturn);
                 }
                 else
                 {
@@ -278,6 +300,11 @@ namespace CarRental.Controllers
             var tokenHandler = new JwtSecurityTokenHandler();
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(securityToken);
+        }
+
+        public RegisterUserDto GetCurrentUser()
+        {
+            return HttpContext.Session.GetObjectFromJson<RegisterUserDto>("current_user");
         }
 
     }

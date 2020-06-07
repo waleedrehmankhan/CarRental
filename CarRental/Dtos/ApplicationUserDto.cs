@@ -12,6 +12,7 @@ namespace CarRental.Dtos
         [Required]
         public int BranchId { get; set; }
         public string CurrentToken { get; set; }
+        public string BranchName { get; set; }
     }
 
     public class LoginUserDto

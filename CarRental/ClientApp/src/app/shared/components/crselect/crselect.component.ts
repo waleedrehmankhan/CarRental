@@ -20,6 +20,7 @@ export class CrselectComponent implements OnInit, ControlValueAccessor {
   @Input() key: string;
   @Input() value: string;
   @Input() disabled: boolean=false;
+  @Input() defaultvalue: string ;
   selectedValue = null;
     changeFn: any;
     touchChangeFn: any;
@@ -30,7 +31,9 @@ export class CrselectComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     console.log(this.url);
+   
     this.getSelectData();
+   
   }
 
 
@@ -43,7 +46,12 @@ export class CrselectComponent implements OnInit, ControlValueAccessor {
 
           console.log(response);
           this.items = response.data.Items;
-         // this.selectedValue = response.data.Items[0].Id;
+          //this.selectedValue = response.data.Items[0].Id;
+          if (this.defaultvalue) {
+            this.selectedValue = this.defaultvalue;
+
+          }
+           
           this.modelChanged();
 
         }

@@ -38,10 +38,24 @@ namespace CarRental.Controllers
         [HttpPost("getInvoiceDetails")]
         public async Task<ContentResult> GetInvoice(GetInvoiceInput input)
         {
+            IEnumerable<Invoice> invoices;
             try
             {
                 ReturnMessage rm = new ReturnMessage(1, "Success");
-                var invoices = await Task.Run(() => _unitOfWork.Invoices.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true, includeProperties: "Customer,Booking"));
+                var current_user = HttpContext.Session.GetObjectFromJson<RegisterUserDto>("current_user");
+                if (current_user.BranchId != 3 || current_user.UserRole=="Staff")
+                {
+                    var users = await Task.Run(() => _unitOfWork.BranchStaff.GetAsync(filter: w => w.BranchId == current_user.BranchId, includeProperties: "Staff"));
+                    List<string> usersinbranch = new List<string>();
+                    foreach (var item in users)
+                    {
+                        usersinbranch.Add(item.Staff.UserName);
+                    }
+                    invoices = await Task.Run(() => _unitOfWork.Invoices.GetAsync(filter: w => (input.Id != 0 ? (w.Id == input.Id) : true)&&usersinbranch.Contains(w.CreatedBy), includeProperties: "Customer,Booking"));
+                }
+                else
+                    invoices = await Task.Run(() => _unitOfWork.Invoices.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true, includeProperties: "Customer,Booking"));
+ 
                 var invoicesToReturn = _mapper.Map<IEnumerable<InvoiceDto>>(invoices);
                 return this.Content(rm.returnMessage(new PagedResultDto<InvoiceDto>
                     (invoicesToReturn.AsQueryable(), input.pagenumber, input.pagesize)),

@@ -11,19 +11,25 @@
     
     export class RegisterUserDto {
         
+        // Email
+        public Email: string = null;
         // FirstName
         public FirstName: string = null;
         // LastName
         public LastName: string = null;
         // UserRole
         public UserRole: string = null;
+        // BranchId
+        public BranchId: number = 0;
         // CurrentToken
         public CurrentToken: string = null;
+        // BranchName
+        public BranchName: string = null;
     }
     export class LoginUserDto {
         
-        // Email
-        public Email: string = null;
+        // Username
+        public Username: string = null;
         // Password
         public Password: string = null;
     }
