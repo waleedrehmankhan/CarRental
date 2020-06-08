@@ -1,4 +1,5 @@
 import { CarDto } from "./CarDto";
+import { BranchDto } from "./BranchDto";
 
  
 
@@ -10,31 +11,19 @@ import { CarDto } from "./CarDto";
     // More info: http://frhagn.github.io/Typewriter/
 
     
-    export class ServiceHistoryDto {
+    export class LocationDto {
         
         // Id
         public Id: number = 0;
         // Car
         public Car: CarDto = null;
-        // DueDate
-        public DueDate: Date = new Date(0);
-        // Status
-        public Status: boolean = false;
-        // Description
-        public Description: string = null;
+        // Branch
+        public Branch: BranchDto = null;
+        // isAtLocation
+        public isAtLocation: boolean = false;
         // CarId
         public CarId: number = 0;
-        // ServicingType
-        public ServicingType: number = 0;
-        // Amoune
-        public Amoune: number = 0;
-        // CreatedOn
-        public CreatedOn: Date = new Date(0);
-        // CreatedBy
-        public CreatedBy: string = null;
-        // ServiceStatus
-        public ServiceStatus: string = null;
-        // ServicingTypeName
-        public ServicingTypeName: string = null;
+        // BranchId
+        public BranchId: number = 0;
     }
 

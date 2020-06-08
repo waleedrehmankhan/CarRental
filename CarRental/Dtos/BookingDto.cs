@@ -61,5 +61,6 @@ namespace CarRental.Dtos
         public bool IsNewCustomer { get; set; }
         public DateTime CreatedOn { get; set; }
         public string CreatedBy { get; set; }
+        public InvoiceDto Invoice { get; set; }
     }
 }

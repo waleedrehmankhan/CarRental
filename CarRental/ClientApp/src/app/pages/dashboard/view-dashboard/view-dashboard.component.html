@@ -61,7 +61,7 @@
 <nz-row [nzGutter]="16">
   <nz-col [nzSpan]="24">
     <nz-card nzTitle="Recent Bookings">
-      <div><app-crgrid [refresh]="refresh" (deleteClick)="deleteClicked($event)" (editClick)="editClicked($event)" [columns]="lstcolumns" [url]="url"></app-crgrid></div>
+      <div><app-crgrid [refresh]="refresh"   [columns]="lstcolumns" [url]="url" [actions]="lstactions"></app-crgrid></div>
     </nz-card>
   </nz-col>
   

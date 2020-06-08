@@ -50,7 +50,34 @@ namespace CarRental.Controllers
                 foreach (var item in carsToReturn)
                 {
                     item.CarAvailability = GetavailableTime(new GetCarInput() { Id=item.Id,AvailableDateCheck=input.AvailableDateCheck});
+                    var location = await Task.Run(() => _unitOfWork.Locations.GetAsync(filter: w => w.CarId == item.Id && w.isAtLocation == true, includeProperties: "Branch"));
+                    if(location.Count()!=0)
+                        item.CurrentLocation = location.First().Branch.BranchName;
                 }
+                return this.Content(rm.returnMessage(new PagedResultDto<CarDto>
+                    (carsToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
+                    "application/json");
+            }
+            catch (Exception ex)
+            {
+                return this.Content(JsonConvert.SerializeObject(new
+                {
+                    msgCode = -3,
+                    msg = ex.Message
+                }), "application/json");
+            }
+        }
+
+        [HttpPost("getCarDetailsQuick")]
+        public async Task<ContentResult> GetCarDetails(GetCarInput input)
+        {
+            try
+            {
+                ReturnMessage rm = new ReturnMessage(1, "Success");
+                var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true, includeProperties: "CarClassification"));
+                 
+                var carsToReturn = _mapper.Map<IEnumerable<CarDto>>(cars);
+               
                 return this.Content(rm.returnMessage(new PagedResultDto<CarDto>
                     (carsToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
                     "application/json");
@@ -350,12 +377,44 @@ namespace CarRental.Controllers
         //    }
         //}
 
-       
+
+        [HttpPost("deleteServiceHistory")]
+        public async Task<ContentResult> DeleteCarServiceHistory(GetServiceInput input)
+        {
+
+            ReturnMessage returnmessage = new ReturnMessage(1, "Car Service History Deleted Succesfully");
+            try
+            {
+
+                var service = await Task.Run(() => _unitOfWork.ServiceHistory.GetAsync(filter: w => w.Id == input.Id));
+
+                if (service.Count() == 0)
+                {
+                    returnmessage.msgCode = -2;
+                    returnmessage.msg = "Service History Not Found";
+                }
+                else
+                    _unitOfWork.ServiceHistory.Remove(service.First());
+                _unitOfWork.Complete();
+                _logger.LogInformation("Log:Delete Car Service for ID: {Id}", input.Id);
+
+                return this.Content(returnmessage.returnMessage(null),
+                            "application/json");
+            }
+            catch (Exception ex)
+            {
+                returnmessage.msg = ex.Message.ToString();
+                returnmessage.msgCode = -3;
+                return this.Content(returnmessage.returnMessage(null));
+            }
+        }
+
+
 
 
 
     }
 
 
-   
+
 }

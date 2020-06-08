@@ -4,6 +4,7 @@ import { DataService } from '../../../data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ServiceHistoryDto } from '../../../classes/ServiceHistoryDto';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-add-history',
@@ -15,6 +16,7 @@ export class AddHistoryComponent implements OnInit {
   serviceForm: FormGroup;
 
   serviceDto = new ServiceHistoryDto();
+  servicingstatus:string="true"
   constructor(
 
     private fb: FormBuilder,
@@ -26,8 +28,9 @@ export class AddHistoryComponent implements OnInit {
   ) { }
   carurl: string = "car/getCarDetails";
   url: string = "car/getCarServiceDetails";
-  lstcolumns: string[] = ["DueDate", "Description", "CarId"]
-  refresh: boolean = false;
+  lstcolumns: string[] = ["DueDate:Date", "Description", "ServicingTypeName:ServicingType", "ServiceStatus:Status"]
+  lstactions: string[] = ["delete:delete"];
+  refresh = new Subject < boolean>();
   ngOnInit() {
 
     this.serviceForm = this.fb.group({
@@ -35,7 +38,9 @@ export class AddHistoryComponent implements OnInit {
       Description: "",
       Status: "",
       DueDate: [null],
-      CarId: [""]
+      CarId: [""],
+      ServicingType: [""],
+      Amoune:[""],
     });
     console.log(this.serviceForm);
     this.errors = [];
@@ -104,8 +109,9 @@ export class AddHistoryComponent implements OnInit {
             this.message.success(response.message.msg, {
               nzDuration: 5000
             });
-             
-            this.refresh = true;
+
+            this.refresh.next(true);
+            this.serviceForm.reset();
           }
           else if (response.data && response.data.message.msgCode == -3) {
             debugger;
@@ -137,6 +143,20 @@ export class AddHistoryComponent implements OnInit {
       }
     }
     return serviceDto;
+  }
+
+  deleteClicked(data: ServiceHistoryDto) {
+    this._dataService.postData("car/deleteServiceHistory", { "Id": data.Id }).subscribe(
+
+      response => {
+
+        this.refresh.next(true);
+        this.message.success(response.message.msg, {
+          nzDuration: 5000
+        });
+      }
+    );
+    this.refresh.next(true);
   }
 
 }

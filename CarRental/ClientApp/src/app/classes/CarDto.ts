@@ -35,6 +35,8 @@ import { CarAvailbilityTimeDto } from "./CarAvailbilityTimeDto";
         public Image: string = null;
         // CarAvailability
         public CarAvailability: CarAvailbilityTimeDto[] = [];
+        // CurrentLocation
+        public CurrentLocation: string = null;
         // PassengerCount
         public PassengerCount: number = 0;
         // CostPerHour

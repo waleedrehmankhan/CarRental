@@ -14,7 +14,8 @@ export class ViewDashboardComponent implements OnInit {
   constructor(private _dataService: DataService, private message: NzMessageService, private router: Router) { }
   url: string = "booking/getBookings"
   refresh = new Subject<boolean>();
-  lstcolumns: string[] = ["Customer.FirstName", "FromBranch.BranchName", "ToBranch.BranchName", "FromDate", "ReturnDate", "Status"]
+  lstcolumns: string[] = ["Customer.FirstName: Customer Name", "FromBranch.BranchName: Pickup Location", "ToBranch.BranchName:Drop Off Location", "FromDate:From Date", "ReturnDate:Return Date", "Status: Booking Status"]
+  lstactions:string[]=[]
   ngOnInit() {
   }
 }

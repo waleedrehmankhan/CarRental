@@ -59,6 +59,8 @@ namespace CarRental.Helpers
 
             CreateMap<ServiceHistory, ServiceHistoryDto>();
             CreateMap<ServiceHistoryDto, ServiceHistory>();
+            CreateMap<Location, LocationDto>();
+            CreateMap<LocationDto, Location>();
         }
     }
 }

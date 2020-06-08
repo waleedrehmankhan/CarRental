@@ -1,7 +1,8 @@
+import { CustomerDto } from "./CustomerDto";
+import { BranchDto } from "./BranchDto";
 import { BookingExtraDto } from "./BookingExtraDto";
 import { CarDto } from "./CarDto";
-import { BranchDto } from "./BranchDto";
-import { CustomerDto } from "./CustomerDto";
+import { InvoiceDto } from "./InvoiceDto";
 
  
 
@@ -49,5 +50,7 @@ import { CustomerDto } from "./CustomerDto";
         public CreatedOn: Date = new Date(0);
         // CreatedBy
         public CreatedBy: string = null;
+        // Invoice
+        public Invoice: InvoiceDto = null;
     }
 

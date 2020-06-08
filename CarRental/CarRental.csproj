@@ -124,6 +124,9 @@
     <None Update="ClientApp\src\app\classes\InvoiceDto.ts">
       <CustomToolNamespace>Dtos\InvoiceDto.cs</CustomToolNamespace>
     </None>
+    <None Update="ClientApp\src\app\classes\LocationDto.ts">
+      <CustomToolNamespace>Dtos\LocationDto.cs</CustomToolNamespace>
+    </None>
     <None Update="ClientApp\src\app\classes\LoginDto.ts">
       <CustomToolNamespace>Dtos\LoginDto.cs</CustomToolNamespace>
     </None>

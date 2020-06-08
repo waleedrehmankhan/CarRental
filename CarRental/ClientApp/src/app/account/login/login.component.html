@@ -4,7 +4,7 @@
     top: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    padding: 50px;
+ 
 
     border-radius: 10px;
     box-shadow: 5px 5px #BBD1EA; -webkit-box-shadow: 13px 3px 36px -9px rgba(117,115,117,1);
@@ -14,7 +14,16 @@
 
 
   <nz-spin [nzSpinning]="isSpinning">
-
+    <div style="display: flex; flex-direction:row;align-items:center">
+      <div style="flex:8">
+        <img style="width:100%" src="/StaticFiles/images/imagelogin.png" />
+      </div>
+      <div style="flex:4;padding:20px;text-align: center ">
+        <div style="background: #0094ff; width: 50px; height: 50px; border-radius: 10px;
+display: inline-flex; justify-content: center; align-items: center">
+          <i nz-icon nzType="car" nzTheme="outline" style="color: white; font-size: 18px;"></i>
+        </div>
+        <h2 style="text-align:center;font-size:medium;line-height:27px;margin:15px"><span style="color:#0094ff;font-size:27px">CAR RENTAL</span> <br/><span style="color:#999">Management System</span></h2>
     <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submitForm()">
 
       <nz-form-item>
@@ -36,6 +45,9 @@
 
       <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
     </form>
+      </div>
+    </div>
+
     </nz-spin>
 
 </div>

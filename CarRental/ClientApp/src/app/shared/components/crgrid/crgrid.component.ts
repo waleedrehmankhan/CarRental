@@ -15,12 +15,13 @@ export class CrgridComponent  implements OnInit {
    
    
   @Input() columns: string[];
-  @Input() actions: string[]=["edit","delete"];
+  @Input() actions: string[]=["edit:edit","delete:delete"];
   @Input() url: string;
   @Input() refresh: Observable<boolean>;
   @Output() editClick = new EventEmitter<any>();
   @Output() deleteClick = new EventEmitter<any>();
   @Output() infoClick = new EventEmitter<any>();
+  @Output() invoiceClick = new EventEmitter<any>();
   @Output() callAction = new EventEmitter<any>();
 
 
@@ -90,9 +91,9 @@ export class CrgridComponent  implements OnInit {
     this.deleteClick.next(data);
   }
 
-  infoClicked(data: any) {
+  invoiceClicked(data: any) {
     console.log(data);
-    this.infoClick.next(data);
+    this.invoiceClick.next(data);
   }
 
 
@@ -100,11 +101,11 @@ export class CrgridComponent  implements OnInit {
 
   callActions(actionName: string, data: any) {
     debugger;
-    switch (actionName[0]) {
+    switch (actionName[0].split(':')[0]) {
      
       case 'edit': return this.editClicked(data);
       case 'delete': return this.deleteClicked(data);
-      case 'info-circle': return this.infoClicked(data);
+      case 'invoice': return this.invoiceClicked(data);
    
     }
   }

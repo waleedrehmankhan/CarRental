@@ -23,6 +23,7 @@ namespace CarRental.Persistence
             Payments = new PaymentRepository(_context);
             CarClassification = new CarClassificationRepository(_context);
             ServiceHistory = new ServiceRepository(_context);
+            Locations = new LocationRepository(_context);
         }
 
         public ICustomerRepository Customers { get; private set; }
@@ -41,6 +42,7 @@ namespace CarRental.Persistence
 
         public ICarClassificationRepository CarClassification { get; private set; }
         public IServiceRepository ServiceHistory { get; private set; }
+        public ILocationRepository Locations { get; private set; }
 
         public int Complete()
 

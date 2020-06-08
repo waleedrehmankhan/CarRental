@@ -3,28 +3,28 @@
 <nz-table [nzFrontPagination]="false" #Table [nzData]="records">
   <thead>
     <tr>
-      <th  nzCustomFilter nzShowSort nzSortKey="{{column}}"   *ngFor="let column of columns">
-        {{ column }}
+      <th    *ngFor="let column of columns">
+        {{ column.includes(":") ? column.split(":")[1]:column }}
 
-        <!--<nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
-          <i nz-icon nzType="search"></i>
-        </nz-filter-trigger>-->
+      
 
       </th>
-      <th [attr.colspan]="[actions.length]">Action</th>
+
+      <th  *ngIf="actions.length>0" [attr.colspan]="[actions.length]">Action</th>
 
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let data of Table.data">
-      <td *ngFor="let column of columns">{{ data[column] }}</td>
+      <td *ngFor="let column of columns">{{ data[column.includes(":") ? column.split(":")[0]:column] }}</td>
       <!--<td> <a><i nz-icon nzType="edit" (click)="editClicked(data)" nzTheme="twotone"></i></a></td>
       <td>
         <a><i nz-icon nzType="delete" (click)="deleteClicked(data)" nzTheme="twotone"></i></a>
       </td>-->
 
       <td *ngFor="let column of actions">
-        <a><i nz-icon nzType="{{ column }}" (click)="callActions([column],data)" nzTheme="twotone" ></i></a>
+      
+        <a nz-tooltip nzTooltipTitle="{{column.split(':')[0]}}"><i nz-icon nzType="{{column.split(':')[1]}}" (click)="callActions([column],data)" ></i></a>
 
 
       </td>

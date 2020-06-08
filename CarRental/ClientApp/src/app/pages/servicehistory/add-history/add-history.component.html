@@ -1,4 +1,26 @@
 <form nz-form [formGroup]="serviceForm" (ngSubmit)="submitForm()">
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CarId">Car</nz-form-label>
+    <nz-form-control [nzErrorTip]="serviceForm.get('CarId').errors?.errors" [nzSm]="14" [nzXs]="24">
+      <crselect [url]="carurl" key="Model" value="Id" formControlName="CarId"></crselect>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ServicingType">ServicingType</nz-form-label>
+    <nz-form-control [nzErrorTip]="serviceForm.get('ServicingType').errors?.errors" [nzSm]="14" [nzXs]="24">
+      <nz-select formControlName="ServicingType" nzShowSearch nzAllowClear nzPlaceHolder="Select Type">
+        <nz-option nzLabel="Tyre Replacement" nzValue="1"></nz-option>
+        <nz-option nzLabel="Mobil Change" nzValue="2"></nz-option>
+        <nz-option nzLabel="Brake Fix" nzValue="3"></nz-option>
+        <nz-option nzLabel="Fuel Fill" nzValue="4"></nz-option>
+        <nz-option nzLabel="Other" nzValue="5"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Description">Description</nz-form-label>
     <nz-form-control [nzErrorTip]="serviceForm.get('Description').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
@@ -15,21 +37,20 @@
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Status">Status</nz-form-label>
     <nz-form-control [nzErrorTip]="serviceForm.get('Status').errors?.errors" [nzSm]="14" [nzXs]="24">
-      <nz-select formControlName="Status" nzShowSearch nzAllowClear nzPlaceHolder="Select Status">
-        <nz-option nzLabel="Due" nzValue="false"></nz-option>
+      <nz-select nzDisabled="true" [(ngModel)]="servicingstatus" formControlName="Status" nzShowSearch nzAllowClear nzPlaceHolder="Select Status">
         <nz-option nzLabel="Completed" nzValue="true"></nz-option>
+        <nz-option nzLabel="Due" nzValue="false"></nz-option>
 
       </nz-select>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CarId">Car</nz-form-label>
-    <nz-form-control [nzErrorTip]="serviceForm.get('CarId').errors?.errors" [nzSm]="14" [nzXs]="24">
-      <crselect [url]="carurl" key="Model" value="Id" formControlName="CarId"></crselect>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Amoune">Amount</nz-form-label>
+    <nz-form-control [nzErrorTip]="serviceForm.get('Amoune').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
+      <input nz-input formControlName="Amoune" placeholder="Enter Amount" id="Amoune" />
     </nz-form-control>
   </nz-form-item>
-
   <nz-form-item nz-row>
     <nz-form-control [nzSpan]="14" [nzOffset]="6">
       <button nz-button nzType="primary" [disabled]="serviceForm.invalid">Save</button>
@@ -40,4 +61,4 @@
 
 
 
-<div><app-crgrid [refresh]="refresh" (deleteClick)="deleteClicked($event)" (editClick)="editClicked($event)" [columns]="lstcolumns" [url]="url"></app-crgrid></div>
+<div><app-crgrid [refresh]="refresh" (deleteClick)="deleteClicked($event)"   [actions]="lstactions" [columns]="lstcolumns" [url]="url"></app-crgrid></div>

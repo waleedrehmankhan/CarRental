@@ -19,8 +19,8 @@ export class ViewPaymentComponent implements OnInit {
   refresh = new Subject<boolean>();
   ngOnInit() {
   }
-  lstcolumns: string[] = ["InvoiceNumber","Customer.FirstName","Amount","IssueDate","DueDate","Description"]
-   
+  lstcolumns: string[] = ["InvoiceNumber:Invoice No","Customer.FirstName: Customer Name","Amount:Total Due Amount","IssueDate:Issued On","DueDate:Due On","Description"]
+   lstactions:string[]=["edit:pay-circle","delete:delete"]
 
   editClicked(data: InvoiceDto) {
     console.log(data);

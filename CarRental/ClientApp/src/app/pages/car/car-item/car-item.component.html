@@ -14,9 +14,11 @@
       <p> Daily Rate ${{car.CarClassification.CostPerDay }} </p>
       <p> Hourly Rate ${{car.CarClassification.CostPerHour }} </p>
       <p> LateFeePerHour ${{car.CarClassification.LateFeePerHour }} </p>
+      <p> Current Location: {{car.CurrentLocation||"Not Assigned"}} </p>
     </div>
     <div style="flex:2">
       <strong>Total Passenger :{{car.CarClassification.PassengerCount}}</strong>
+      
     </div>
 
   </div>

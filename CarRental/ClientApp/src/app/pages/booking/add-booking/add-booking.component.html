@@ -11,7 +11,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="ToBranchID">Return Location</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('ToBranchID').errors?.errors" [nzSm]="14" [nzXs]="24">
-      <crselect [url]="branchurl" key="BranchName" value="Id" formControlName="ToBranchID"></crselect>
+      <crselect  [disabled]="disablededit" [url]="branchurl" key="BranchName" value="Id" formControlName="ToBranchID"></crselect>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
@@ -19,7 +19,7 @@
     <nz-form-control [nzErrorTip]="booking.get('FromDate').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
       <!--<nz-date-picker nzShowTime formControlName="FromDate" nzFormat="yyyy/MM/dd"></nz-date-picker>-->
 
-      <nz-date-picker formControlName="FromDate"
+      <nz-date-picker [nzDisabled]="disablededit" formControlName="FromDate"
                       nzShowTime
                       nzFormat="dd-MM-yyyy HH:mm:ss"
                       nzPlaceHolder="Select Pickup Date and Time"></nz-date-picker>
@@ -31,7 +31,7 @@
     <nz-form-control [nzErrorTip]="booking.get('ReturnDate').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
       <!--<nz-date-picker formControlName="ReturnDate" nzFormat="yyyy/MM/dd"></nz-date-picker>-->
 
-      <nz-date-picker formControlName="ReturnDate"
+      <nz-date-picker [nzDisabled]="disablededit" formControlName="ReturnDate"
                       nzShowTime
                       nzFormat="dd-MM-yyyy HH:mm:ss"
                       nzPlaceHolder="Select Return Date and Time"></nz-date-picker>
@@ -40,7 +40,7 @@
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CarId">Car</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('CarId').errors?.errors" [nzSm]="14" [nzXs]="24">
-      <crselect [url]="carurl" key="Model" value="Id" formControlName="CarId"></crselect>
+      <crselect [disabled]="disablededit" [url]="carurl" key="Model" value="Id" formControlName="CarId"></crselect>
     </nz-form-control>
   </nz-form-item>
 
@@ -49,12 +49,12 @@
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CustomerId">Customer</nz-form-label>
     <nz-form-control [nzErrorTip]="booking.get('CustomerId').errors?.errors" [nzSm]="14" [nzXs]="24">
 
-      <crselect [disabled]="(booking.get('IsNewCustomer').value)" [url]="customerurl" key="FirstName" value="Id" formControlName="CustomerId"></crselect>
+      <crselect [disabled]="(booking.get('IsNewCustomer').value)||disablededit" [url]="customerurl" key="FirstName" value="Id" formControlName="CustomerId"></crselect>
 
     </nz-form-control>
   </nz-form-item>
 
-  <ng-container *ngIf="booking.get('IsNewCustomer').value">
+  <ng-container  *ngIf="booking.get('IsNewCustomer').value">
     <div style="margin: 0 auto;text-align: left;">
       <fieldset formGroupName="Customer">
         <legend>Customer</legend>
@@ -62,53 +62,53 @@
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="CustomerCode">Customer Code</nz-form-label>
           <nz-form-control [nzErrorTip]="customerForm.get('CustomerCode').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <input nz-input formControlName="CustomerCode" placeholder="Enter Customer Code" id="CustomerCode" />
+            <input [disabled]="disablededit" nz-input formControlName="CustomerCode" placeholder="Enter Customer Code" id="CustomerCode" />
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="FirstName">FirstName</nz-form-label>
           <nz-form-control [nzErrorTip]="customerForm.get('FirstName').errors?.errors" nzHasFeedBack [nzSm]="14" [nzXs]="24">
-            <input nz-input formControlName="FirstName" placeholder="Enter First Name" id="FirstName" />
+            <input  [disabled]="disablededit" nz-input formControlName="FirstName" placeholder="Enter First Name" id="FirstName" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="LastName">LastName</nz-form-label>
           <nz-form-control [nzErrorTip]="customerForm.get('LastName').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <input nz-input formControlName="LastName" placeholder="Enter Last Name" id="LastName" />
+            <input [disabled]="disablededit" nz-input formControlName="LastName" placeholder="Enter Last Name" id="LastName" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzErrorTip="Invalid Email" nzFor="EmailAddress">EmailAddress</nz-form-label>
           <nz-form-control [nzErrorTip]="customerForm.get('EmailAddress').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <input nz-input formControlName="EmailAddress" placeholder="Enter Email Address" id="EmailAddress" />
+            <input [disabled]="disablededit" nz-input formControlName="EmailAddress" placeholder="Enter Email Address" id="EmailAddress" />
           </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="PhoneNumber">PhoneNumber</nz-form-label>
           <nz-form-control [nzErrorTip]="customerForm.get('PhoneNumber').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <input nz-input formControlName="PhoneNumber" placeholder="Enter Phone number" id="PhoneNumber" />
+            <input [disabled]="disablededit" nz-input formControlName="PhoneNumber" placeholder="Enter Phone number" id="PhoneNumber" />
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="BirthDate">Date of Birth</nz-form-label>
           <nz-form-control [nzErrorTip]="customerForm.get('BirthDate').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <nz-date-picker formControlName="BirthDate" nzFormat="yyyy/MM/dd"></nz-date-picker>
+            <nz-date-picker [nzDisabled]="disablededit" formControlName="BirthDate" nzFormat="yyyy/MM/dd"></nz-date-picker>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="LicenseNumber">LicenseNumber</nz-form-label>
           <nz-form-control [nzErrorTip]="customerForm.get('LicenseNumber').errors?.errors" [nzSm]="14" [nzXs]="24" nzHasFeedBack>
-            <input nz-input formControlName="LicenseNumber" placeholder="Enter Driving License Number" id="LicenseNumber" />
+            <input nz-input [disabled]="disablededit" formControlName="LicenseNumber" placeholder="Enter Driving License Number" id="LicenseNumber" />
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="MembershipTypeId">Membership Type</nz-form-label>
           <nz-form-control [nzErrorTip]="customerForm.get('MembershipTypeId').errors?.errors" [nzSm]="14" [nzXs]="24">
-            <crselect [url]="membershipurl" key="Name" value="Id" id="MembershipTypeId" formControlName="MembershipTypeId"></crselect>
+            <crselect [disabled]="disablededit"  [url]="membershipurl" key="Name" value="Id" id="MembershipTypeId" formControlName="MembershipTypeId"></crselect>
           </nz-form-control>
         </nz-form-item>
 
@@ -118,11 +118,11 @@
 
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="Extra">Booking Addons</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24">
+    <nz-form-control   [nzSm]="14" [nzXs]="24">
 
       <nz-collapse>
         <nz-collapse-panel nzHeader="Booking Addons">
-          <app-view-extra (dataChange)="dataChange($event)"></app-view-extra>
+          <app-view-extra  (dataChange)="dataChange($event)"></app-view-extra>
         </nz-collapse-panel>
       </nz-collapse>
 

@@ -51,15 +51,17 @@ namespace CarRental.Controllers
                     {
                         usersinbranch.Add(item.Staff.UserName);
                     }
-                    bookings = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => (input.Id != 0 ? (w.Id == input.Id) : true)&& usersinbranch.Contains(w.CreatedBy), includeProperties: "FromBranch,ToBranch,Car,Customer"));
+                    bookings = await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w =>( (input.Id != 0 ? (w.Id == input.Id) : true)&&((w.ToBranchId == current_user.BranchId)||(w.FromBranchId==current_user.BranchId)||(usersinbranch.Contains(w.CreatedBy)) )), includeProperties: "FromBranch,ToBranch,Car,Customer"));
                 }
                 else 
                     bookings=  await Task.Run(() => _unitOfWork.Bookings.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true,includeProperties:"FromBranch,ToBranch,Car,Customer"));
+                
                 var bookingdToReturn = _mapper.Map<IEnumerable<BookingDto>>(bookings);
                 foreach (var item in bookingdToReturn)
                 {
                     item.bookingextras = GetBookingExtras(new GetBookingExtraInput() { BookingId = item.Id });
-                   
+                    var invoice = _unitOfWork.Invoices.Find(x => x.BookingId == item.Id).First();
+                    item.Invoice = _mapper.Map<InvoiceDto>(invoice);
                 }
                 
                 return this.Content(rm.returnMessage(new PagedResultDto<BookingDto>
@@ -119,6 +121,15 @@ namespace CarRental.Controllers
                     {
                         bookingToAdd.Customer.Id = booking.First().Customer.Id;
                         _unitOfWork.Customers.Update(bookingToAdd.Customer);
+                    }
+                    if(bookingToAdd.isActive==false)
+                    {
+                        var locationfromBranch = _unitOfWork.Locations.Find(x => x.CarId == bookingToAdd.CarId && x.BranchId == bookingToAdd.FromBranchId).First();
+                        locationfromBranch.isAtLocation = false;
+                        var locationtoBranch = _unitOfWork.Locations.Find(x => x.CarId == bookingToAdd.CarId && x.BranchId == bookingToAdd.ToBranchId).First();
+                        locationtoBranch.isAtLocation = true;
+                        _unitOfWork.Locations.Update(locationfromBranch);
+                        _unitOfWork.Locations.Update(locationtoBranch);
                     }
                     _unitOfWork.Bookings.Update(bookingToAdd);
        

@@ -22,7 +22,8 @@ namespace CarRental.Dtos
         public CarClassificationDto CarClassification { get; set; }
         public string Image { get; set; }
        public IList<CarAvailbilityTimeDto> CarAvailability { get; set; }
-        
+       public string CurrentLocation { get; set; }
+
 
         public int PassengerCount { get; set; }
         public float CostPerHour { get; set; }

@@ -28,24 +28,33 @@ export class AddBookingComponent implements OnInit {
   checkboxname: string = "Is New Customer";
   selectedExtra: any = [];
   current_user = JSON.parse(sessionStorage.getItem("current_user"))
-  BranchId = this.current_user.BranchId;
+  BranchId = null;
   disabled: boolean = this.current_user.BranchId != 3
+  disablededit: boolean 
   selectedvalue:string="True"
  
   constructor(private fb: FormBuilder, private _dataService: DataService, private activatedRoute: ActivatedRoute, private router: Router, private message: NzMessageService) {
   }
   bookingDto = new BookingDto();
   branchurl: string = "branch/getBranchDetails";
-  carurl: string = "car/getCarDetails";
+  carurl: string = "car/getCarDetailsQuick";
   customerurl: string = "customers/getCustomerDetails"
   membershipurl: string = "membership/getMemberShip";
 
   ngOnInit() {
     console.log(this.activatedRoute.snapshot.params);
     const bookingId = this.activatedRoute.snapshot.params.Id;
+    
     const carId = this.activatedRoute.snapshot.params.CarId;
     if (bookingId) {
-      this.checkboxname="View Customer Details"
+      this.checkboxname = "View Customer Details"
+
+
+
+
+    }
+    else {
+      this.BranchId = this.current_user.BranchId
     }
     bookingId && this._dataService.postData("booking/getBookings", { "ID": bookingId }).subscribe
       (
@@ -54,7 +63,11 @@ export class AddBookingComponent implements OnInit {
           const [booking] = response.data.Items;
           booking.FromDate = new Date(booking.FromDate);
           booking.ReturnDate = new Date(booking.ReturnDate);
+
           this.booking.patchValue(booking);
+
+          this.disablededit = !(this.current_user.BranchId != 3 && this.current_user.BranchId === booking.FromBranchID)
+          this.BranchId=booking.FromBranchID
 
         }
       );

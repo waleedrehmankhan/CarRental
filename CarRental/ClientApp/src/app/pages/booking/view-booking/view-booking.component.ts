@@ -18,7 +18,8 @@ export class ViewBookingComponent implements OnInit {
 
   url: string = "booking/getBookings"
   refresh = new Subject<boolean>();
-  lstcolumns: string[] = ["Customer.FirstName", "FromBranch.BranchName", "ToBranch.BranchName", "FromDate", "ReturnDate","Status"]
+  lstcolumns: string[] = ["Customer.FirstName:Customer First Name", "FromBranch.BranchName: Pickup Location", "ToBranch.BranchName:Drop Off Location", "FromDate", "ReturnDate","Status"]
+  lstactions:string[]=["edit:edit","delete:delete","invoice:money-collect"]
   ngOnInit() {
   }
 
@@ -45,6 +46,12 @@ export class ViewBookingComponent implements OnInit {
   editClicked(data: BookingDto) {
     console.log(data);
     this.router.navigateByUrl(`booking/edit/${data.Id}`)
+
+  }
+
+  invoiceClicked(data: BookingDto) {
+    console.log(data);
+    this.router.navigateByUrl(`payment/voucher/${data['Invoice.Id']}`)
 
   }
 }
