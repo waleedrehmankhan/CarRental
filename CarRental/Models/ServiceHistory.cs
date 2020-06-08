@@ -9,6 +9,8 @@ namespace CarRental.Models
         public Car Car { get; set; }
         public DateTime DueDate { get; set; }
         public bool Status { get; set; }
+        public int ServicingType { get; set; }
+        public double Amoune { get; set; }
         public string Description { get; set; }
 
         [Display(Name = "Car")]
