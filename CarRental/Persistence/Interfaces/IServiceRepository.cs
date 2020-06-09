@@ -8,5 +8,8 @@ namespace CarRental.Persistence.Interfaces
 {
    public interface IServiceRepository : IRepository<ServiceHistory>
     {
+        public dynamic GetTotalExpenseByTypeMonthly();
+        public float GetTotalExpense();
+
     }
 }

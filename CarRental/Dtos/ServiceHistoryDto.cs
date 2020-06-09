@@ -45,12 +45,9 @@ namespace CarRental.Dtos
                         name = "Mobil Change";
                         break;
                     case 3:
-                        name = "Brake Fix";
-                        break;
-                    case 4:
                         name = "Fuel Fill";
                         break;
-                    case 5:
+                    case 4:
                         name = "Other";
                         break;
                     default:

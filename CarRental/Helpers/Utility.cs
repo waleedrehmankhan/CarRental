@@ -43,5 +43,30 @@ namespace CarRental.Helpers
             Paid = 2,
             Cancelled = 3,
         }
+
+        public static string getservicetypename(int ServicingType)
+        {
+            string name = "";
+            switch (ServicingType)
+            {
+                case 1:
+                    name = "Tyre Replacement";
+                    break;
+                case 2:
+                    name = "Mobil Change";
+                    break;
+                case 3:
+                    name = "Fuel Fill";
+                    break;
+                case 4:
+                    name = "Other";
+                    break;
+                default:
+                    name = "";
+                    break;
+
+            }
+            return name;
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -321,11 +323,94 @@ namespace CarRental.Controllers
         {
             try
             {
+              
                 ReturnMessage rm = new ReturnMessage(1, "Success");
                 var services = await Task.Run(() => _unitOfWork.ServiceHistory.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true));
                 var servicestoReturn = _mapper.Map<IEnumerable<ServiceHistoryDto>>(services);
                 return this.Content(rm.returnMessage(new PagedResultDto<ServiceHistoryDto>
                     (servicestoReturn.AsQueryable(), input.pagenumber, input.pagesize)),
+                    "application/json");
+            }
+            catch (Exception ex)
+            {
+                return this.Content(JsonConvert.SerializeObject(new
+                {
+                    msgCode = -3,
+                    msg = ex.Message
+                }), "application/json");
+            }
+        }
+
+        [HttpPost("getExpenseByTypeMonthly")]
+        public ContentResult GetTotalExpenseByTypeMonthly(GetServiceInput input)
+        {
+            try
+            {
+                ChartJsHelper chartJsHelper = new ChartJsHelper();
+                chartJsHelper.barChartData = new List<BarchartData>();
+
+                List<string> barchartlabels = new List<string>();
+                List<float> bardata = new List<float>();
+                for (int i = 1; i <=12; i++)
+                {
+                    
+                    string month = CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(i);
+                    barchartlabels.Add(month.ToString());
+                    bardata.Add(0);
+                }
+                chartJsHelper.barChartLabels = barchartlabels.ToArray();
+                 var data = _unitOfWork.ServiceHistory.GetTotalExpenseByTypeMonthly();
+                
+                foreach (var item in data)
+                {
+                    if (chartJsHelper.barChartData.Where(x=>x.label== Utility.getservicetypename(item.ServicingType)).Count()==0)
+                    {
+                        BarchartData barchartdata = new BarchartData();
+                        BarchartData barchartdata1 = new BarchartData();
+                        barchartdata.data = new List<float>();
+                       
+
+                        List<float> bardata1 = new List<float>(bardata);
+                        bardata1[item.Month-1] = ((float)item.Amount);
+
+
+                        //barchartdata.data.Add ((float)item.Amount);
+                        barchartdata.label = Utility.getservicetypename(item.ServicingType);
+                         
+                        barchartdata.data = bardata1;
+                        chartJsHelper.barChartData.Add(barchartdata);
+                    }
+                   else
+                    {
+                        foreach (var item1 in chartJsHelper.barChartData)
+                        {
+                            if(Utility.getservicetypename(item.ServicingType)==item1.label)
+                                item1.data[item.Month-1]= ((float)item.Amount);
+                        }
+                    }
+                }
+                chartJsHelper.barChartLegend = true;
+ 
+                if(chartJsHelper.barChartData.Count()==0)
+                {
+                    BarchartData barchartdata = new BarchartData();
+                    barchartdata.data = new List<float>();
+                    for (int i = 0; i < 12; i++)
+                    {
+                         
+                            barchartdata.data.Add((float)0);
+                       
+                         
+                    }
+                    barchartdata.label = "";
+                    //barchartdata.data.Add ((float)item.Amount);
+
+                    chartJsHelper.barChartData.Add(barchartdata);
+                }
+                chartJsHelper.barChartType = "bar";
+
+
+                return this.Content(JsonConvert.SerializeObject(chartJsHelper),
                     "application/json");
             }
             catch (Exception ex)

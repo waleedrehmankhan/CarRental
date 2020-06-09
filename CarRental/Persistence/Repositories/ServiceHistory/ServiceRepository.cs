@@ -14,5 +14,35 @@ namespace CarRental.Persistence
         {
 
         }
+
+        public float GetTotalExpense()
+        {
+            
+            throw new NotImplementedException();
+        }
+
+        public dynamic GetTotalExpenseByTypeMonthly()
+        {
+            //var data = this.dbSet.ToList().GroupBy(x => x.ServicingType.ToString(), x.DueDate.Month.ToString());
+            //foreach (var group in data)
+            //{
+            //    //group.Key.SupplierId is the SupplierId value
+            //    //group.Key.Country is the CountryId value
+            //}
+
+
+            var list = from d in dbSet.ToList()
+
+                       group (d.Amoune) by new { d.ServicingType, d.DueDate.Month } into g
+
+                       select new
+                       {
+                           ServicingType = g.Key.ServicingType,
+                           Month=g.Key.Month  ,
+                           Amount=g.Sum()
+                       };
+            return list;
+
+        }
     }
 }
