@@ -1,6 +1,7 @@
 <div>
-    <app-crgrid [refresh]="refresh" (deleteClick)="deleteClicked($event)" [columns]="lstcolumns" [url]="url">
-    </app-crgrid>
+  <app-crgrid [refresh]="refresh" (editClick)="editClicked($event)" [columns]="lstcolumns" [actions]="lstactions" [url]="url">
+  </app-crgrid>
 </div>
 
 <!-- (editClick)="editClicked($event)" -->
+<!--(deleteClick)="deleteClicked($event)"-->

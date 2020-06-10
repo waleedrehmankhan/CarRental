@@ -79,7 +79,13 @@ namespace CarRental.Controllers
                 var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true, includeProperties: "CarClassification"));
                  
                 var carsToReturn = _mapper.Map<IEnumerable<CarDto>>(cars);
-               
+                foreach (var item in carsToReturn)
+                {
+                    item.PassengerCount = item.CarClassification.PassengerCount;
+                    item.CostPerHour = item.CarClassification.CostPerHour;
+                    item.CostPerDay = item.CarClassification.CostPerDay;
+                    item.LateFeePerHour = item.CarClassification.LateFeePerHour;
+                }
                 return this.Content(rm.returnMessage(new PagedResultDto<CarDto>
                     (carsToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
                     "application/json");
@@ -102,6 +108,7 @@ namespace CarRental.Controllers
             ReturnMessage returnmessage = new ReturnMessage(1, "Car Saved Succesfully");
             try
             {
+               
                 carDto.CarClassification = new CarClassificationDto() { 
                 
                 PassengerCount=carDto.PassengerCount,
@@ -109,7 +116,9 @@ namespace CarRental.Controllers
                 CostPerHour=carDto.CostPerHour,
                 LateFeePerHour=carDto.LateFeePerHour
                 };
-                var car = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => w.Id == carDto.Id));
+                var car = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => carDto.Id != 0 ? (w.Id == carDto.Id) : true, includeProperties: "CarClassification"));
+
+                int carclassificationid = car.First().CarClassification.Id;
                 var carToAdd = _mapper.Map<Car>(carDto);
                 var carClassificationToAdd = _mapper.Map<CarClassification>(carDto.CarClassification);
 
@@ -123,6 +132,8 @@ namespace CarRental.Controllers
                 }
                 else
                 {
+                    carToAdd.CarClassificationId = carclassificationid;
+                    carClassificationToAdd.Id = carclassificationid;
                     _unitOfWork.CarClassification.Update(carClassificationToAdd);
                     _unitOfWork.Cars.Update(carToAdd);
                 }

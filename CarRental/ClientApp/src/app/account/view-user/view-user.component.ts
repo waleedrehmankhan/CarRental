@@ -3,13 +3,14 @@ import { DataService } from "src/app/data.service";
 import { Router } from "@angular/router";
 import { NzMessageService } from "ng-zorro-antd";
 import { Subject } from "rxjs";
-
+import { UserDto } from 'src/app/classes/UserDto';
 @Component({
   selector: "app-view-user",
   templateUrl: "./view-user.component.html",
   styleUrls: ["./view-user.component.css"],
 })
 export class ViewUserComponent implements OnInit {
+  lstactions:string[]=["edit:edit"]
   constructor(
     private _dataService: DataService,
     private router: Router,
@@ -40,10 +41,10 @@ export class ViewUserComponent implements OnInit {
       });
   }
 
-  // editClicked(data: CustomerDto) {
-  //   console.log(data);
-  //   this.router.navigateByUrl(`customer/edit/${data.Id}`)
-  // }
+  editClicked(data: UserDto) {
+     console.log(data);
+     this.router.navigateByUrl(`account/edit/${data.Id}`)
+   }
 
   ngOnInit() {}
 }

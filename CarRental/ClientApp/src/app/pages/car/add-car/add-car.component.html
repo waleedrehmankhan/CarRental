@@ -2,7 +2,7 @@
     Car saved successfully!
 </div>
 
-<form nz-form [formGroup]="carForm" (ngSubmit)="submitForm()">
+<form nz-form [formGroup]="carForm"  *ngIf="carForm" (ngSubmit)="submitForm()">
   <input style="display: none;" nz-input formControlName="Id" id="Id" />
 
   <nz-form-item>

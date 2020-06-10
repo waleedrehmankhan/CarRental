@@ -9,30 +9,19 @@
     // More info: http://frhagn.github.io/Typewriter/
 
     
-    export class RegisterUserDto {
+    export class UserDto {
         
+        // Id
+        public Id: string = null;
         // Email
         public Email: string = null;
+        // Username
+        public Username: string = null;
         // FirstName
         public FirstName: string = null;
         // LastName
         public LastName: string = null;
-        // UserRole
-        public UserRole: string = null;
-        // BranchId
-        public BranchId: number = 0;
-        // CurrentToken
-        public CurrentToken: string = null;
-        // BranchName
-        public BranchName: string = null;
-        // Id
-        public Id: string = null;
-    }
-    export class LoginUserDto {
-        
-        // Username
-        public Username: string = null;
-        // Password
-        public Password: string = null;
+        // PhoneNumber
+        public PhoneNumber: string = null;
     }
 

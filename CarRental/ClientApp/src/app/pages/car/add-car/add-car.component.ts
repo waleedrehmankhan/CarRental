@@ -39,6 +39,16 @@ export class AddCarComponent implements OnInit {
   ngOnInit() {
     const Id = this.activatedRoute.snapshot.params.Id;
 
+    Id && this._dataService.postData("car/getCarDetailsQuick", { "Id": Id }).subscribe
+      (
+
+        response => {
+          const [car] = response.data.Items;
+          this.carForm.patchValue(car);
+
+        }
+      );
+
     this.carForm = this.fb.group({
       Id: Id || -1,
       RegistrationNumber: new FormControl(),

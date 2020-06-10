@@ -9,6 +9,7 @@ import {
 import { DataService } from "src/app/data.service";
 import { RegisterUserDto } from "src/app/classes/RegisterUserDto";
 import { NzMessageService } from "ng-zorro-antd";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-register",
@@ -28,7 +29,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _dataService: DataService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private activatedRoute: ActivatedRoute
   ) {
     this.registerForm = new FormGroup({
       Email: new FormControl(),
@@ -44,6 +46,18 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    const Id = this.activatedRoute.snapshot.params.Id;
+
+    Id && this._dataService.postData("account/getUserDetails", { "Id": Id }).subscribe
+      (
+
+        response => {
+          const [user] = response.data.Items;
+          this.registerForm.patchValue(user);
+
+        }
+      );
     this.registerForm.reset();
   }
 

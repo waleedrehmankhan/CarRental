@@ -5,5 +5,6 @@ namespace CarRental.Persistence.Repositories.User
     public class GetUserInput : PagedAndSortedInputDto
     {
         public string Email { get; set; }
+        public string Id { get; set; }
     }
 }

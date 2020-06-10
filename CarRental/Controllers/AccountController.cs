@@ -74,11 +74,25 @@ namespace CarRental.Controllers
                 }
                 else
                 {
-                    userInDb = _userManager.Users.ToList();
+                    if(input.Id!=null)
+                    {
+                        userInDb = _userManager.Users.ToList().Where(x => x.Id == input.Id);
+                    
+
+                    }
+                    else
+                        userInDb = _userManager.Users.ToList();
+
                 }
-               
-                var userToReturn = _mapper.Map<IEnumerable<UserDto>>(userInDb);
-                return this.Content(rm.returnMessage(new PagedResultDto<UserDto>
+
+                
+                var userToReturn = _mapper.Map<IEnumerable<RegisterUserDto>>(userInDb);
+                foreach (var item in userToReturn)
+                {
+                    var branch = await Task.Run(() => _unitOfWork.BranchStaff.GetAsync(filter: w => w.StaffId == item.Id));
+                    item.BranchId = branch.First().BranchId;
+                }
+                return this.Content(rm.returnMessage(new PagedResultDto<RegisterUserDto>
                         (userToReturn.AsQueryable(), input.pagenumber, input.pagesize)),
                         "application/json");
             }

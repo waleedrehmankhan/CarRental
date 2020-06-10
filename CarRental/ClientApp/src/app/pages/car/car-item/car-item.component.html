@@ -18,8 +18,14 @@
     </div>
     <div style="flex:2">
       <strong>Total Passenger :{{car.CarClassification.PassengerCount}}</strong>
-      
+
     </div>
+    <div style="flex:3">
+      <a style="padding:10px" nz-tooltip nzTooltipTitle="Edit Car"><i nz-icon nzTheme="outline" style=" font-size: 18px;" nzType="edit" (click)="edit(car.Id)"></i></a>
+      <a nz-tooltip nzTooltipTitle="Delete Car"><i nz-icon nzTheme="outline" style=" font-size: 18px;" nzType="delete" (click)="delete(car.Id)"></i></a>
+
+    </div>
+   
 
   </div>
   <app-car-availability [eventData]="car.CarAvailability"></app-car-availability>
