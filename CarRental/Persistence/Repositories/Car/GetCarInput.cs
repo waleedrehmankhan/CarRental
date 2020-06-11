@@ -9,12 +9,15 @@ namespace CarRental.Persistence.Repositories.Car
     public class GetCarInput : PagedAndSortedInputDto
     {
         public int Id;
-        public int Model;
+        public string Model;
         public bool IsAvailable;
         public int  CarClassificationId;
         public DateTime  AvailableDateCheck;
         public DateTime  FromDate;
         public DateTime  ReturnDate;
+        public string  RegistrationNumber;
+        public bool  issearch;
+        public int  Year;
 
     }
 }

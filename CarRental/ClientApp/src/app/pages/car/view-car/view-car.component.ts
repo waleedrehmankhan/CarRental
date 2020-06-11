@@ -106,5 +106,29 @@ export class ViewCarComponent implements OnInit {
     console.log(this.date);
     this.getCarData();
   }
-  submitForm() {}
+  submitForm = () => {
+    this.isSpinning = true;
+    if (this.searchForm.valid) {
+      var key=this.searchForm.value.SearchKey;
+     var value=this.searchForm.value.SearchValue;
+    
+      this._dataService
+        .postData("car/getcardetails", { [key]: value, "pagenumber": this.pagenumber, "pagesize": this.pagesize, "AvailableDateCheck": this.date})
+        .subscribe((response) => {
+          console.log(response.data.Items);
+          this.totalcount = response.data.TotalCount;
+          var itemsarray = new Array();
+          //for (var v in response.data.Items) {
+          //  debugger;
+          //  itemsarray.push(this.convertIntoOneLevelJson(response.data.Items[v]));
+
+          //}
+
+          this.carItems = response.data.Items;
+          this.isSpinning = false;
+        });
+
+    }
+
+  }
 }

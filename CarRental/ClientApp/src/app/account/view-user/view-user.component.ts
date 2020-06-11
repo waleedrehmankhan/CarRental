@@ -10,7 +10,7 @@ import { UserDto } from 'src/app/classes/UserDto';
   styleUrls: ["./view-user.component.css"],
 })
 export class ViewUserComponent implements OnInit {
-  lstactions:string[]=["edit:edit"]
+  lstactions:string[]=["edit:edit","delete:delete"]
   constructor(
     private _dataService: DataService,
     private router: Router,
@@ -24,8 +24,7 @@ export class ViewUserComponent implements OnInit {
     "FirstName",
     "LastName",
     "Email",
-    "Username",
-    "PhoneNumber",
+    "Username"
   ];
 
   deleteClicked(data) {

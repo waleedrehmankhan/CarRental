@@ -47,7 +47,12 @@ namespace CarRental.Controllers
             try
             {
                 ReturnMessage rm = new ReturnMessage(1, "Success");
-                var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => input.Id != 0 ? (w.Id == input.Id) : true, includeProperties: "CarClassification"));
+                var cars = await Task.Run(() => _unitOfWork.Cars.GetAsync(filter: w => (input.Id != 0 ? (w.Id == input.Id) : true)
+                &&(input.RegistrationNumber != null? (w.RegistrationNumber.Contains(input.RegistrationNumber)) : true)
+                &&(input.Model != null? (w.Model.Contains(input.Model)) : true)
+                &&(input.Year != 0? (w.Year.ToString().Contains(input.Year.ToString())) : true),
+
+                includeProperties: "CarClassification"));
                 var carsToReturn = _mapper.Map<IEnumerable<CarDto>>(cars);
                 foreach (var item in carsToReturn)
                 {
